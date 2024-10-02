@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "Products | Stockify",
+};
+
 export default function ProductsPage() {
-  return <div>ProductsPage</div>;
+  return <main>ProductPage</main>;
 }
