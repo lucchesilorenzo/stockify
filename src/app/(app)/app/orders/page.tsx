@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Orders | Stockify",
+  title: "Orders",
 };
 
 export default function OrdersPage() {

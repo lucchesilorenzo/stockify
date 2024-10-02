@@ -12,11 +12,11 @@ export const metadata: Metadata = {
   description: "Stockify is a stock tracking app.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+type RootLayoutProps = {
   children: React.ReactNode;
-}>) {
+};
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-zinc-50 text-sm antialiased`}>

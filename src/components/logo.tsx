@@ -3,12 +3,14 @@ import Link from "next/link";
 
 export default function Logo() {
   return (
-    <Link
-      href="/app/dashboard"
-      className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-    >
-      <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-      <span className="sr-only">Stockify</span>
-    </Link>
+    <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+      <Link
+        href="/app/dashboard"
+        className="flex items-center gap-2 font-semibold"
+      >
+        <Package2 className="h-6 w-6" />
+        <span>Stockify</span>
+      </Link>
+    </div>
   );
 }

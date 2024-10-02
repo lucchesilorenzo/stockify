@@ -4,7 +4,7 @@ import AuthHeading from "@/components/auth-heading";
 import AuthImagePreview from "@/components/auth-image-preview";
 
 export const metadata = {
-  title: "Login | Stockify",
+  title: "Login",
 };
 
 export default function LogInPage() {
