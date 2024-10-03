@@ -14,3 +14,9 @@ export const authFormSchema = z.object({
 });
 
 export type TAuthFormSchema = z.infer<typeof authFormSchema>;
+
+export const orderFormSchema = z.object({
+  // TODO: add validation
+});
+
+export type TOrderFormSchema = z.infer<typeof orderFormSchema>;

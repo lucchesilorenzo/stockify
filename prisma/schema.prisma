@@ -16,15 +16,27 @@ model User {
   createdAt      DateTime @default(now())
 }
 
+model Order {
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  quantity   Int
+  totalPrice Float
+  status     String   @default("Fulfilled")
+  updatedAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+}
+
 model Product {
   id          String   @id @default(cuid())
-  name        String
+  name        String   @unique
   price       Float
   quantity    Int
   maxQuantity Int
   minQuantity Int
   categoryId  String
   category    Category @relation(fields: [categoryId], references: [id])
+  Order       Order[]
   updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
 }

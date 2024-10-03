@@ -14,3 +14,17 @@ export async function getProducts() {
 
   return products;
 }
+
+export async function getOrders() {
+  const orders = await prisma.order.findMany({
+    include: {
+      product: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  return orders;
+}

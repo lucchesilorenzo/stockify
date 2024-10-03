@@ -12,10 +12,10 @@ export const metadata = {
 };
 
 type AuthFormProps = {
-  type: "login" | "signup";
+  authType: "login" | "signup";
 };
 
-export default function AuthForm({ type }: AuthFormProps) {
+export default function AuthForm({ authType }: AuthFormProps) {
   const {
     register,
     handleSubmit,
@@ -54,7 +54,7 @@ export default function AuthForm({ type }: AuthFormProps) {
         )}
       </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {type === "login" ? "Login" : "Sign up"}
+        {authType === "login" ? "Login" : "Sign up"}
       </Button>
     </form>
   );

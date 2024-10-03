@@ -5,7 +5,7 @@ import { createContext, useState } from "react";
 
 type ProductContextProviderProps = {
   children: React.ReactNode;
-  data: ProductWithCategory[];
+  productsData: ProductWithCategory[];
 };
 
 type TProductContext = {
@@ -16,9 +16,9 @@ export const ProductContext = createContext<TProductContext | null>(null);
 
 export default function ProductContextProvider({
   children,
-  data,
+  productsData,
 }: ProductContextProviderProps) {
-  const [products] = useState(data);
+  const [products] = useState(productsData);
 
   return (
     <ProductContext.Provider value={{ products }}>

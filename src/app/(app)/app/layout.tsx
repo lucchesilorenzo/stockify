@@ -1,7 +1,8 @@
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
+import OrderContextProvider from "@/contexts/order-context-provider";
 import ProductContextProvider from "@/contexts/product-context-provider";
-import { getProducts } from "@/lib/server-utils";
+import { getOrders, getProducts } from "@/lib/server-utils";
 
 type AppLayoutProps = {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ type AppLayoutProps = {
 
 export default async function AppLayout({ children }: AppLayoutProps) {
   const products = await getProducts();
+  const orders = await getOrders();
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -16,7 +18,8 @@ export default async function AppLayout({ children }: AppLayoutProps) {
       <div className="flex flex-col">
         <Header />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <ProductContextProvider data={products}>
+          {/* <OrderContextProvider ordersData={orders}> */}
+          <ProductContextProvider productsData={products}>
             {children}
           </ProductContextProvider>
         </main>
