@@ -28,3 +28,9 @@ export async function getOrders() {
 
   return orders;
 }
+
+export async function getCategories() {
+  const categories = await prisma.category.findMany();
+
+  return categories;
+}

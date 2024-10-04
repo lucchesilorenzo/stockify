@@ -18,7 +18,7 @@ export default function OrdersActionCard() {
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <EntityDialog>
+        <EntityDialog actionType="createOrder">
           <Plus className="mr-2 h-5 w-5" /> Create new order
         </EntityDialog>
       </CardFooter>

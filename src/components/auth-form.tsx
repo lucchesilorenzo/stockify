@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authFormSchema, TAuthFormSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { LoadingButton } from "./loading-button";
 
 export const metadata = {
   title: "Login | Stockify",
@@ -41,6 +41,7 @@ export default function AuthForm({ authType }: AuthFormProps) {
           <p className="px-1 text-xs text-red-600">{errors.email.message}</p>
         )}
       </div>
+
       <div className="grid gap-2">
         <Label htmlFor="password">Password</Label>
         <Input
@@ -53,9 +54,10 @@ export default function AuthForm({ authType }: AuthFormProps) {
           <p className="px-1 text-xs text-red-600">{errors.password.message}</p>
         )}
       </div>
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+
+      <LoadingButton isLoading={isSubmitting} className="w-full">
         {authType === "login" ? "Login" : "Sign up"}
-      </Button>
+      </LoadingButton>
     </form>
   );
 }

@@ -14,9 +14,9 @@ export default function LogInPage() {
 
       <div className="flex min-h-screen items-center justify-center">
         <div className="grid w-[350px] gap-6">
-          <AuthHeading type="login" />
-          <AuthForm type="login" />
-          <AuthFooter type="login" />
+          <AuthHeading authType="login" />
+          <AuthForm authType="login" />
+          <AuthFooter authType="login" />
         </div>
       </div>
     </>

@@ -24,13 +24,15 @@ import {
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import EntityDialog from "./entity-dialog";
+import { Plus } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export default function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -56,7 +58,7 @@ export function DataTable<TData, TValue>({
     <>
       {/* Filters */}
       <div>
-        <div className="flex items-center py-4">
+        <div className="flex items-center justify-between py-4">
           <Input
             placeholder="Filter categories..."
             value={
@@ -70,6 +72,9 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-sm"
           />
+          <EntityDialog actionType="addProduct">
+            <Plus className="mr-2 h-5 w-5" /> Add product
+          </EntityDialog>
         </div>
       </div>
 

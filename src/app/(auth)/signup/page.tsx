@@ -14,9 +14,9 @@ export default function SignUpPage() {
 
       <div className="flex min-h-screen items-center justify-center">
         <div className="grid w-[350px] gap-6">
-          <AuthHeading type="signup" />
-          <AuthForm type="signup" />
-          <AuthFooter type="signup" />
+          <AuthHeading authType="signup" />
+          <AuthForm authType="signup" />
+          <AuthFooter authType="signup" />
         </div>
       </div>
     </>

@@ -33,7 +33,7 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Select product" />

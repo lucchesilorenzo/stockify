@@ -1,4 +1,4 @@
-import { DataTable } from "@/components/data-table";
+import DataTable from "@/components/data-table";
 import H1 from "@/components/h1";
 import { getProducts } from "@/lib/server-utils";
 import { columns } from "./columns";

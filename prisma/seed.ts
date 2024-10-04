@@ -3,234 +3,211 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const createCategoryIfNotExists = async (name: string) => {
-    const existingCategory = await prisma.category.findUnique({
-      where: { name },
-    });
-    return (
-      existingCategory ||
-      (await prisma.category.create({
-        data: { name },
-      }))
-    );
-  };
+  // Create 10 Categories
+  const categories = await prisma.category.createMany({
+    data: [
+      { name: "Electronics" },
+      { name: "Clothing" },
+      { name: "Books" },
+      { name: "Toys" },
+      { name: "Furniture" },
+      { name: "Beauty" },
+      { name: "Sports" },
+      { name: "Jewelry" },
+      { name: "Home Appliances" },
+      { name: "Automotive" },
+    ],
+  });
 
-  const electronics = await createCategoryIfNotExists("Electronics");
-  const clothing = await createCategoryIfNotExists("Clothing");
-  const literature = await createCategoryIfNotExists("Literature");
-  const homeAppliances = await createCategoryIfNotExists("Home Appliances");
-  const sports = await createCategoryIfNotExists("Sports");
-
-  await prisma.product.createMany({
+  // Create 10 Products
+  const products = await prisma.product.createMany({
     data: [
       {
         name: "Smartphone",
-        price: 599.99,
+        price: 699.99,
         quantity: 50,
         maxQuantity: 100,
         minQuantity: 10,
-        categoryId: electronics.id,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Electronics" } }))
+            ?.id || "",
       },
       {
         name: "Laptop",
-        price: 999.99,
+        price: 1299.99,
         quantity: 30,
         maxQuantity: 50,
         minQuantity: 5,
-        categoryId: electronics.id,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Electronics" } }))
+            ?.id || "",
       },
-      {
-        name: "Smartwatch",
-        price: 199.99,
-        quantity: 100,
-        maxQuantity: 200,
-        minQuantity: 20,
-        categoryId: electronics.id,
-      },
-      {
-        name: "Headphones",
-        price: 79.99,
-        quantity: 75,
-        maxQuantity: 150,
-        minQuantity: 15,
-        categoryId: electronics.id,
-      },
-      {
-        name: "Tablet",
-        price: 399.99,
-        quantity: 60,
-        maxQuantity: 120,
-        minQuantity: 12,
-        categoryId: electronics.id,
-      },
-
       {
         name: "T-shirt",
         price: 19.99,
         quantity: 200,
-        maxQuantity: 500,
-        minQuantity: 50,
-        categoryId: clothing.id,
-      },
-      {
-        name: "Jeans",
-        price: 39.99,
-        quantity: 150,
         maxQuantity: 300,
-        minQuantity: 30,
-        categoryId: clothing.id,
+        minQuantity: 20,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Clothing" } }))
+            ?.id || "",
       },
       {
-        name: "Sweater",
-        price: 49.99,
-        quantity: 100,
+        name: "Sneakers",
+        price: 79.99,
+        quantity: 120,
         maxQuantity: 200,
-        minQuantity: 25,
-        categoryId: clothing.id,
+        minQuantity: 20,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Clothing" } }))
+            ?.id || "",
       },
       {
-        name: "Jacket",
-        price: 89.99,
-        quantity: 80,
-        maxQuantity: 150,
-        minQuantity: 10,
-        categoryId: clothing.id,
-      },
-      {
-        name: "Dress",
-        price: 59.99,
-        quantity: 90,
-        maxQuantity: 180,
-        minQuantity: 15,
-        categoryId: clothing.id,
-      },
-
-      {
-        name: "Fiction Novel",
+        name: "Mystery Novel",
         price: 14.99,
-        quantity: 100,
-        maxQuantity: 200,
-        minQuantity: 20,
-        categoryId: literature.id,
-      },
-      {
-        name: "Non-Fiction Book",
-        price: 24.99,
-        quantity: 50,
-        maxQuantity: 100,
-        minQuantity: 10,
-        categoryId: literature.id,
-      },
-      {
-        name: "Children's Book",
-        price: 9.99,
-        quantity: 150,
-        maxQuantity: 300,
-        minQuantity: 15,
-        categoryId: literature.id,
-      },
-      {
-        name: "Textbook",
-        price: 29.99,
-        quantity: 70,
+        quantity: 80,
         maxQuantity: 150,
-        minQuantity: 5,
-        categoryId: literature.id,
+        minQuantity: 15,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Books" } }))
+            ?.id || "",
       },
       {
-        name: "Comic Book",
-        price: 19.99,
-        quantity: 80,
-        maxQuantity: 160,
-        minQuantity: 12,
-        categoryId: literature.id,
-      },
-
-      {
-        name: "Vacuum Cleaner",
-        price: 149.99,
-        quantity: 40,
-        maxQuantity: 80,
+        name: "Toy Car",
+        price: 9.99,
+        quantity: 90,
+        maxQuantity: 150,
         minQuantity: 10,
-        categoryId: homeAppliances.id,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Toys" } }))?.id ||
+          "",
       },
       {
-        name: "Microwave Oven",
-        price: 89.99,
-        quantity: 30,
-        maxQuantity: 60,
+        name: "Dining Table",
+        price: 299.99,
+        quantity: 25,
+        maxQuantity: 50,
         minQuantity: 5,
-        categoryId: homeAppliances.id,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Furniture" } }))
+            ?.id || "",
       },
       {
-        name: "Refrigerator",
-        price: 799.99,
-        quantity: 20,
-        maxQuantity: 30,
-        minQuantity: 2,
-        categoryId: homeAppliances.id,
-      },
-      {
-        name: "Blender",
-        price: 39.99,
-        quantity: 100,
+        name: "Lipstick",
+        price: 29.99,
+        quantity: 150,
         maxQuantity: 200,
         minQuantity: 20,
-        categoryId: homeAppliances.id,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Beauty" } }))
+            ?.id || "",
       },
-      {
-        name: "Coffee Maker",
-        price: 49.99,
-        quantity: 80,
-        maxQuantity: 160,
-        minQuantity: 10,
-        categoryId: homeAppliances.id,
-      },
-
       {
         name: "Running Shoes",
-        price: 69.99,
-        quantity: 150,
-        maxQuantity: 300,
-        minQuantity: 20,
-        categoryId: sports.id,
-      },
-      {
-        name: "Basketball",
-        price: 29.99,
+        price: 89.99,
         quantity: 100,
-        maxQuantity: 200,
+        maxQuantity: 150,
         minQuantity: 15,
-        categoryId: sports.id,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Sports" } }))
+            ?.id || "",
       },
       {
-        name: "Soccer Ball",
-        price: 19.99,
-        quantity: 80,
-        maxQuantity: 160,
+        name: "Necklace",
+        price: 149.99,
+        quantity: 50,
+        maxQuantity: 80,
         minQuantity: 10,
-        categoryId: sports.id,
-      },
-      {
-        name: "Yoga Mat",
-        price: 29.99,
-        quantity: 120,
-        maxQuantity: 240,
-        minQuantity: 25,
-        categoryId: sports.id,
-      },
-      {
-        name: "Dumbbells",
-        price: 39.99,
-        quantity: 60,
-        maxQuantity: 120,
-        minQuantity: 5,
-        categoryId: sports.id,
+        categoryId:
+          (await prisma.category.findUnique({ where: { name: "Jewelry" } }))
+            ?.id || "",
       },
     ],
   });
 
-  console.log("Seeding completed with products and categories!");
+  // Create 10 Orders for different products
+  const orders = await prisma.order.createMany({
+    data: [
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "Smartphone" } }))
+            ?.id || "",
+        quantity: 2,
+        totalPrice: 699.99 * 2,
+      },
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "Laptop" } }))
+            ?.id || "",
+        quantity: 1,
+        totalPrice: 1299.99,
+      },
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "T-shirt" } }))
+            ?.id || "",
+        quantity: 10,
+        totalPrice: 19.99 * 10,
+      },
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "Sneakers" } }))
+            ?.id || "",
+        quantity: 3,
+        totalPrice: 79.99 * 3,
+      },
+      {
+        productId:
+          (
+            await prisma.product.findUnique({
+              where: { name: "Mystery Novel" },
+            })
+          )?.id || "",
+        quantity: 5,
+        totalPrice: 14.99 * 5,
+      },
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "Toy Car" } }))
+            ?.id || "",
+        quantity: 8,
+        totalPrice: 9.99 * 8,
+      },
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "Dining Table" } }))
+            ?.id || "",
+        quantity: 1,
+        totalPrice: 299.99,
+      },
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "Lipstick" } }))
+            ?.id || "",
+        quantity: 6,
+        totalPrice: 29.99 * 6,
+      },
+      {
+        productId:
+          (
+            await prisma.product.findUnique({
+              where: { name: "Running Shoes" },
+            })
+          )?.id || "",
+        quantity: 2,
+        totalPrice: 89.99 * 2,
+      },
+      {
+        productId:
+          (await prisma.product.findUnique({ where: { name: "Necklace" } }))
+            ?.id || "",
+        quantity: 1,
+        totalPrice: 149.99,
+      },
+    ],
+  });
+
+  console.log({ categories, products, orders });
 }
 
 main()
