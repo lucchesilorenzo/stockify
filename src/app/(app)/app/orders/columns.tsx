@@ -1,12 +1,14 @@
 "use client";
 
+import OrderActions from "@/components/order-actions";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { OrderWithProduct } from "@/lib/types";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import { Order } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<OrderWithProduct>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -30,10 +32,15 @@ export const columns: ColumnDef<Order>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Product
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const name: string = row.getValue("product.name");
+
+      return <div className="font-medium">{name}</div>;
     },
   },
   {
@@ -63,6 +70,15 @@ export const columns: ColumnDef<Order>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const status: string = row.getValue("status");
+
+      return (
+        <Badge variant={status === "Pending" ? "secondary" : "default"}>
+          {status}
+        </Badge>
+      );
+    },
   },
   {
     accessorKey: "totalPrice",
@@ -81,7 +97,7 @@ export const columns: ColumnDef<Order>[] = [
       const amount = parseFloat(row.getValue("totalPrice"));
       const formattedCurrency = formatCurrency(amount);
 
-      return <div className="font-medium">{formattedCurrency}</div>;
+      return <div>{formattedCurrency}</div>;
     },
   },
   {
@@ -102,6 +118,14 @@ export const columns: ColumnDef<Order>[] = [
       const formattedDate = formatDate(date);
 
       return <div>{formattedDate}</div>;
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const order = row.original;
+
+      return <OrderActions order={order} />;
     },
   },
 ];

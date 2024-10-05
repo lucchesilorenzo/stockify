@@ -14,6 +14,6 @@ export function formatCurrency(amount: number) {
 
 export function formatDate(date: Date) {
   return new Intl.DateTimeFormat("en-CA", {
-    dateStyle: "short",
+    dateStyle: "long",
   }).format(date);
 }

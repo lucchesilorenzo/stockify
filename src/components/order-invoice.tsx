@@ -9,16 +9,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useInvoiceContext } from "@/lib/hooks";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
 export default function OrderInvoice() {
+  const { isInvoiceOpen, order } = useInvoiceContext();
+
+  if (!isInvoiceOpen || !order) return null;
+
+  const { id, createdAt, totalPrice, updatedAt, quantity, product } = order;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-lg">
-            Order Oe31b70H
+            Order # {id}
           </CardTitle>
-          <CardDescription>Date: November 23, 2023</CardDescription>
+          <CardDescription>Date: {formatDate(createdAt)}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="p-6 text-sm">
@@ -27,15 +35,9 @@ export default function OrderInvoice() {
           <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">
-                Glimmer Lamps x <span>2</span>
+                {product.name} <span>{quantity}</span>
               </span>
-              <span>$250.00</span>
-            </li>
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">
-                Aqua Filters x <span>1</span>
-              </span>
-              <span>$49.00</span>
+              <span>{formatCurrency(totalPrice)}</span>
             </li>
           </ul>
           <Separator className="my-2" />
@@ -54,14 +56,17 @@ export default function OrderInvoice() {
             </li>
             <li className="flex items-center justify-between font-semibold">
               <span className="text-muted-foreground">Total</span>
-              <span>$329.00</span>
+              <span>{formatCurrency(totalPrice)}</span>
             </li>
           </ul>
         </div>
       </CardContent>
       <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
         <div className="text-xs text-muted-foreground">
-          Updated <time dateTime="2023-11-23">November 23, 2023</time>
+          Updated{" "}
+          <time dateTime={updatedAt.toISOString()}>
+            {formatDate(updatedAt)}
+          </time>
         </div>
       </CardFooter>
     </Card>

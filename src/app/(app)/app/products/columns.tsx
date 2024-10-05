@@ -3,7 +3,7 @@
 import ProductActions from "@/components/product-actions";
 import { Button } from "@/components/ui/button";
 import { ProductWithCategory } from "@/lib/types";
-import { formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
@@ -54,7 +54,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
       const amount = parseFloat(row.getValue("price"));
       const formattedCurrency = formatCurrency(amount);
 
-      return <div className="font-medium">{formattedCurrency}</div>;
+      return <div>{formattedCurrency}</div>;
     },
   },
   {
@@ -68,6 +68,32 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           Quantity
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const quantity: number = row.getValue("quantity");
+      const maxQuantity = row.original.maxQuantity;
+      const minQuantity = row.original.minQuantity;
+
+      let quantityColor = "";
+
+      if (quantity <= minQuantity) {
+        quantityColor = "bg-red-100 text-red-800";
+      } else if (quantity >= maxQuantity / 2) {
+        quantityColor = "bg-green-100 text-green-800";
+      } else {
+        quantityColor = "bg-yellow-100 text-yellow-800";
+      }
+
+      return (
+        <div
+          className={cn(
+            "inline-flex items-center rounded-full px-2.5 py-0.5 font-medium",
+            quantityColor,
+          )}
+        >
+          {quantity}
+        </div>
       );
     },
   },
