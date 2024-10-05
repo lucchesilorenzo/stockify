@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+// Schemas
+
 export const authFormSchema = z.object({
   email: z
     .string()
@@ -13,13 +15,18 @@ export const authFormSchema = z.object({
     .max(20, "Password is too long."),
 });
 
-export type TAuthFormSchema = z.infer<typeof authFormSchema>;
-
 export const orderFormSchema = z.object({
-  // TODO: add validation
+  productId: z.string({
+    required_error: "Product is required.",
+  }),
+  quantity: z.coerce
+    .number({
+      invalid_type_error: "Quantity must be a number.",
+    })
+    .int("Quantity must be an integer.")
+    .positive("Quantity must be a positive number.")
+    .min(1, "Quantity is required."),
 });
-
-export type TOrderFormSchema = z.infer<typeof orderFormSchema>;
 
 export const productFormSchema = z
   .object({
@@ -72,4 +79,10 @@ export const productFormSchema = z
     path: ["quantity"],
   });
 
+export const productIdSchema = z.string().cuid();
+
+// Types
+
+export type TAuthFormSchema = z.infer<typeof authFormSchema>;
+export type TOrderFormSchema = z.infer<typeof orderFormSchema>;
 export type TProductFormSchema = z.infer<typeof productFormSchema>;

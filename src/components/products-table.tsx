@@ -27,15 +27,15 @@ import { Input } from "./ui/input";
 import EntityDialog from "./entity-dialog";
 import { Plus } from "lucide-react";
 
-interface DataTableProps<TData, TValue> {
+interface ProductsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export default function DataTable<TData, TValue>({
+export default function ProductsTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: ProductsTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 

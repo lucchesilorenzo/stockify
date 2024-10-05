@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import { Order } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
@@ -78,12 +79,9 @@ export const columns: ColumnDef<Order>[] = [
     },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("totalPrice"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
+      const formattedCurrency = formatCurrency(amount);
 
-      return <div className="font-medium">{formatted}</div>;
+      return <div className="font-medium">{formattedCurrency}</div>;
     },
   },
   {
@@ -101,9 +99,7 @@ export const columns: ColumnDef<Order>[] = [
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt"));
-      const formattedDate = new Intl.DateTimeFormat("en-CA", {
-        dateStyle: "short",
-      }).format(date);
+      const formattedDate = formatDate(date);
 
       return <div>{formattedDate}</div>;
     },

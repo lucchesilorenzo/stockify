@@ -1,4 +1,21 @@
-import { Category, Order, Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
-export type ProductWithCategory = Product & Pick<Category, "name">;
-export type OrderWithProduct = Order & Pick<Product, "name">;
+export type ProductWithCategory = Prisma.ProductGetPayload<{
+  include: {
+    category: {
+      select: {
+        name: true;
+      };
+    };
+  };
+}>;
+
+export type OrderWithProduct = Prisma.OrderGetPayload<{
+  include: {
+    product: {
+      select: {
+        name: true;
+      };
+    };
+  };
+}>;

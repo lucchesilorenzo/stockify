@@ -1,7 +1,7 @@
-import DataTable from "@/components/data-table";
 import H1 from "@/components/h1";
 import { getProducts } from "@/lib/server-utils";
 import { columns } from "./columns";
+import ProductsTable from "@/components/products-table";
 
 export const metadata = {
   title: "Products",
@@ -15,7 +15,7 @@ export default async function ProductsPage() {
       <H1>Products</H1>
 
       <div className="my-6">
-        <DataTable columns={columns} data={data} />
+        <ProductsTable columns={columns} data={data} />
       </div>
     </main>
   );

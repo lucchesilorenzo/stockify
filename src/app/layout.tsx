@@ -1,7 +1,8 @@
+import ThemeContextProvider from "@/contexts/theme-context-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./styles/globals.css";
 import { Toaster } from "sonner";
+import "./styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,16 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-zinc-50 text-sm antialiased`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} text-sm antialiased`}>
+        <ThemeContextProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeContextProvider>
       </body>
       <Toaster position="top-right" />
     </html>

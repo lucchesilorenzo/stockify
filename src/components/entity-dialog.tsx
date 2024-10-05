@@ -37,8 +37,8 @@ export default function EntityDialog({
               : "Add a new product"}
           </DialogTitle>
           <DialogDescription>
-            Fill in the details below to place a new order. Ensure that all
-            required fields are completed correctly before submitting.
+            Fill in the details below. Ensure that all required fields are
+            completed correctly before submitting.
           </DialogDescription>
         </DialogHeader>
         {actionType === "createOrder" ? (
