@@ -17,7 +17,17 @@ export default function OrderInvoice() {
 
   if (!isInvoiceOpen || !order) return null;
 
-  const { id, createdAt, totalPrice, updatedAt, quantity, product } = order;
+  const {
+    id,
+    createdAt,
+    totalPrice,
+    updatedAt,
+    quantity,
+    product,
+    subtotal,
+    tax,
+    shipping,
+  } = order;
 
   return (
     <Card className="overflow-hidden">
@@ -35,24 +45,24 @@ export default function OrderInvoice() {
           <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">
-                {product.name} <span>{quantity}</span>
+                {product.name} <span>x {quantity}</span>
               </span>
-              <span>{formatCurrency(totalPrice)}</span>
+              <span>{formatCurrency(subtotal)}</span>
             </li>
           </ul>
           <Separator className="my-2" />
           <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Subtotal</span>
-              <span>$299.00</span>
+              <span>{formatCurrency(subtotal)}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Shipping</span>
-              <span>$5.00</span>
+              <span>{formatCurrency(shipping)}</span>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Tax</span>
-              <span>$25.00</span>
+              <span>{formatCurrency(tax)}</span>
             </li>
             <li className="flex items-center justify-between font-semibold">
               <span className="text-muted-foreground">Total</span>

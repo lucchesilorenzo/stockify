@@ -95,12 +95,24 @@ export async function createOrder(order: unknown) {
     return { message: "You can't order more than Max Quantity." };
   }
 
-  // Calculate total price
-  const totalPrice = orderedQuantity * options.price;
+  // Calculate order details
+  const subtotal = orderedQuantity * options.price;
+  const shipping = subtotal > 100 ? 0 : 5;
+  const tax = +(subtotal * 0.22).toFixed(2);
+  const totalPrice = +(subtotal + shipping + tax).toFixed(2);
+
+  const orderDetails = {
+    productId: validatedOrder.data.productId,
+    quantity: orderedQuantity,
+    subtotal,
+    shipping,
+    tax,
+    totalPrice,
+  };
 
   // Create order
   try {
-    await createNewOrder(validatedOrder.data, totalPrice);
+    await createNewOrder(orderDetails);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {

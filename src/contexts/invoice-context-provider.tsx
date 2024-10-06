@@ -1,6 +1,7 @@
 "use client";
 
 import { OrderWithProduct } from "@/lib/types";
+import { Order } from "@prisma/client";
 import { createContext, useState } from "react";
 
 type InvoiceContextProviderProps = {
@@ -10,7 +11,6 @@ type InvoiceContextProviderProps = {
 type TInvoiceContext = {
   isInvoiceOpen: boolean;
   order: OrderWithProduct | null;
-
   handleIsInvoiceOpenAndSetOrder: (order: OrderWithProduct) => void;
 };
 
@@ -21,15 +21,26 @@ export default function InvoiceContextProvider({
 }: InvoiceContextProviderProps) {
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [order, setOrder] = useState<OrderWithProduct | null>(null);
+  const [selectedOrderId, setSelectedOrderId] = useState<Order["id"] | null>(
+    null,
+  );
 
-  function handleIsInvoiceOpenAndSetOrder(order: OrderWithProduct) {
-    setIsInvoiceOpen(!isInvoiceOpen);
-    setOrder(order);
+  function handleIsInvoiceOpenAndSetOrder(newOrder: OrderWithProduct) {
+    // Checks if new order is the same as selected order
+    const isSameOrder = newOrder.id === selectedOrderId;
+
+    setIsInvoiceOpen(!isSameOrder); // Toggle dialog state
+    setOrder(!isSameOrder ? newOrder : null); // Set new order
+    setSelectedOrderId(!isSameOrder ? newOrder.id : null); // Set new selected order id
   }
 
   return (
     <InvoiceContext.Provider
-      value={{ isInvoiceOpen, handleIsInvoiceOpenAndSetOrder, order }}
+      value={{
+        isInvoiceOpen,
+        handleIsInvoiceOpenAndSetOrder,
+        order,
+      }}
     >
       {children}
     </InvoiceContext.Provider>

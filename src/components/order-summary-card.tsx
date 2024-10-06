@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -7,25 +5,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { OrderWithProduct } from "@/lib/types";
+import { formatCurrency } from "@/lib/utils";
+import { Order } from "@prisma/client";
 
 type OrderSummaryCardProps = {
-  orders: OrderWithProduct[];
+  orders: Order[];
 };
 
 export default function OrderSummaryCard({ orders }: OrderSummaryCardProps) {
-  const totalOrderPrice = orders
-    .reduce((total, order) => total + order.totalPrice, 0)
-    .toFixed(2);
+  const totalOrdersLength = orders.length;
+  const totalOrders = orders.reduce(
+    (curr, order) => curr + order.totalPrice,
+    0,
+  );
 
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardDescription>Total Orders</CardDescription>
-        <CardTitle className="text-4xl">{`$${totalOrderPrice}`}</CardTitle>
+        <CardDescription>This Month</CardDescription>
+        <CardTitle className="text-4xl">
+          {formatCurrency(totalOrders)}
+        </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-xs text-muted-foreground">+25% from last week</div>
+        <div className="text-xs text-muted-foreground">
+          Orders this month:
+          <span className="ml-2 text-lg font-medium">{totalOrdersLength}</span>
+        </div>
       </CardContent>
     </Card>
   );

@@ -1,7 +1,8 @@
-import { Order, Product } from "@prisma/client";
+import { Product } from "@prisma/client";
 import "server-only";
 import prisma from "./db";
-import { TOrderFormSchema, TProductFormSchema } from "./validations";
+import { TProductFormSchema } from "./validations";
+import { OrderEssentials } from "./types";
 
 // --- Products ---
 
@@ -98,7 +99,6 @@ export async function getOrders() {
 }
 
 export async function checkIfProductHasOrder(productId: Product["id"]) {
-  // Checks if product has an order
   const productHasOrder = await prisma.order.findFirst({
     where: {
       productId,
@@ -108,18 +108,27 @@ export async function checkIfProductHasOrder(productId: Product["id"]) {
   return productHasOrder;
 }
 
-export async function createNewOrder(
-  order: TOrderFormSchema,
-  totalPrice: Order["totalPrice"],
-) {
+export async function createNewOrder(orderDetails: OrderEssentials) {
   const newOrder = await prisma.order.create({
-    data: {
-      ...order,
-      totalPrice,
-    },
+    data: orderDetails,
   });
 
   return newOrder;
+}
+
+export async function getMonthlyOrders() {
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1);
+
+  const ordersThisMonth = await prisma.order.findMany({
+    where: {
+      createdAt: {
+        gte: startOfMonth,
+      },
+    },
+  });
+
+  return ordersThisMonth;
 }
 
 // --- Categories ---

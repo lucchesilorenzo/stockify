@@ -3,9 +3,9 @@ import OrderInvoice from "@/components/order-invoice";
 import OrderSummaryCard from "@/components/order-summary-card";
 import OrdersActionCard from "@/components/orders-action-card";
 import RecentOrdersTable from "@/components/recent-orders-table";
-import { getOrders } from "@/lib/server-utils";
-import { columns } from "./columns";
 import InvoiceContextProvider from "@/contexts/invoice-context-provider";
+import { getMonthlyOrders, getOrders } from "@/lib/server-utils";
+import { columns } from "./columns";
 
 export const metadata = {
   title: "Orders",
@@ -13,15 +13,16 @@ export const metadata = {
 
 export default async function OrdersPage() {
   const orders = await getOrders();
+  const monthlyOrders = await getMonthlyOrders();
 
   return (
     <InvoiceContextProvider>
       <main>
         <H1>Orders</H1>
 
-        <div className="my-6 flex items-center gap-x-10">
+        <div className="my-6 flex gap-x-10">
           <OrdersActionCard />
-          <OrderSummaryCard orders={orders} />
+          <OrderSummaryCard orders={monthlyOrders} />
         </div>
 
         <section className="grid grid-cols-[60vw_1fr] gap-6">

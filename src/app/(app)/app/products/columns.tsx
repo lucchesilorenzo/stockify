@@ -21,6 +21,10 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const name: string = row.getValue("name");
+      return <div className="font-medium">{name}</div>;
+    },
   },
   {
     accessorKey: "category.name",
