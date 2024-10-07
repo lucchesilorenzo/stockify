@@ -2,6 +2,7 @@
 
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import slugify from "slugify";
 import {
   checkIfProductHasOrder,
   createNewOrder,
@@ -25,8 +26,14 @@ export async function addProduct(product: unknown) {
     return { message: "Invalid product." };
   }
 
+  // Create a new product with slug
+  const newProduct = {
+    ...validatedProduct.data,
+    slug: slugify(validatedProduct.data.name, { lower: true }),
+  };
+
   try {
-    await createNewProduct(validatedProduct.data);
+    await createNewProduct(newProduct);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {

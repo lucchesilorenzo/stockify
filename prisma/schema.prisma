@@ -32,6 +32,7 @@ model Order {
 
 model Product {
   id          String   @id @default(cuid())
+  slug        String   @unique
   name        String   @unique
   price       Float
   quantity    Int

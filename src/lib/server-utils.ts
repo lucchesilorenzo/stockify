@@ -2,7 +2,11 @@ import { Product } from "@prisma/client";
 import "server-only";
 import prisma from "./db";
 import { TProductFormSchema } from "./validations";
-import { OrderEssentials } from "./types";
+import {
+  OrderEssentials,
+  ProductEssentials,
+  ProductWithCategory,
+} from "./types";
 
 // --- Products ---
 
@@ -30,6 +34,16 @@ export async function getProductById(productId: Product["id"]) {
   return product;
 }
 
+export async function getProductBySlug(productSlug: Product["slug"]) {
+  const product = await prisma.product.findUnique({
+    where: {
+      slug: productSlug,
+    },
+  });
+
+  return product;
+}
+
 export async function getProductOptions(productId: Product["id"]) {
   const options = await prisma.product.findUnique({
     where: {
@@ -46,7 +60,7 @@ export async function getProductOptions(productId: Product["id"]) {
   return options;
 }
 
-export async function createNewProduct(product: TProductFormSchema) {
+export async function createNewProduct(product: ProductEssentials) {
   const newProduct = await prisma.product.create({
     data: product,
   });

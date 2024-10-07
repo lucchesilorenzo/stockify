@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
+import slugify from "slugify";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Categorie
-  const electronics = await prisma.category.upsert({
+  const electronicsCategory = await prisma.category.upsert({
     where: { name: "Electronics" },
     update: {},
     create: {
@@ -12,107 +12,64 @@ async function main() {
     },
   });
 
-  const books = await prisma.category.upsert({
-    where: { name: "Books" },
+  const fashionCategory = await prisma.category.upsert({
+    where: { name: "Fashion" },
     update: {},
     create: {
-      name: "Books",
+      name: "Fashion",
     },
   });
 
-  const furniture = await prisma.category.upsert({
-    where: { name: "Furniture" },
-    update: {},
-    create: {
-      name: "Furniture",
-    },
-  });
-
-  // Prodotti
-  const product1 = await prisma.product.upsert({
-    where: { name: "Smartphone" },
-    update: {},
-    create: {
-      name: "Smartphone",
-      price: 299.99,
-      quantity: 50,
+  const products = [
+    {
+      name: "Laptop Gaming",
+      price: 1200.0,
+      quantity: 20,
       maxQuantity: 100,
-      minQuantity: 1,
-      categoryId: electronics.id,
+      minQuantity: 5,
+      categoryId: electronicsCategory.id,
     },
-  });
-
-  const product2 = await prisma.product.upsert({
-    where: { name: "Laptop" },
-    update: {},
-    create: {
-      name: "Laptop",
-      price: 899.99,
-      quantity: 30,
-      maxQuantity: 50,
-      minQuantity: 1,
-      categoryId: electronics.id,
+    {
+      name: "Wireless Headphones",
+      price: 200.0,
+      quantity: 50,
+      maxQuantity: 200,
+      minQuantity: 10,
+      categoryId: electronicsCategory.id,
     },
-  });
-
-  const product3 = await prisma.product.upsert({
-    where: { name: "Bookshelf" },
-    update: {},
-    create: {
-      name: "Bookshelf",
-      price: 79.99,
-      quantity: 15,
-      maxQuantity: 30,
-      minQuantity: 1,
-      categoryId: furniture.id,
+    {
+      name: "Designer T-Shirt",
+      price: 50.0,
+      quantity: 100,
+      maxQuantity: 500,
+      minQuantity: 20,
+      categoryId: fashionCategory.id,
     },
-  });
+  ];
 
-  // Ordini
-  const order1 = await prisma.order.create({
-    data: {
-      productId: product1.id,
-      quantity: 2,
-      totalPrice: product1.price * 2,
-      subtotal: product1.price * 2,
-      shipping: 5.0,
-      tax: 2.99,
-      status: "Pending",
-    },
-  });
-
-  const order2 = await prisma.order.create({
-    data: {
-      productId: product2.id,
-      quantity: 1,
-      totalPrice: product2.price * 1,
-      subtotal: product2.price,
-      shipping: 10.0,
-      tax: 5.99,
-      status: "Shipped",
-    },
-  });
-
-  const order3 = await prisma.order.create({
-    data: {
-      productId: product3.id,
-      quantity: 3,
-      totalPrice: product3.price * 3,
-      subtotal: product3.price * 3,
-      shipping: 7.0,
-      tax: 1.99,
-      status: "Delivered",
-    },
-  });
-
-  console.log("Database seeded successfully!");
+  for (const product of products) {
+    await prisma.product.upsert({
+      where: { name: product.name },
+      update: {},
+      create: {
+        name: product.name,
+        slug: slugify(product.name, { lower: true, strict: true }),
+        price: product.price,
+        quantity: product.quantity,
+        maxQuantity: product.maxQuantity,
+        minQuantity: product.minQuantity,
+        categoryId: product.categoryId,
+      },
+    });
+  }
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
+  .then(async () => {
     await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
   });

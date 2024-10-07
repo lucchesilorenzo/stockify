@@ -1,4 +1,4 @@
-import { Order, Prisma } from "@prisma/client";
+import { Order, Prisma, Product } from "@prisma/client";
 
 export type ProductWithCategory = Prisma.ProductGetPayload<{
   include: {
@@ -9,6 +9,8 @@ export type ProductWithCategory = Prisma.ProductGetPayload<{
     };
   };
 }>;
+
+export type ProductEssentials = Omit<Product, "id" | "createdAt" | "updatedAt">;
 
 export type OrderWithProduct = Prisma.OrderGetPayload<{
   include: {

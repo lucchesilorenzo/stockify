@@ -11,6 +11,7 @@ import {
 import { useProductContext } from "@/lib/hooks";
 import { ProductWithCategory } from "@/lib/types";
 import { MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import ProductAlertDialog from "./product-alert-dialog";
 import { Button } from "./ui/button";
@@ -45,6 +46,9 @@ export default function ProductActions({ product }: ProductActionsProps) {
             Copy product ID
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link href={`/app/products/${product.slug}/edit`}>Edit</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setIsAlertOpen(!isAlertOpen)}>
             Delete
           </DropdownMenuItem>
