@@ -10,7 +10,10 @@ export type ProductWithCategory = Prisma.ProductGetPayload<{
   };
 }>;
 
-export type ProductEssentials = Omit<Product, "id" | "createdAt" | "updatedAt">;
+export type ProductEssentials = Omit<
+  Product,
+  "id" | "createdAt" | "updatedAt" | "status" | "description"
+>;
 
 export type OrderWithProduct = Prisma.OrderGetPayload<{
   include: {

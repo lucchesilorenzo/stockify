@@ -18,26 +18,28 @@ model User {
 
 model Order {
   id         String   @id @default(cuid())
-  productId  String
-  product    Product  @relation(fields: [productId], references: [id])
   quantity   Int
   totalPrice Float
   subtotal   Float
   shipping   Float
   tax        Float
   status     String   @default("Pending")
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
   updatedAt  DateTime @updatedAt
   createdAt  DateTime @default(now())
 }
 
 model Product {
   id          String   @id @default(cuid())
-  slug        String   @unique
   name        String   @unique
+  slug        String   @unique
   price       Float
   quantity    Int
   maxQuantity Int
   minQuantity Int
+  description String   @default("")
+  status      String   @default("Available")
   categoryId  String
   category    Category @relation(fields: [categoryId], references: [id])
   order       Order[]

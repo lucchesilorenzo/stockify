@@ -6,3 +6,5 @@ export const routes = [
   { name: "Products", href: "/app/products", icon: Package },
   { name: "Analytics", href: "/app/analytics", icon: LineChart },
 ];
+
+export const productStatuses = ["Available", "Archived"];

@@ -1,12 +1,8 @@
 import { Product } from "@prisma/client";
+import { notFound } from "next/navigation";
 import "server-only";
 import prisma from "./db";
-import { TProductFormSchema } from "./validations";
-import {
-  OrderEssentials,
-  ProductEssentials,
-  ProductWithCategory,
-} from "./types";
+import { OrderEssentials, ProductEssentials } from "./types";
 
 // --- Products ---
 
@@ -40,6 +36,8 @@ export async function getProductBySlug(productSlug: Product["slug"]) {
       slug: productSlug,
     },
   });
+
+  if (!product) return notFound();
 
   return product;
 }

@@ -81,8 +81,29 @@ export const productFormSchema = z
 
 export const productIdSchema = z.string().cuid();
 
+export const editProductFormSchema = z.object({
+  name: z.string().trim().max(20, "Name is too long."),
+  description: z.string().trim().max(200, "Description is too long."),
+  price: z.coerce
+    .number({
+      invalid_type_error: "Price must be a number.",
+    })
+    .positive("Price must be a positive number.")
+    .max(99999, "Price is too long."),
+  maxQuantity: z.coerce
+    .number({
+      invalid_type_error: "Max Quantity must be a number.",
+    })
+    .int("Max Quantity must be an integer.")
+    .positive("Max Quantity must be a positive number.")
+    .max(100, "Max Quantity is too long."),
+  categoryId: z.string().optional(),
+  status: z.string().optional(),
+});
+
 // Types
 
 export type TAuthFormSchema = z.infer<typeof authFormSchema>;
 export type TOrderFormSchema = z.infer<typeof orderFormSchema>;
 export type TProductFormSchema = z.infer<typeof productFormSchema>;
+export type TEditProductFormSchema = z.infer<typeof editProductFormSchema>;
