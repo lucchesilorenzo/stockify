@@ -40,17 +40,19 @@ type EditProductFormProps = {
 };
 
 export default function EditProductForm({ product }: EditProductFormProps) {
-  const { categories } = useProductContext();
+  const { categories, handleUpdateProduct } = useProductContext();
   const {
     register,
     setValue,
     handleSubmit,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm<TEditProductFormSchema>({
     resolver: zodResolver(editProductFormSchema),
   });
 
-  function onSubmit(data: TEditProductFormSchema) {
+  async function onSubmit(data: TEditProductFormSchema) {
+    // await handleUpdateProduct(product.id, data);
     console.log(data);
   }
 
@@ -72,10 +74,17 @@ export default function EditProductForm({ product }: EditProductFormProps) {
           In stock
         </Badge>
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
-          <Button variant="outline" size="sm">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => reset()}
+          >
             Discard
           </Button>
-          <LoadingButton isLoading={isSubmitting}>Save Product</LoadingButton>
+          <LoadingButton type="submit" size="sm" isLoading={isSubmitting}>
+            Save Product
+          </LoadingButton>
         </div>
       </div>
 
@@ -109,6 +118,8 @@ export default function EditProductForm({ product }: EditProductFormProps) {
                   <Textarea
                     id="description"
                     defaultValue={product.description}
+                    spellCheck={false}
+                    placeholder="Add a description of your product"
                     className="min-h-32"
                     {...register("description")}
                   />
@@ -127,7 +138,7 @@ export default function EditProductForm({ product }: EditProductFormProps) {
             <CardHeader>
               <CardTitle>Stock</CardTitle>
               <CardDescription>
-                Change the stock and price of your products
+                Change the stock and price of your product
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -216,7 +227,7 @@ export default function EditProductForm({ product }: EditProductFormProps) {
             <CardHeader>
               <CardTitle>Product Image</CardTitle>
               <CardDescription>
-                Change the image of your products
+                Change the image of your product
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -224,12 +235,16 @@ export default function EditProductForm({ product }: EditProductFormProps) {
                 <Image
                   alt="Product image"
                   className="aspect-square w-full rounded-md object-cover"
+                  src={product.image ?? "/placeholder.svg"}
                   height="300"
-                  src="/stockify-preview.jpg"
                   width="300"
                 />
                 <div className="grid grid-cols-3 gap-2">
-                  <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                  {/* TODO: Upload Image */}
+                  <button
+                    type="button"
+                    className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
+                  >
                     <Upload className="h-4 w-4 text-muted-foreground" />
                     <span className="sr-only">Upload</span>
                   </button>
@@ -247,8 +262,7 @@ export default function EditProductForm({ product }: EditProductFormProps) {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div></div>
-              <Button size="sm" variant="secondary">
+              <Button type="button" size="sm" variant="secondary">
                 Archive Product
               </Button>
             </CardContent>
@@ -258,10 +272,17 @@ export default function EditProductForm({ product }: EditProductFormProps) {
 
       {/* Save and Discard Buttons (Mobile) */}
       <div className="flex items-center justify-center gap-2 md:hidden">
-        <Button variant="outline" size="sm">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => reset()}
+        >
           Discard
         </Button>
-        <LoadingButton isLoading={isSubmitting}>Save Product</LoadingButton>
+        <LoadingButton type="submit" size="sm" isLoading={isSubmitting}>
+          Save Product
+        </LoadingButton>
       </div>
     </form>
   );

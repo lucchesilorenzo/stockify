@@ -12,7 +12,7 @@ import { CircleUser } from "lucide-react";
 export default function Header() {
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-      <div className="w-full flex-1">{/* More to be added */}</div>
+      <div className="w-full flex-1">{/* TODO: More to be added */}</div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">

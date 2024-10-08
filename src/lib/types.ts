@@ -12,7 +12,7 @@ export type ProductWithCategory = Prisma.ProductGetPayload<{
 
 export type ProductEssentials = Omit<
   Product,
-  "id" | "createdAt" | "updatedAt" | "status" | "description"
+  "id" | "createdAt" | "updatedAt" | "status" | "description" | "image"
 >;
 
 export type OrderWithProduct = Prisma.OrderGetPayload<{

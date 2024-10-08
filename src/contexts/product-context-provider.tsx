@@ -1,8 +1,8 @@
 "use client";
 
-import { addProduct, deleteProduct } from "@/lib/actions";
+import { addProduct, deleteProduct, updateProduct } from "@/lib/actions";
 import { ProductWithCategory } from "@/lib/types";
-import { TProductFormSchema } from "@/lib/validations";
+import { TEditProductFormSchema, TProductFormSchema } from "@/lib/validations";
 import { Category, Product } from "@prisma/client";
 import { createContext, useState } from "react";
 import { toast } from "sonner";
@@ -18,6 +18,10 @@ type TProductContext = {
   categories: Category[];
   handleAddProduct: (product: TProductFormSchema) => Promise<void>;
   handleDeleteProduct: (productId: Product["id"]) => Promise<void>;
+  handleUpdateProduct: (
+    productId: Product["id"],
+    product: TEditProductFormSchema,
+  ) => Promise<void>;
 };
 
 export const ProductContext = createContext<TProductContext | null>(null);
@@ -48,9 +52,27 @@ export default function ProductContextProvider({
     toast.success("Product deleted successfully.");
   }
 
+  async function handleUpdateProduct(
+    productId: Product["id"],
+    product: TEditProductFormSchema,
+  ) {
+    const result = await updateProduct(productId, product);
+    if (result?.message) {
+      toast.error(result.message);
+      return;
+    }
+    toast.success("Product updated successfully.");
+  }
+
   return (
     <ProductContext.Provider
-      value={{ products, categories, handleAddProduct, handleDeleteProduct }}
+      value={{
+        products,
+        categories,
+        handleAddProduct,
+        handleDeleteProduct,
+        handleUpdateProduct,
+      }}
     >
       {children}
     </ProductContext.Provider>

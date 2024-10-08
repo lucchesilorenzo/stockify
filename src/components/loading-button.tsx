@@ -1,19 +1,27 @@
 "use client";
 
-import * as React from "react";
 import { Loader2 } from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { VariantProps } from "class-variance-authority";
 
 interface LoadingButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   isLoading: boolean;
 }
 
 const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
-  ({ children, isLoading, ...props }, ref) => {
+  ({ children, variant, size, className, isLoading, ...props }, ref) => {
     return (
-      <Button ref={ref} {...props} disabled={isLoading}>
+      <Button
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+        disabled={isLoading}
+      >
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {isLoading ? "Loading..." : children}
       </Button>

@@ -98,6 +98,7 @@ export const editProductFormSchema = z.object({
     .positive("Max Quantity must be a positive number.")
     .max(100, "Max Quantity is too long."),
   categoryId: z.string().optional(),
+  image: z.string().optional(),
   status: z.string().optional(),
 });
 

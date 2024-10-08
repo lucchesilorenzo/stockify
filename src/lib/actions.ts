@@ -13,6 +13,7 @@ import {
   updateProductQuantity,
 } from "./server-utils";
 import {
+  editProductFormSchema,
   orderFormSchema,
   productFormSchema,
   productIdSchema,
@@ -70,6 +71,20 @@ export async function deleteProduct(productId: unknown) {
   }
 
   revalidatePath("/app/products");
+}
+
+export async function updateProduct(productId: unknown, product: unknown) {
+  // Checks if product ID is valid
+  const validatedProductId = productIdSchema.safeParse(productId);
+  if (!validatedProductId.success) {
+    return { message: "Invalid product ID." };
+  }
+
+  // Checks if product data is valid
+  const validatedProduct = editProductFormSchema.safeParse(product);
+  if (!validatedProduct.success) {
+    return { message: "Invalid product data." };
+  }
 }
 
 // --- Orders ---
