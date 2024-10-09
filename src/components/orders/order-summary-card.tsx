@@ -1,3 +1,5 @@
+import { Order } from "@prisma/client";
+
 import {
   Card,
   CardContent,
@@ -6,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
-import { Order } from "@prisma/client";
 
 type OrderSummaryCardProps = {
   orders: Order[];

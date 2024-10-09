@@ -1,8 +1,9 @@
 "use client";
 
+import { Paperclip } from "lucide-react";
+
 import { useInvoiceContext } from "@/lib/hooks";
 import { OrderWithProduct } from "@/lib/types";
-import { Paperclip } from "lucide-react";
 
 type OrderActionsProps = {
   order: OrderWithProduct;

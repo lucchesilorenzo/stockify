@@ -1,5 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
+import OrderForm from "../orders/order-form";
+import ProductForm from "../products/product-form";
+import { Button } from "../ui/button";
+
 import {
   Dialog,
   DialogContent,
@@ -8,10 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
-import OrderForm from "./order-form";
-import ProductForm from "./product-form";
-import { Button } from "./ui/button";
 
 type EntityDialogProps = {
   children: React.ReactNode;

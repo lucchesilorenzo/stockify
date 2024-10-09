@@ -1,10 +1,11 @@
 import { Product } from "@prisma/client";
 import { notFound } from "next/navigation";
 import "server-only";
-import prisma from "./db";
-import { OrderEssentials, ProductEssentials } from "./types";
 
-// --- Products ---
+import prisma from "../db";
+import { ProductEssentials } from "../types";
+
+import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
 export async function getProducts() {
   const products = await prisma.product.findMany({
@@ -66,6 +67,18 @@ export async function createNewProduct(product: ProductEssentials) {
   return newProduct;
 }
 
+export async function updateProductById(
+  productId: Product["id"],
+  product: TProductEditFormSchema,
+) {
+  await prisma.product.update({
+    where: {
+      id: productId,
+    },
+    data: product,
+  });
+}
+
 export async function updateProductQuantity(
   productId: Product["id"],
   quantity: Product["quantity"],
@@ -92,61 +105,4 @@ export async function deleteProductById(productId: Product["id"]) {
   });
 
   return deletedProduct;
-}
-
-// --- Orders ---
-
-export async function getOrders() {
-  const orders = await prisma.order.findMany({
-    include: {
-      product: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  });
-
-  return orders;
-}
-
-export async function checkIfProductHasOrder(productId: Product["id"]) {
-  const productHasOrder = await prisma.order.findFirst({
-    where: {
-      productId,
-    },
-  });
-
-  return productHasOrder;
-}
-
-export async function createNewOrder(orderDetails: OrderEssentials) {
-  const newOrder = await prisma.order.create({
-    data: orderDetails,
-  });
-
-  return newOrder;
-}
-
-export async function getMonthlyOrders() {
-  const startOfMonth = new Date();
-  startOfMonth.setDate(1);
-
-  const ordersThisMonth = await prisma.order.findMany({
-    where: {
-      createdAt: {
-        gte: startOfMonth,
-      },
-    },
-  });
-
-  return ordersThisMonth;
-}
-
-// --- Categories ---
-
-export async function getCategories() {
-  const categories = await prisma.category.findMany();
-
-  return categories;
 }

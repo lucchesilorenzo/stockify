@@ -1,11 +1,12 @@
-import H1 from "@/components/h1";
-import OrderInvoice from "@/components/order-invoice";
-import OrderSummaryCard from "@/components/order-summary-card";
-import OrdersActionCard from "@/components/orders-action-card";
-import RecentOrdersTable from "@/components/recent-orders-table";
-import InvoiceContextProvider from "@/contexts/invoice-context-provider";
-import { getMonthlyOrders, getOrders } from "@/lib/server-utils";
 import { columns } from "./columns";
+
+import H1 from "@/components/common/h1";
+import OrderInvoice from "@/components/orders/order-invoice";
+import OrderSummaryCard from "@/components/orders/order-summary-card";
+import OrdersActionCard from "@/components/orders/orders-action-card";
+import RecentOrdersTable from "@/components/orders/recent-orders-table";
+import InvoiceContextProvider from "@/contexts/invoice-context-provider";
+import { getMonthlyOrders, getOrders } from "@/lib/queries/order-queries";
 
 export const metadata = {
   title: "Orders",

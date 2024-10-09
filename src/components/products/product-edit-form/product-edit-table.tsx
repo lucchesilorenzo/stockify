@@ -1,5 +1,10 @@
 "use client";
 
+import { Product } from "@prisma/client";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -8,23 +13,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TEditProductFormSchema } from "@/lib/validations";
-import { Product } from "@prisma/client";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
-type EditProductTableProps = {
+type ProductEditTableProps = {
   product: Product;
-  register: UseFormRegister<TEditProductFormSchema>;
-  errors: FieldErrors<TEditProductFormSchema>;
+  register: UseFormRegister<TProductEditFormSchema>;
+  errors: FieldErrors<TProductEditFormSchema>;
 };
 
-export default function EditProductTable({
+export default function ProductEditTable({
   product,
   register,
   errors,
-}: EditProductTableProps) {
+}: ProductEditTableProps) {
   return (
     <Table>
       <TableHeader>

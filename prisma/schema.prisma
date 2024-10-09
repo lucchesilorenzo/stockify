@@ -38,7 +38,7 @@ model Product {
   quantity    Int
   maxQuantity Int
   minQuantity Int
-  description String   @default("")
+  description String?
   status      String   @default("Available")
   image       String?
   categoryId  String

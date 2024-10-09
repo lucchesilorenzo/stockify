@@ -1,11 +1,16 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { authFormSchema, TAuthFormSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LoadingButton } from "./loading-button";
+
+import { LoadingButton } from "../common/loading-button";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  TAuthFormSchema,
+  authFormSchema,
+} from "@/lib/validations/auth-validations";
 
 export const metadata = {
   title: "Login | Stockify",

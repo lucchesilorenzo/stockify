@@ -1,33 +1,5 @@
 import { z } from "zod";
 
-// Schemas
-
-export const authFormSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .min(1, "Email is required.")
-    .email("Invalid email address."),
-  password: z
-    .string()
-    .trim()
-    .min(1, "Password is required.")
-    .max(20, "Password is too long."),
-});
-
-export const orderFormSchema = z.object({
-  productId: z.string({
-    required_error: "Product is required.",
-  }),
-  quantity: z.coerce
-    .number({
-      invalid_type_error: "Quantity must be a number.",
-    })
-    .int("Quantity must be an integer.")
-    .positive("Quantity must be a positive number.")
-    .min(1, "Quantity is required."),
-});
-
 export const productFormSchema = z
   .object({
     name: z
@@ -81,8 +53,8 @@ export const productFormSchema = z
 
 export const productIdSchema = z.string().cuid();
 
-export const editProductFormSchema = z.object({
-  name: z.string().trim().max(20, "Name is too long."),
+export const productEditFormSchema = z.object({
+  name: z.string(),
   description: z.string().trim().max(200, "Description is too long."),
   price: z.coerce
     .number({
@@ -96,15 +68,11 @@ export const editProductFormSchema = z.object({
     })
     .int("Max Quantity must be an integer.")
     .positive("Max Quantity must be a positive number.")
-    .max(100, "Max Quantity is too long."),
+    .max(1000, "Max Quantity is too long."),
   categoryId: z.string().optional(),
-  image: z.string().optional(),
+  image: z.any().optional(),
   status: z.string().optional(),
 });
 
-// Types
-
-export type TAuthFormSchema = z.infer<typeof authFormSchema>;
-export type TOrderFormSchema = z.infer<typeof orderFormSchema>;
 export type TProductFormSchema = z.infer<typeof productFormSchema>;
-export type TEditProductFormSchema = z.infer<typeof editProductFormSchema>;
+export type TProductEditFormSchema = z.infer<typeof productEditFormSchema>;

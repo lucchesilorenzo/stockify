@@ -1,8 +1,10 @@
 "use client";
 
-import { OrderWithProduct } from "@/lib/types";
-import { Order } from "@prisma/client";
 import { createContext, useState } from "react";
+
+import { Order } from "@prisma/client";
+
+import { OrderWithProduct } from "@/lib/types";
 
 type InvoiceContextProviderProps = {
   children: React.ReactNode;

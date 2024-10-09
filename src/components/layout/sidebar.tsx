@@ -1,4 +1,4 @@
-import Logo from "./logo";
+import Logo from "../common/logo";
 import Navigation from "./navigation";
 
 export default function Sidebar() {

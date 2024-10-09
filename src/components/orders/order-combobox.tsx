@@ -1,7 +1,9 @@
 "use client";
 
-import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
+
+import { Check, ChevronsUpDown } from "lucide-react";
+import { UseFormSetValue } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,8 +21,7 @@ import {
 } from "@/components/ui/popover";
 import { ProductWithCategory } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { TOrderFormSchema } from "@/lib/validations";
-import { UseFormSetValue } from "react-hook-form";
+import { TOrderFormSchema } from "@/lib/validations/order-validations";
 
 type OrderComboboxProps = {
   products: ProductWithCategory[];

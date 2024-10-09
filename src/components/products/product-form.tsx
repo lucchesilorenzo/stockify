@@ -1,5 +1,12 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { LoadingButton } from "../common/loading-button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+
 import {
   Select,
   SelectContent,
@@ -8,12 +15,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useProductContext } from "@/lib/hooks";
-import { productFormSchema, TProductFormSchema } from "@/lib/validations";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { LoadingButton } from "./loading-button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import {
+  TProductFormSchema,
+  productFormSchema,
+} from "@/lib/validations/product-validations";
 
 type ProductFormProps = {
   onFormSubmit: () => void;

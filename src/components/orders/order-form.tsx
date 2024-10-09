@@ -1,13 +1,18 @@
 "use client";
 
-import { useOrderContext, useProductContext } from "@/lib/hooks";
-import { orderFormSchema, TOrderFormSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LoadingButton } from "./loading-button";
+
+import { LoadingButton } from "../common/loading-button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import OrderCombobox from "./order-combobox";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+
+import { useOrderContext, useProductContext } from "@/lib/hooks";
+import {
+  TOrderFormSchema,
+  orderFormSchema,
+} from "@/lib/validations/order-validations";
 
 type OrderFormProps = {
   onFormSubmit: () => void;

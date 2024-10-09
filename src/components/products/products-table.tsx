@@ -1,5 +1,8 @@
 "use client";
 
+import * as React from "react";
+import { useState } from "react";
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -11,7 +14,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import * as React from "react";
+import { Plus } from "lucide-react";
+
+import EntityDialog from "../common/entity-dialog";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 import {
   Table,
@@ -21,11 +28,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import EntityDialog from "./entity-dialog";
-import { Plus } from "lucide-react";
 
 interface ProductsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

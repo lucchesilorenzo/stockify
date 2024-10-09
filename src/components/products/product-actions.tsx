@@ -1,5 +1,13 @@
 "use client";
 
+import { useState } from "react";
+
+import { MoreHorizontal } from "lucide-react";
+import Link from "next/link";
+
+import { Button } from "../ui/button";
+import ProductAlertDialog from "./product-alert-dialog";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +18,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useProductContext } from "@/lib/hooks";
 import { ProductWithCategory } from "@/lib/types";
-import { MoreHorizontal } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
-import ProductAlertDialog from "./product-alert-dialog";
-import { Button } from "./ui/button";
 
 type ProductActionsProps = {
   product: ProductWithCategory;

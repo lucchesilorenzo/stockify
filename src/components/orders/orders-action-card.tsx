@@ -1,3 +1,7 @@
+import { Plus } from "lucide-react";
+
+import EntityDialog from "../common/entity-dialog";
+
 import {
   Card,
   CardDescription,
@@ -5,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Plus } from "lucide-react";
-import EntityDialog from "./entity-dialog";
 
 export default function OrdersActionCard() {
   return (

@@ -1,7 +1,8 @@
-import H1 from "@/components/h1";
-import { getProducts } from "@/lib/server-utils";
 import { columns } from "./columns";
-import ProductsTable from "@/components/products-table";
+
+import H1 from "@/components/common/h1";
+import ProductsTable from "@/components/products/products-table";
+import { getProducts } from "@/lib/queries/product-queries";
 
 export const metadata = {
   title: "Products",

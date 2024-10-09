@@ -1,11 +1,21 @@
 "use client";
 
-import { addProduct, deleteProduct, updateProduct } from "@/lib/actions";
-import { ProductWithCategory } from "@/lib/types";
-import { TEditProductFormSchema, TProductFormSchema } from "@/lib/validations";
-import { Category, Product } from "@prisma/client";
 import { createContext, useState } from "react";
+
+import { Category, Product } from "@prisma/client";
 import { toast } from "sonner";
+
+import {
+  addProduct,
+  checkIfProductMaxQuantityIsReached,
+  deleteProduct,
+  updateProduct,
+} from "@/app/actions/product-actions";
+import { ProductWithCategory } from "@/lib/types";
+import {
+  TProductEditFormSchema,
+  TProductFormSchema,
+} from "@/lib/validations/product-validations";
 
 type ProductContextProviderProps = {
   children: React.ReactNode;
@@ -20,8 +30,12 @@ type TProductContext = {
   handleDeleteProduct: (productId: Product["id"]) => Promise<void>;
   handleUpdateProduct: (
     productId: Product["id"],
-    product: TEditProductFormSchema,
+    product: TProductEditFormSchema,
   ) => Promise<void>;
+  handleCheckProductMaxQuantity: (
+    productId: Product["id"],
+    maxQuantity: Product["maxQuantity"],
+  ) => Promise<boolean>;
 };
 
 export const ProductContext = createContext<TProductContext | null>(null);
@@ -54,7 +68,7 @@ export default function ProductContextProvider({
 
   async function handleUpdateProduct(
     productId: Product["id"],
-    product: TEditProductFormSchema,
+    product: TProductEditFormSchema,
   ) {
     const result = await updateProduct(productId, product);
     if (result?.message) {
@@ -62,6 +76,23 @@ export default function ProductContextProvider({
       return;
     }
     toast.success("Product updated successfully.");
+  }
+
+  async function handleCheckProductMaxQuantity(
+    productId: Product["id"],
+    maxQuantity: Product["maxQuantity"],
+  ) {
+    const result = await checkIfProductMaxQuantityIsReached(
+      productId,
+      maxQuantity,
+    );
+
+    if (result?.message) {
+      toast.error(result.message);
+      return false;
+    }
+
+    return true;
   }
 
   return (
@@ -72,6 +103,7 @@ export default function ProductContextProvider({
         handleAddProduct,
         handleDeleteProduct,
         handleUpdateProduct,
+        handleCheckProductMaxQuantity,
       }}
     >
       {children}

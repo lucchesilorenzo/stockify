@@ -4,7 +4,6 @@ import slugify from "slugify";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Creazione delle categorie
   const electronicsCategory = await prisma.category.upsert({
     where: { name: "Electronics" },
     update: {},
@@ -21,7 +20,6 @@ async function main() {
     },
   });
 
-  // Creazione dei prodotti
   const products = [
     {
       name: "Laptop Gaming",
@@ -55,7 +53,6 @@ async function main() {
 
   const createdProducts = [];
 
-  // Creazione e salvataggio dei prodotti
   for (const product of products) {
     const createdProduct = await prisma.product.upsert({
       where: { name: product.name },
@@ -74,12 +71,10 @@ async function main() {
     createdProducts.push(createdProduct);
   }
 
-  // Controlla che i prodotti siano stati creati correttamente
   if (createdProducts.length === 0) {
-    throw new Error("Nessun prodotto creato. Controlla il seed.");
+    throw new Error("No products were created.");
   }
 
-  // Creazione degli ordini associati ai prodotti
   const orders = [
     {
       productName: "Laptop Gaming",
@@ -113,7 +108,7 @@ async function main() {
     });
 
     if (!product) {
-      console.error(`Prodotto non trovato: ${order.productName}`);
+      console.error(`Product not found: ${order.productName}`);
       continue;
     }
 
@@ -132,11 +127,11 @@ async function main() {
 
 main()
   .then(async () => {
-    console.log("Seed completato con successo.");
+    console.log("Seed completed.");
     await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error("Errore durante il seed: ", e);
+    console.error("Seed failed: ", e);
     await prisma.$disconnect();
     process.exit(1);
   });

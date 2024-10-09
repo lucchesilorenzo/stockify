@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   ColumnDef,
   SortingState,
@@ -10,6 +12,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { Button } from "../ui/button";
+
 import {
   Table,
   TableBody,
@@ -18,8 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
-import { Button } from "./ui/button";
 
 interface RecentOrdersTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

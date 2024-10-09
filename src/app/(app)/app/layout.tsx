@@ -1,9 +1,11 @@
-import Header from "@/components/header";
-import Sidebar from "@/components/sidebar";
-import ThemeToggle from "@/components/theme-toggle";
+import Header from "@/components/layout/header";
+import Sidebar from "@/components/layout/sidebar";
+import ThemeToggle from "@/components/layout/theme-toggle";
 import OrderContextProvider from "@/contexts/order-context-provider";
 import ProductContextProvider from "@/contexts/product-context-provider";
-import { getCategories, getOrders, getProducts } from "@/lib/server-utils";
+import { getCategories } from "@/lib/queries/category-queries";
+import { getOrders } from "@/lib/queries/order-queries";
+import { getProducts } from "@/lib/queries/product-queries";
 
 type AppLayoutProps = {
   children: React.ReactNode;

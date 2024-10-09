@@ -1,12 +1,13 @@
 "use client";
 
-import OrderActions from "@/components/order-actions";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+
+import OrderActions from "@/components/orders/order-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { OrderWithProduct } from "@/lib/types";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<OrderWithProduct>[] = [
   {

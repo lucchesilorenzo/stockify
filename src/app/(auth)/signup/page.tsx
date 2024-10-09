@@ -1,7 +1,7 @@
-import AuthFooter from "@/components/auth-footer";
-import AuthForm from "@/components/auth-form";
-import AuthHeading from "@/components/auth-heading";
-import AuthImage from "@/components/auth-image";
+import AuthFooter from "@/components/auth/auth-footer";
+import AuthForm from "@/components/auth/auth-form";
+import AuthHeading from "@/components/auth/auth-heading";
+import AuthImage from "@/components/auth/auth-image";
 
 export const metadata = {
   title: "Sign up",

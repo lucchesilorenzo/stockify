@@ -1,11 +1,12 @@
 "use client";
 
-import ProductActions from "@/components/product-actions";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+
+import ProductActions from "@/components/products/product-actions";
 import { Button } from "@/components/ui/button";
 import { ProductWithCategory } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<ProductWithCategory>[] = [
   {

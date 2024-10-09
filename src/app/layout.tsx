@@ -1,8 +1,10 @@
-import ThemeContextProvider from "@/contexts/theme-context-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
+
 import "./styles/globals.css";
+
+import ThemeContextProvider from "@/contexts/theme-context-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,8 +32,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           {children}
         </ThemeContextProvider>
+        <Toaster position="top-right" />
       </body>
-      <Toaster position="top-right" />
     </html>
   );
 }
