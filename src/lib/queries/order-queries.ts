@@ -1,4 +1,4 @@
-import { Product } from "@prisma/client";
+import { Order, Product } from "@prisma/client";
 import "server-only";
 
 import prisma from "../db";
@@ -49,4 +49,17 @@ export async function getMonthlyOrders() {
   });
 
   return ordersThisMonth;
+}
+
+export async function updateOrderStatus(orderId: Order["id"]) {
+  const updatedOrder = await prisma.order.update({
+    where: {
+      id: orderId,
+    },
+    data: {
+      status: "Completed",
+    },
+  });
+
+  return updatedOrder;
 }

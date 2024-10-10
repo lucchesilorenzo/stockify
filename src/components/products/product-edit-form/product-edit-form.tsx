@@ -47,6 +47,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
   });
 
   async function onSubmit(data: TProductEditFormSchema) {
+    console.log(data);
     // Check if max quantity is reached
     const result = await handleCheckProductMaxQuantity(
       product.id,

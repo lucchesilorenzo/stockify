@@ -42,7 +42,6 @@ export default function ProductEditFormDetails({
               className="w-full"
               defaultValue={product.name}
               disabled
-              {...register("name")}
             />
           </div>
           <div className="grid gap-3">

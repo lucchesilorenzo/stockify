@@ -29,7 +29,7 @@ export default function ProductEditFormImage({
         <CardDescription>Change the image of your product</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-2">
+        <div className="space-y-2">
           <Image
             src={product.image ?? "/placeholder.svg"}
             alt="Product image"
@@ -37,7 +37,7 @@ export default function ProductEditFormImage({
             height="300"
             className="aspect-square w-full rounded-md object-cover"
           />
-          <div className="grid grid-cols-3 gap-2">
+          <div className="flex aspect-square w-full max-h-[80px]">
             <div className="relative flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
               <Input
                 type="file"

@@ -3,7 +3,7 @@
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-import { createNewOrder } from "@/lib/queries/order-queries";
+import { createNewOrder, updateOrderStatus } from "@/lib/queries/order-queries";
 import {
   getProductById,
   getProductOptions,
@@ -56,7 +56,16 @@ export async function createOrder(order: unknown) {
 
   // Create order
   try {
-    await createNewOrder(orderDetails);
+    const newOrder = await createNewOrder(orderDetails);
+
+    // Update order status in 1 minute
+    setTimeout(async () => {
+      try {
+        await updateOrderStatus(newOrder.id);
+      } catch {
+        return { message: "Failed to update order status." };
+      }
+    }, 60000);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {

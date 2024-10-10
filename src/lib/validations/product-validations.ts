@@ -54,7 +54,6 @@ export const productFormSchema = z
 export const productIdSchema = z.string().cuid();
 
 export const productEditFormSchema = z.object({
-  name: z.string(),
   description: z.string().trim().max(200, "Description is too long."),
   price: z.coerce
     .number({
