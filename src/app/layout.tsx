@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     default: "Welcome | Stockify",
     template: "%s | Stockify",
   },
-  description: "Stockify is a stock tracking app.",
+  description:
+    "Stockify is a warehouse management system designed for stock clerks, allowing them to add new products, reorder stock, view recent orders, monitor statistics, and efficiently manage inventory operations.",
 };
 
 type RootLayoutProps = {

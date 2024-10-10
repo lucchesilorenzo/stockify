@@ -1,6 +1,5 @@
 import { Product } from "@prisma/client";
 import { notFound } from "next/navigation";
-import "server-only";
 
 import prisma from "../db";
 import { ProductEssentials } from "../types";

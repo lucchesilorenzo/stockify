@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import ProductActions from "@/components/products/product-actions";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProductWithCategory } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
@@ -63,6 +64,29 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
     },
   },
   {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const status: string = row.getValue("status");
+
+      return (
+        <Badge variant={status === "Available" ? "default" : "destructive"}>
+          {status}
+        </Badge>
+      );
+    },
+  },
+  {
     accessorKey: "quantity",
     header: ({ column }) => {
       return (
@@ -80,7 +104,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
       const maxQuantity = row.original.maxQuantity;
       const minQuantity = row.original.minQuantity;
 
-      let quantityColor = "";
+      let quantityColor;
 
       if (quantity <= minQuantity) {
         quantityColor = "bg-red-100 text-red-800";

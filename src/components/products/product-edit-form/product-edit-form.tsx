@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import ProductEditFormArchive from "./product-edit-form-archive";
+// import ProductEditFormArchive from "./product-edit-form-archive";
 import ProductEditFormCategory from "./product-edit-form-category";
 import ProductEditFormDetails from "./product-edit-form-details";
 import ProductEditFormImage from "./product-edit-form-image";
@@ -152,7 +152,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
           />
 
           {/* TODO: Archive Product */}
-          <ProductEditFormArchive />
+          {/* <ProductEditFormArchive /> */}
         </div>
       </div>
 

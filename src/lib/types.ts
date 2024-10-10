@@ -29,3 +29,8 @@ export type OrderEssentials = Omit<
   Order,
   "id" | "createdAt" | "updatedAt" | "status"
 >;
+
+export type Status = {
+  value: string;
+  label: string;
+};

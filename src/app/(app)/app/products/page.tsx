@@ -15,7 +15,7 @@ export default async function ProductsPage() {
     <main>
       <H1>Products</H1>
 
-      <div className="my-6">
+      <div className="my-6 max-w-[70vw]">
         <ProductsTable columns={columns} data={data} />
       </div>
     </main>

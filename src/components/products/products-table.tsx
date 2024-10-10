@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useState } from "react";
 
 import {
@@ -19,6 +18,7 @@ import { Plus } from "lucide-react";
 import EntityDialog from "../common/entity-dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import ProductTablePopover from "./product-table-popover";
 
 import {
   Table,
@@ -29,7 +29,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface ProductsTableProps<TData, TValue> {
+export interface ProductsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
@@ -61,21 +61,26 @@ export default function ProductsTable<TData, TValue>({
       {/* Filters */}
       <div>
         <div className="flex items-center justify-between py-4">
-          <Input
-            placeholder="Filter categories..."
-            value={
-              (table.getColumn("category.name")?.getFilterValue() as string) ??
-              ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn("category.name")
-                ?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
+          <div className="flex items-center gap-x-4">
+            <Input
+              placeholder="Filter categories..."
+              value={
+                (table
+                  .getColumn("category.name")
+                  ?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table
+                  .getColumn("category.name")
+                  ?.setFilterValue(event.target.value)
+              }
+              className="max-w-72"
+            />
+            <ProductTablePopover table={table} />
+          </div>
           <EntityDialog actionType="addProduct">
-            <Plus className="mr-2 h-5 w-5" /> Add product
+            <Plus className="mr-1 h-5 w-5" />
+            Add product
           </EntityDialog>
         </div>
       </div>

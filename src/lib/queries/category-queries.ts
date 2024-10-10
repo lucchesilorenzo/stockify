@@ -1,5 +1,3 @@
-import "server-only";
-
 import prisma from "../db";
 
 export async function getCategories() {

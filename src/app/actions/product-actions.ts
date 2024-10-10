@@ -2,7 +2,6 @@
 
 import { Prisma, Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import slugify from "slugify";
 
 import { checkIfProductHasOrder } from "@/lib/queries/order-queries";
 import {
@@ -12,6 +11,7 @@ import {
   getProductOptions,
   updateProductById,
 } from "@/lib/queries/product-queries";
+import { createSlug } from "@/lib/utils";
 import {
   productEditFormSchema,
   productFormSchema,
@@ -27,7 +27,7 @@ export async function addProduct(product: unknown) {
   // Create a new product with slug
   const newProduct = {
     ...validatedProduct.data,
-    slug: slugify(validatedProduct.data.name, { lower: true }),
+    slug: createSlug(validatedProduct.data.name),
   };
 
   try {

@@ -1,5 +1,5 @@
 import { Order, Product } from "@prisma/client";
-import "server-only";
+import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
 
 import prisma from "../db";
 import { OrderEssentials } from "../types";
@@ -37,18 +37,35 @@ export async function createNewOrder(orderDetails: OrderEssentials) {
 }
 
 export async function getMonthlyOrders() {
-  const startOfMonth = new Date();
-  startOfMonth.setDate(1);
+  const start = startOfMonth(new Date());
+  const end = endOfMonth(new Date());
 
   const ordersThisMonth = await prisma.order.findMany({
     where: {
       createdAt: {
-        gte: startOfMonth,
+        gte: start,
+        lt: end,
       },
     },
   });
 
   return ordersThisMonth;
+}
+
+export async function getWeeklyOrders() {
+  const start = startOfWeek(new Date(), { weekStartsOn: 1 });
+  const end = endOfWeek(new Date(), { weekStartsOn: 1 });
+
+  const ordersLastWeek = await prisma.order.findMany({
+    where: {
+      createdAt: {
+        gte: start,
+        lt: end,
+      },
+    },
+  });
+
+  return ordersLastWeek;
 }
 
 export async function updateOrderStatus(orderId: Order["id"]) {

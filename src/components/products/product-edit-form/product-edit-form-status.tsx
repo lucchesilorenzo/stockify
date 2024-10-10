@@ -12,11 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Status } from "@/lib/types";
 import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
 type ProductEditFormStatusProps = {
   product: Product;
-  productStatuses: string[];
+  productStatuses: Status[];
   setValue: UseFormSetValue<TProductEditFormSchema>;
   errors: FieldErrors<TProductEditFormSchema>;
 };
@@ -47,8 +48,8 @@ export default function ProductEditFormStatus({
               </SelectTrigger>
               <SelectContent>
                 {productStatuses.map((status) => (
-                  <SelectItem key={status} value={status}>
-                    {status}
+                  <SelectItem key={status.value} value={status.label}>
+                    {status.label}
                   </SelectItem>
                 ))}
               </SelectContent>
