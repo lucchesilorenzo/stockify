@@ -25,6 +25,7 @@ type ProductContextProviderProps = {
 
 type TProductContext = {
   products: ProductWithCategory[];
+  filteredProducts: ProductWithCategory[];
   categories: Category[];
   handleAddProduct: (product: TProductFormSchema) => Promise<void>;
   handleDeleteProduct: (productId: Product["id"]) => Promise<void>;
@@ -47,6 +48,10 @@ export default function ProductContextProvider({
 }: ProductContextProviderProps) {
   const [products] = useState(productsData);
   const [categories] = useState(categoriesData);
+
+  const filteredProducts = products.filter(
+    (product) => product.status === "Available",
+  );
 
   async function handleAddProduct(product: TProductFormSchema) {
     const result = await addProduct(product);
@@ -99,6 +104,7 @@ export default function ProductContextProvider({
     <ProductContext.Provider
       value={{
         products,
+        filteredProducts,
         categories,
         handleAddProduct,
         handleDeleteProduct,

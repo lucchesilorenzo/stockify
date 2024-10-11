@@ -19,7 +19,7 @@ type OrderFormProps = {
 };
 
 export default function OrderForm({ onFormSubmit }: OrderFormProps) {
-  const { products } = useProductContext();
+  const { filteredProducts } = useProductContext();
   const { handleCreateOrder } = useOrderContext();
 
   const {
@@ -42,7 +42,7 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
         <div className="flex flex-col space-y-1">
           <Label htmlFor="productId">Product</Label>
           <OrderCombobox
-            products={products}
+            products={filteredProducts}
             setValue={setValue} // setValue is used to set the value of the form
             fieldName="productId" // fieldName is used to get the value of the form
           />
