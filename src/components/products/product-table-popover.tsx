@@ -42,7 +42,6 @@ export default function ProductTablePopover<T>({
 
   return (
     <div className="flex items-center space-x-4">
-      <p className="text-sm text-muted-foreground">Status</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-start">

@@ -30,7 +30,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
               categoriesData={categories}
             >
               {children}
-              <div className="absolute bottom-5 right-5">
+              <div className="fixed bottom-5 right-5">
                 <ThemeToggle />
               </div>
             </ProductContextProvider>

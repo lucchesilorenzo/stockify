@@ -26,13 +26,13 @@ export default async function OrdersPage() {
       <main>
         <H1>Orders</H1>
 
-        <div className="my-6 flex gap-x-10">
+        <div className="my-6 flex flex-col sm:flex-row gap-10">
           <OrdersActionCard />
           <OrderSummaryCard type="month" orders={monthlyOrders} />
           <OrderSummaryCard type="week" orders={weeklyOrders} />
         </div>
 
-        <section className="grid grid-cols-[60vw_1fr] gap-6">
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-[600px_1fr] lg:grid-cols-[900px_1fr] xl:grid-cols-[1200px_1fr]">
           <div>
             <RecentOrdersTable columns={columns} data={orders} />
           </div>

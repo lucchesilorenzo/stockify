@@ -43,11 +43,6 @@ export default function ProductActions({ product }: ProductActionsProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(product.id)}
-          >
-            Copy product ID
-          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link href={`/app/products/${product.slug}/edit`}>Edit</Link>

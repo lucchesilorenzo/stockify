@@ -20,6 +20,23 @@ export async function getProducts() {
   return products;
 }
 
+export async function getFilteredProducts() {
+  const filteredProducts = await prisma.product.findMany({
+    include: {
+      category: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    where: {
+      status: "Available",
+    },
+  });
+
+  return filteredProducts;
+}
+
 export async function getProductById(productId: Product["id"]) {
   const product = await prisma.product.findUnique({
     where: {

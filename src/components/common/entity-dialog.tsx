@@ -14,15 +14,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ProductWithCategory } from "@/lib/types";
 
 type EntityDialogProps = {
   children: React.ReactNode;
   actionType: "addProduct" | "createOrder";
+  filteredProducts?: ProductWithCategory[];
 };
 
 export default function EntityDialog({
   children,
   actionType,
+  filteredProducts,
 }: EntityDialogProps) {
   const [closeDialog, setCloseDialog] = useState(false);
 
@@ -44,7 +47,10 @@ export default function EntityDialog({
           </DialogDescription>
         </DialogHeader>
         {actionType === "createOrder" ? (
-          <OrderForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
+          <OrderForm
+            onFormSubmit={() => setCloseDialog(!closeDialog)}
+            filteredProducts={filteredProducts!}
+          />
         ) : (
           <ProductForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
         )}

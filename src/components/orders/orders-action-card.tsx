@@ -9,8 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getFilteredProducts } from "@/lib/queries/product-queries";
 
-export default function OrdersActionCard() {
+export default async function OrdersActionCard() {
+  const filteredProducts = await getFilteredProducts();
+
   return (
     <Card className="sm:col-span-2">
       <CardHeader className="pb-3">
@@ -20,7 +23,10 @@ export default function OrdersActionCard() {
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <EntityDialog actionType="createOrder">
+        <EntityDialog
+          actionType="createOrder"
+          filteredProducts={filteredProducts}
+        >
           <Plus className="mr-1 h-5 w-5" />
           Create new order
         </EntityDialog>

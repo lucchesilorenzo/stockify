@@ -8,7 +8,8 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import OrderCombobox from "./order-combobox";
 
-import { useOrderContext, useProductContext } from "@/lib/hooks";
+import { useOrderContext } from "@/lib/hooks";
+import { ProductWithCategory } from "@/lib/types";
 import {
   TOrderFormSchema,
   orderFormSchema,
@@ -16,10 +17,13 @@ import {
 
 type OrderFormProps = {
   onFormSubmit: () => void;
+  filteredProducts: ProductWithCategory[];
 };
 
-export default function OrderForm({ onFormSubmit }: OrderFormProps) {
-  const { filteredProducts } = useProductContext();
+export default function OrderForm({
+  onFormSubmit,
+  filteredProducts,
+}: OrderFormProps) {
   const { handleCreateOrder } = useOrderContext();
 
   const {

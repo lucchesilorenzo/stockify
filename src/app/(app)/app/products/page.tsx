@@ -9,14 +9,14 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
-  const data = await getProducts();
+  const products = await getProducts();
 
   return (
     <main>
       <H1>Products</H1>
 
-      <div className="my-6 max-w-[70vw]">
-        <ProductsTable columns={columns} data={data} />
+      <div className="my-6">
+        <ProductsTable columns={columns} data={products} />
       </div>
     </main>
   );
