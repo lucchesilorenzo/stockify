@@ -3,6 +3,7 @@
 import { Prisma, Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+import { createActivity } from "@/lib/queries/dashboard-queries";
 import { checkIfProductHasOrder } from "@/lib/queries/order-queries";
 import {
   createNewProduct,
@@ -11,6 +12,7 @@ import {
   getProductOptions,
   updateProductById,
 } from "@/lib/queries/product-queries";
+import { ActivityEssentials } from "@/lib/types";
 import { createSlug } from "@/lib/utils";
 import {
   productEditFormSchema,
@@ -41,6 +43,19 @@ export async function addProduct(product: unknown) {
     return { message: "Failed to create product." };
   }
 
+  // Create a new activity
+  const activity: ActivityEssentials = {
+    activity: "Created",
+    entity: "Product",
+    product: validatedProduct.data.name,
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
+  }
+
   revalidatePath("/app/products");
 }
 
@@ -49,6 +64,10 @@ export async function deleteProduct(productId: unknown) {
   if (!validatedProductId.success) {
     return { message: "Invalid product ID." };
   }
+
+  // Checks if product exists
+  const product = await getProductById(validatedProductId.data);
+  if (!product) return { message: "Product not found." };
 
   // Checks if product has an order
   const productHasOrder = await checkIfProductHasOrder(validatedProductId.data);
@@ -65,6 +84,19 @@ export async function deleteProduct(productId: unknown) {
       }
     }
     return { message: "Failed to delete product." };
+  }
+
+  // Create a new activity
+  const activity: ActivityEssentials = {
+    activity: "Deleted",
+    entity: "Product",
+    product: product.name,
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
   }
 
   revalidatePath("/app/products");
@@ -92,6 +124,19 @@ export async function updateProduct(productId: unknown, product: unknown) {
     await updateProductById(validatedProductId.data, validatedProduct.data);
   } catch {
     return { message: "Failed to update product." };
+  }
+
+  // Create a new activity
+  const activity: ActivityEssentials = {
+    activity: "Updated",
+    entity: "Product",
+    product: productToUpdate.name,
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
   }
 
   revalidatePath(`/app/products/${productToUpdate.slug}/edit`);

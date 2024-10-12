@@ -3,12 +3,14 @@
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+import { createActivity } from "@/lib/queries/dashboard-queries";
 import { createNewOrder, updateOrderStatus } from "@/lib/queries/order-queries";
 import {
   getProductById,
   getProductOptions,
   updateProductQuantity,
 } from "@/lib/queries/product-queries";
+import { ActivityEssentials } from "@/lib/types";
 import { orderFormSchema } from "@/lib/validations/order-validations";
 
 export async function createOrder(order: unknown) {
@@ -83,6 +85,19 @@ export async function createOrder(order: unknown) {
     );
   } catch {
     return { message: "Failed to update product quantity." };
+  }
+
+  // Create new activity
+  const activity: ActivityEssentials = {
+    activity: "Created",
+    entity: "Order",
+    product: product.name,
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
   }
 
   revalidatePath("/app/orders");

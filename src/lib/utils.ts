@@ -12,9 +12,12 @@ export function formatCurrency(amount: number) {
   }).format(amount);
 }
 
-export function formatDate(date: Date) {
+export function formatDate(
+  date: Date,
+  format: Intl.DateTimeFormatOptions["dateStyle"] = "long",
+) {
   return new Intl.DateTimeFormat("en-CA", {
-    dateStyle: "long",
+    dateStyle: format,
   }).format(date);
 }
 

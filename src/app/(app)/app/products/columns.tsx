@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 import ProductActions from "@/components/products/product-actions";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -38,7 +38,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Category
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -52,7 +52,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -72,7 +72,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -95,7 +95,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Quantity
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -135,7 +135,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Max Quantity
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -149,7 +149,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Min Quantity
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },

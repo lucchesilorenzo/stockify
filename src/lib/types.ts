@@ -31,6 +31,12 @@ export type OrderEssentials = Omit<
 >;
 
 export type Status = {
-  value: string;
-  label: string;
+  value: "available" | "archived";
+  label: "Available" | "Archived";
+};
+
+export type ActivityEssentials = {
+  activity: "Created" | "Updated" | "Deleted";
+  entity: "Product" | "Order";
+  product: ProductEssentials["name"];
 };

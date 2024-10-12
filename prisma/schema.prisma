@@ -55,3 +55,11 @@ model Category {
   updatedAt DateTime  @updatedAt
   createdAt DateTime  @default(now())
 }
+
+model Activity {
+  id        String   @id @default(cuid())
+  activity  String
+  entity    String
+  product   String
+  createdAt DateTime @default(now())
+}

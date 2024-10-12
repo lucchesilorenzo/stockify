@@ -1,12 +1,6 @@
 import { Order } from "@prisma/client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
 
 type OrderSummaryCardProps = {
@@ -26,15 +20,13 @@ export default function OrderSummaryCard({
 
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">
           This {type === "month" ? "Month" : "Week"}
-        </CardDescription>
-        <CardTitle className="text-4xl">
-          {formatCurrency(totalOrders)}
         </CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="text-2xl font-bold">{formatCurrency(totalOrders)}</div>
         <div className="text-xs text-muted-foreground">
           Orders this {type === "month" ? "month" : "week"}:
           <span className="ml-1 text-lg font-medium">{totalOrdersLength}</span>

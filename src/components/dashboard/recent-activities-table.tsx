@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import {
   ColumnDef,
-  ColumnFiltersState,
   SortingState,
   flexRender,
   getCoreRowModel,
@@ -13,12 +12,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Plus } from "lucide-react";
 
-import EntityDialog from "../common/entity-dialog";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import ProductTablePopover from "./product-table-popover";
 
 import {
   Table,
@@ -29,26 +24,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export interface ProductsTableProps<TData, TValue> {
+export interface RecentActivitiesProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export default function ProductsTable<TData, TValue>({
+export default function RecentActivities<TData, TValue>({
   columns,
   data,
-}: ProductsTableProps<TData, TValue>) {
+}: RecentActivitiesProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
-      columnFilters,
     },
-    onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -58,34 +50,8 @@ export default function ProductsTable<TData, TValue>({
 
   return (
     <>
-      {/* Filters */}
-      <div>
-        <div className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-x-4">
-            <Input
-              placeholder="Filter categories..."
-              value={
-                (table
-                  .getColumn("category.name")
-                  ?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table
-                  .getColumn("category.name")
-                  ?.setFilterValue(event.target.value)
-              }
-              className="max-w-72"
-            />
-            <ProductTablePopover table={table} />
-          </div>
-          <EntityDialog actionType="addProduct">
-            <Plus className="mr-1 h-5 w-5" />
-            Add product
-          </EntityDialog>
-        </div>
-      </div>
-
       {/* Table */}
+      <h2 className="text-lg font-semibold my-6">Recent Activities</h2>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

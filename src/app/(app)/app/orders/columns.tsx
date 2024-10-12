@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 import OrderActions from "@/components/orders/order-actions";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,7 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           # Order ID
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -34,7 +34,7 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Product
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -53,7 +53,7 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Quantity
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -67,7 +67,7 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -90,7 +90,7 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Amount
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -110,13 +110,13 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Date
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt"));
-      const formattedDate = formatDate(date);
+      const formattedDate = formatDate(date, "short");
 
       return <div>{formattedDate}</div>;
     },
