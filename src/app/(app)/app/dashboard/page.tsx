@@ -19,7 +19,7 @@ export default async function DashboardPage() {
       <div className="space-y-6 my-6">
         <DashboardSummary />
 
-        <div className="py-8">
+        <div className="my-6">
           <RecentActivitiesTable columns={columns} data={activities} />
         </div>
       </div>
