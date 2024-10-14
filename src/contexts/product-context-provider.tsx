@@ -11,7 +11,6 @@ import {
   deleteProduct,
   updateProduct,
 } from "@/app/actions/product-actions";
-import { ProductWithCategory } from "@/lib/types";
 import {
   TProductEditFormSchema,
   TProductFormSchema,
@@ -19,12 +18,10 @@ import {
 
 type ProductContextProviderProps = {
   children: React.ReactNode;
-  productsData: ProductWithCategory[];
   categoriesData: Category[];
 };
 
 type TProductContext = {
-  products: ProductWithCategory[];
   categories: Category[];
   handleAddProduct: (product: TProductFormSchema) => Promise<void>;
   handleDeleteProduct: (productId: Product["id"]) => Promise<void>;
@@ -42,10 +39,8 @@ export const ProductContext = createContext<TProductContext | null>(null);
 
 export default function ProductContextProvider({
   children,
-  productsData,
   categoriesData,
 }: ProductContextProviderProps) {
-  const [products] = useState(productsData);
   const [categories] = useState(categoriesData);
 
   async function handleAddProduct(product: TProductFormSchema) {
@@ -98,7 +93,6 @@ export default function ProductContextProvider({
   return (
     <ProductContext.Provider
       value={{
-        products,
         categories,
         handleAddProduct,
         handleDeleteProduct,

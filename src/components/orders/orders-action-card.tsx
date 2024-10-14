@@ -19,7 +19,7 @@ export default async function OrdersActionCard() {
       <CardHeader className="pb-3">
         <CardTitle>Your Orders</CardTitle>
         <CardDescription className="max-w-lg text-balance leading-relaxed">
-          Introducing our dynamic orders dashboard for seamless management.
+          Manage your orders efficiently with our comprehensive dashboard.
         </CardDescription>
       </CardHeader>
       <CardFooter>
@@ -28,7 +28,7 @@ export default async function OrdersActionCard() {
           filteredProducts={filteredProducts}
         >
           <Plus className="mr-1 h-5 w-5" />
-          Create new order
+          Create New Order
         </EntityDialog>
       </CardFooter>
     </Card>

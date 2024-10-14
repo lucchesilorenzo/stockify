@@ -80,7 +80,7 @@ export default function ProductsTable<TData, TValue>({
           </div>
           <EntityDialog actionType="addProduct">
             <Plus className="mr-1 h-5 w-5" />
-            Add product
+            Add Product
           </EntityDialog>
         </div>
       </div>

@@ -33,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           {children}
         </ThemeContextProvider>
-        <Toaster position="top-right" />
+        <Toaster position="top-right" duration={5000} />
       </body>
     </html>
   );

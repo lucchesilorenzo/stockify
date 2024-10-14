@@ -37,7 +37,7 @@ export default function ProductEditTable({
       </TableHeader>
       <TableBody>
         <TableRow>
-          <TableCell className="font-semibold">Name</TableCell>
+          <TableCell className="font-semibold">{product.name}</TableCell>
           <TableCell>
             <Label htmlFor="stock-1" className="sr-only">
               Stock

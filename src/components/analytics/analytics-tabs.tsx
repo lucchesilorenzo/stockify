@@ -1,10 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import AnalyticsOverview from "./analytics-overview";
 
-import { getProductsByCategory } from "@/lib/queries/analytics-queries";
+import {
+  getInventoryValueByMonth,
+  getProductsByCategory,
+} from "@/lib/queries/analytics-queries";
 
 export default async function AnalyticsTabs() {
   const { pieChartData, pieChartConfig } = await getProductsByCategory();
+  const inventoryValueByMonth = await getInventoryValueByMonth();
 
   return (
     <Tabs defaultValue="overview" className="space-y-4">
@@ -16,6 +20,7 @@ export default async function AnalyticsTabs() {
         <AnalyticsOverview
           pieChartData={pieChartData}
           pieChartConfig={pieChartConfig}
+          lineChartData={inventoryValueByMonth}
         />
       </TabsContent>
     </Tabs>

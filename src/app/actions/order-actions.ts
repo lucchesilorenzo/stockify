@@ -34,11 +34,17 @@ export async function createOrder(order: unknown) {
   const minQuantity = options.minQuantity;
 
   if (orderedQuantity > maxQuantity) {
-    return { message: "Quantity is too large." };
+    return {
+      message: `The selected quantity cannot exceed the maximum limit of ${maxQuantity}.`,
+    };
   } else if (orderedQuantity < minQuantity) {
-    return { message: "Quantity is too small." };
+    return {
+      message: `The selected quantity must be at least ${minQuantity}.`,
+    };
   } else if (orderedQuantity + currentQuantity > maxQuantity) {
-    return { message: "You can't order more than Max Quantity." };
+    return {
+      message: `The total quantity cannot exceed the maximum limit of ${maxQuantity}. Please select a quantity no greater than ${maxQuantity - currentQuantity}.`,
+    };
   }
 
   // Calculate order details
