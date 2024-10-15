@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 
 import { Check, ChevronsUpDown } from "lucide-react";
 import { UseFormSetValue } from "react-hook-form";
@@ -34,13 +34,14 @@ export default function OrderCombobox({
   setValue,
   fieldName,
 }: OrderComboboxProps) {
-  const [open, setOpen] = React.useState(false);
-  const [internalValue, setInternalValue] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [internalValue, setInternalValue] = useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          id="productId"
           variant="outline"
           role="combobox"
           aria-expanded={open}
@@ -55,7 +56,7 @@ export default function OrderCombobox({
       <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder="Search product..." />
-          <CommandList>
+          <CommandList onWheel={(e) => (e.currentTarget.scrollTop += e.deltaY)}>
             <CommandEmpty>No product found.</CommandEmpty>
             <CommandGroup>
               {products.map((product) => (

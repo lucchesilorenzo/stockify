@@ -1,10 +1,12 @@
+import { Metadata } from "next";
+
 import AuthFooter from "@/components/auth/auth-footer";
 import AuthForm from "@/components/auth/auth-form";
 import AuthHeading from "@/components/auth/auth-heading";
 import AuthImage from "@/components/auth/auth-image";
 
-export const metadata = {
-  title: "Sign up",
+export const metadata: Metadata = {
+  title: "Sign Up",
 };
 
 export default function SignUpPage() {

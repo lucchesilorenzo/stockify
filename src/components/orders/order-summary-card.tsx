@@ -1,4 +1,5 @@
 import { Order } from "@prisma/client";
+import { CalendarDays } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
@@ -24,6 +25,7 @@ export default function OrderSummaryCard({
         <CardTitle className="text-sm font-medium">
           This {type === "month" ? "Month" : "Week"}
         </CardTitle>
+        <CalendarDays className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{formatCurrency(totalOrders)}</div>

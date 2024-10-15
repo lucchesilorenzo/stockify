@@ -60,7 +60,7 @@ export default function ProductsTable<TData, TValue>({
     <>
       {/* Filters */}
       <div>
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-4 gap-x-4">
           <div className="flex items-center gap-x-4">
             <Input
               placeholder="Filter categories..."
@@ -80,7 +80,7 @@ export default function ProductsTable<TData, TValue>({
           </div>
           <EntityDialog actionType="addProduct">
             <Plus className="mr-1 h-5 w-5" />
-            Add Product
+            <span className="hidden sm:block">Add Product</span>
           </EntityDialog>
         </div>
       </div>

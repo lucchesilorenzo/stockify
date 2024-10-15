@@ -3,13 +3,15 @@ import Link from "next/link";
 
 type LogoProps = {
   device: "desktop" | "mobile";
+  onOpenChange?: () => void;
 };
 
-export default function Logo({ device }: LogoProps) {
+export default function Logo({ device, onOpenChange }: LogoProps) {
   return (
     <Link
       href="/app/dashboard"
       className="flex items-center gap-2 font-semibold"
+      onClick={onOpenChange}
     >
       <Warehouse className="h-6 w-6 mr-1" />
       {device === "desktop" && <span>Stockify</span>}

@@ -26,6 +26,7 @@ export async function getProductsByCategory() {
       label: data.category,
       color: data.fill,
     };
+
     return config;
   }, {} as ChartConfig);
 
@@ -67,4 +68,28 @@ export async function getInventoryValueByMonth() {
   );
 
   return inventoryValueByMonth;
+}
+
+export async function getTopProducts() {
+  const products = await prisma.product.findMany({
+    where: {
+      status: "Available",
+    },
+    select: {
+      name: true,
+      quantity: true,
+      price: true,
+    },
+  });
+
+  // Gets top 5 products
+  const topProducts = products
+    .map(({ name, quantity, price }) => ({
+      product: name,
+      value: quantity * price,
+    }))
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
+  return topProducts;
 }

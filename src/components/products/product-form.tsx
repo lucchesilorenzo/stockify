@@ -55,7 +55,7 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
         <div className="space-y-1">
           <Label htmlFor="categoryId">Category</Label>
           <Select onValueChange={(value) => setValue("categoryId", value)}>
-            <SelectTrigger>
+            <SelectTrigger id="categoryId">
               <SelectValue placeholder="Select a category" />
             </SelectTrigger>
             <SelectContent>

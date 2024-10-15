@@ -1,7 +1,9 @@
+import { Metadata } from "next";
+
 import AnalyticsTabs from "@/components/analytics/analytics-tabs";
 import H1 from "@/components/common/h1";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Analytics",
 };
 

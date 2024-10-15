@@ -45,7 +45,7 @@ export default function AnalyticsOverviewPieChart({
         {!productsTotal ? (
           <p className="text-center">No results.</p>
         ) : (
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={300}>
             <ChartContainer config={pieChartConfig}>
               <PieChart>
                 <ChartTooltip content={<ChartTooltipContent />} />

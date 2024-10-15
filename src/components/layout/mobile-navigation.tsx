@@ -30,12 +30,12 @@ export default function MobileNavigation() {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex flex-col w-[250px]">
+      <SheetContent side="left" className="flex flex-col w-[300px]">
         <nav>
           <ul className="grid gap-2 text-lg font-medium">
             <SheetHeader>
               <SheetTitle>
-                <Logo device="mobile" />
+                <Logo device="mobile" onOpenChange={() => setOpen(!open)} />
               </SheetTitle>
 
               <VisuallyHidden>

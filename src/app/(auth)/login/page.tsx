@@ -1,10 +1,12 @@
+import { Metadata } from "next";
+
 import AuthFooter from "@/components/auth/auth-footer";
 import AuthForm from "@/components/auth/auth-form";
 import AuthHeading from "@/components/auth/auth-heading";
 import AuthImage from "@/components/auth/auth-image";
 
-export const metadata = {
-  title: "Login",
+export const metadata: Metadata = {
+  title: "Log In",
 };
 
 export default function LogInPage() {
