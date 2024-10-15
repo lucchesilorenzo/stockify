@@ -9,8 +9,8 @@ export default function AuthHeading({ authType }: AuthHeadingProps) {
         {authType === "signup" ? "Sign up" : "Login"}
       </h1>
       <p className="text-balance text-muted-foreground">
-        Enter your email below to {authType === "signup" ? "sign up" : "log in"}{" "}
-        to your account
+        Enter your credentials below to{" "}
+        {authType === "signup" ? "sign up" : "log in"} to your account
       </p>
     </div>
   );

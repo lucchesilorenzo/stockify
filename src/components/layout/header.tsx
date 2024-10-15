@@ -1,7 +1,12 @@
+"use client";
+
+import { useTransition } from "react";
+
 import { CircleUser } from "lucide-react";
 
 import MobileNavigation from "./mobile-navigation";
 
+import { logOut } from "@/app/actions/auth-actions";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +18,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function Header() {
+  const [isPending, startTransition] = useTransition();
+
+  function handleLogOut() {
+    startTransition(async () => await logOut());
+  }
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <MobileNavigation />
@@ -29,7 +40,9 @@ export default function Header() {
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogOut}>
+            {isPending ? "Logging out..." : "Log out"}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

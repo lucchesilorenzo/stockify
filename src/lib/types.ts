@@ -1,4 +1,4 @@
-import { Order, Prisma, Product } from "@prisma/client";
+import { Order, Prisma, Product, User } from "@prisma/client";
 
 export type ProductWithCategory = Prisma.ProductGetPayload<{
   include: {
@@ -40,3 +40,8 @@ export type ActivityEssentials = {
   entity: "Product" | "Order";
   product: ProductEssentials["name"];
 };
+
+export type UserEssentials = Pick<
+  User,
+  "email" | "hashedPassword" | "firstName" | "lastName"
+>;

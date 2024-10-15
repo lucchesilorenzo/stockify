@@ -2,39 +2,63 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { LoadingButton } from "../common/loading-button";
 
+import { logIn, signUp } from "@/app/actions/auth-actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  TAuthFormSchema,
-  authFormSchema,
+  TLogInSchema,
+  TSignUpSchema,
+  logInSchema,
+  signUpSchema,
 } from "@/lib/validations/auth-validations";
 
-export const metadata = {
-  title: "Login | Stockify",
-};
-
 type AuthFormProps = {
-  authType: "login" | "signup";
+  authType: "signup" | "login";
 };
 
 export default function AuthForm({ authType }: AuthFormProps) {
+  const schema = authType === "signup" ? signUpSchema : logInSchema;
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<TAuthFormSchema>({
-    resolver: zodResolver(authFormSchema),
+  } = useForm<TSignUpSchema & TLogInSchema>({
+    resolver: zodResolver(schema),
   });
 
-  function onSubmit(data: TAuthFormSchema) {
-    console.log(data);
+  async function onSubmit(data: TSignUpSchema & TLogInSchema) {
+    const result =
+      authType === "signup" ? await signUp(data) : await logIn(data);
+    if (result?.message) {
+      toast.error(result?.message);
+      return;
+    }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+      {authType === "signup" && (
+        <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="firstName">First name</Label>
+            <Input
+              id="firstName"
+              placeholder="John"
+              {...register("firstName")}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="lastName">Last name</Label>
+            <Input id="lastName" placeholder="Doe" {...register("lastName")} />
+          </div>
+        </div>
+      )}
+
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -59,6 +83,23 @@ export default function AuthForm({ authType }: AuthFormProps) {
           <p className="px-1 text-xs text-red-600">{errors.password.message}</p>
         )}
       </div>
+
+      {authType === "signup" && (
+        <div className="grid gap-2">
+          <Label htmlFor="confirmPassword">Confirm password</Label>
+          <Input
+            id="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            {...register("confirmPassword")}
+          />
+          {errors.confirmPassword && (
+            <p className="px-1 text-xs text-red-600">
+              {errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
+      )}
 
       <LoadingButton isLoading={isSubmitting} className="w-full">
         {authType === "login" ? "Login" : "Sign up"}
