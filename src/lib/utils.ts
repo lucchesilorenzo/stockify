@@ -1,5 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
+import { redirect } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+
+import { auth } from "./auth";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -27,4 +30,13 @@ export function createSlug(text: string) {
     .trim()
     .replace(/\s+/g, "-")
     .replace(/[^\w-]+/g, "");
+}
+
+export async function checkAuth() {
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  return session;
 }

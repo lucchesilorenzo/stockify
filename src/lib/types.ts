@@ -45,3 +45,12 @@ export type UserEssentials = Pick<
   User,
   "email" | "hashedPassword" | "firstName" | "lastName"
 >;
+
+export type UserSettings = {
+  firstName: User["firstName"];
+  lastName: User["lastName"];
+  dateOfBirth: User["dateOfBirth"] | null;
+  bio: User["bio"] | null;
+  phoneNumber: User["phoneNumber"] | null;
+  location: User["location"] | null;
+} | null;

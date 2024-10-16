@@ -14,7 +14,7 @@ model User {
   firstName      String
   lastName       String
   dateOfBirth    DateTime?
-  phoneNumber    Int?
+  phoneNumber    String?
   bio            String?
   location       String?
   updatedAt      DateTime  @updatedAt

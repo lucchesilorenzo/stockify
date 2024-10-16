@@ -67,6 +67,7 @@
   }
 }
 
+/* Scrollbar styles */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -86,4 +87,9 @@
 * {
   scrollbar-width: thin;
   scrollbar-color: #5c5f72 rgba(255, 255, 255, 0.1);
+}
+
+/* Date picker dropdown fix */
+.rdp-vhidden {
+  @apply hidden;
 }

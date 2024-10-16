@@ -3,7 +3,6 @@ import Sidebar from "@/components/layout/sidebar";
 import ThemeToggle from "@/components/layout/theme-toggle";
 import OrderContextProvider from "@/contexts/order-context-provider";
 import ProductContextProvider from "@/contexts/product-context-provider";
-import { auth } from "@/lib/auth";
 import { getCategories } from "@/lib/queries/category-queries";
 
 type AppLayoutProps = {
@@ -12,8 +11,6 @@ type AppLayoutProps = {
 
 export default async function AppLayout({ children }: AppLayoutProps) {
   const categories = await getCategories();
-  const session = await auth();
-  console.log(session);
 
   return (
     <div className="relative grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
