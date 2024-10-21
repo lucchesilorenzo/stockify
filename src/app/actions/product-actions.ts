@@ -65,11 +65,11 @@ export async function deleteProduct(productId: unknown) {
     return { message: "Invalid product ID." };
   }
 
-  // Checks if product exists
+  // Check if product exists
   const product = await getProductById(validatedProductId.data);
   if (!product) return { message: "Product not found." };
 
-  // Checks if product has an order
+  // Check if product has an order
   const productHasOrder = await checkIfProductHasOrder(validatedProductId.data);
   if (productHasOrder) {
     return { message: "You cannot delete a product that has an order!" };
@@ -103,19 +103,19 @@ export async function deleteProduct(productId: unknown) {
 }
 
 export async function updateProduct(productId: unknown, product: unknown) {
-  // Checks if product ID is valid
+  // Check if product ID is valid
   const validatedProductId = productIdSchema.safeParse(productId);
   if (!validatedProductId.success) {
     return { message: "Invalid product ID." };
   }
 
-  // Checks if product data is valid
+  // Check if product data is valid
   const validatedProduct = productEditFormSchema.safeParse(product);
   if (!validatedProduct.success) {
     return { message: "Invalid product data." };
   }
 
-  // Checks if product exists
+  // Check if product exists
   const productToUpdate = await getProductById(validatedProductId.data);
   if (!productToUpdate) return { message: "Product not found." };
 

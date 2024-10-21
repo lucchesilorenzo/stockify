@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Plus } from "lucide-react";
+import { File, Plus } from "lucide-react";
 
 import EntityDialog from "../common/entity-dialog";
 import { Button } from "../ui/button";
@@ -77,9 +77,14 @@ export default function ProductsTable<TData, TValue>({
               className="max-w-72"
             />
             <ProductTablePopover table={table} />
+            {/* TODO: Add export to CSV/PDF */}
+            <Button variant="outline" onClick={() => window.print()}>
+              <File className="sm:mr-2 h-4 w-4" />
+              <span className="hidden sm:block">Export</span>
+            </Button>
           </div>
           <EntityDialog actionType="addProduct">
-            <Plus className="mr-1 h-5 w-5" />
+            <Plus className="sm:mr-1 h-5 w-5" />
             <span className="hidden sm:block">Add Product</span>
           </EntityDialog>
         </div>

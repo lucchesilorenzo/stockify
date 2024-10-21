@@ -7,7 +7,7 @@ import { checkAuth } from "@/lib/utils";
 import { settingsFormSchema } from "@/lib/validations/settings-validations";
 
 export async function updateSettings(settings: unknown) {
-  // Checks if user is authenticated
+  // Check if user is authenticated
   const session = await checkAuth();
 
   // Validation

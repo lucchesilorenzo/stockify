@@ -97,8 +97,11 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
           </Link>
         </Button>
         <H1>Edit Product</H1>
-        <Badge variant="outline" className="ml-auto sm:ml-0">
-          In stock
+        <Badge
+          variant={product.status === "Archived" ? "destructive" : "default"}
+          className="ml-auto sm:ml-0"
+        >
+          {product.status === "Available" ? "Available" : "Archived"}
         </Badge>
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
           <Button

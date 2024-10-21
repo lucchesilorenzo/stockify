@@ -28,7 +28,7 @@ export default function InvoiceContextProvider({
   );
 
   function handleIsInvoiceOpenAndSetOrder(newOrder: OrderWithProduct) {
-    // Checks if new order is the same as selected order
+    // Check if new order is the same as selected order
     const isSameOrder = newOrder.id === selectedOrderId;
 
     setIsInvoiceOpen(!isSameOrder); // Toggle dialog state

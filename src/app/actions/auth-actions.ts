@@ -18,10 +18,10 @@ export async function signUp(credentials: unknown) {
 
   const { firstName, lastName, email, password } = validatedCredentials.data;
 
-  // Hashes password
+  // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Creates user object
+  // Create user object
   const user = {
     firstName,
     lastName,
@@ -29,7 +29,7 @@ export async function signUp(credentials: unknown) {
     hashedPassword,
   };
 
-  // Creates user in the database
+  // Create user in the database
   try {
     await createUser(user);
   } catch (error) {

@@ -14,18 +14,18 @@ export async function POST(req: Request) {
       );
     }
 
-    // Reads the file into memory
+    // Read the file into memory
     const buffer = await file.arrayBuffer();
 
-    // Creates the uploads directory if it doesn't exist
+    // Create the uploads directory if it doesn't exist
     const uploadsDir = path.join(process.cwd(), "public/uploads");
     await fs.mkdir(uploadsDir, { recursive: true });
 
-    // Writes the file to disk
+    // Write the file to disk
     const filePath = path.join(uploadsDir, file.name);
     await fs.writeFile(filePath, Buffer.from(buffer));
 
-    // Returns the file path
+    // Return the file path
     return NextResponse.json({ filePath: `/uploads/${file.name}` });
   } catch {
     return NextResponse.json(

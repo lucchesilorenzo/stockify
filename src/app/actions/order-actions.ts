@@ -19,15 +19,15 @@ export async function createOrder(order: unknown) {
     return { message: "Invalid order data." };
   }
 
-  // Checks if product exists
+  // Check if product exists
   const product = await getProductById(validatedOrder.data.productId);
   if (!product) return { message: "Product not found." };
 
-  // Checks if quantity is present
+  // Check if quantity is present
   const options = await getProductOptions(validatedOrder.data.productId);
   if (!options) return { message: "Options not found." };
 
-  // Checks if quantity is valid
+  // Check if quantity is valid
   const orderedQuantity = validatedOrder.data.quantity;
   const currentQuantity = options.quantity;
   const maxQuantity = options.maxQuantity;
