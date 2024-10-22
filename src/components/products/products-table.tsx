@@ -14,6 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { File, Plus } from "lucide-react";
+import dynamic from "next/dynamic";
 
 import EntityDialog from "../common/entity-dialog";
 import { Button } from "../ui/button";
@@ -29,14 +30,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+// TODO: Find another way to handle this
+const CSVLink = dynamic(() => import("react-csv").then((mod) => mod.CSVLink), {
+  ssr: false,
+});
+
 export interface ProductsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  csvData: Record<string, string | number>[];
 }
 
 export default function ProductsTable<TData, TValue>({
   columns,
   data,
+  csvData,
 }: ProductsTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -77,11 +85,12 @@ export default function ProductsTable<TData, TValue>({
               className="max-w-72"
             />
             <ProductTablePopover table={table} />
-            {/* TODO: Add export to CSV/PDF */}
-            <Button variant="outline" onClick={() => window.print()}>
-              <File className="sm:mr-2 h-4 w-4" />
-              <span className="hidden sm:block">Export</span>
-            </Button>
+            <CSVLink data={csvData} filename="products.csv" target="_blank">
+              <Button variant="outline">
+                <File className="sm:mr-2 h-4 w-4" />
+                <span className="hidden sm:block">Export</span>
+              </Button>
+            </CSVLink>
           </div>
           <EntityDialog actionType="addProduct">
             <Plus className="sm:mr-1 h-5 w-5" />

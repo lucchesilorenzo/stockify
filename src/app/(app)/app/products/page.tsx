@@ -13,12 +13,22 @@ export const metadata: Metadata = {
 export default async function ProductsPage() {
   const products = await getProducts();
 
+  const csvData = products.map((product) => ({
+    Name: product.name,
+    Category: product.category?.name,
+    Price: product.price,
+    Status: product.status,
+    Quantity: product.quantity,
+    MaxQuantity: product.maxQuantity,
+    MinQuantity: product.minQuantity,
+  }));
+
   return (
     <main>
       <H1>Products</H1>
 
       <div className="my-6 grid grid-cols-1">
-        <ProductsTable columns={columns} data={products} />
+        <ProductsTable columns={columns} data={products} csvData={csvData} />
       </div>
     </main>
   );
