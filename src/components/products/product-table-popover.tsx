@@ -83,7 +83,11 @@ export default function ProductTablePopover<T>({
           </Command>
         </PopoverContent>
         {selectedStatus && (
-          <Button variant="ghost" onClick={handleResetStatus} className="p-2">
+          <Button
+            variant="ghost"
+            onClick={handleResetStatus}
+            className="p-2 hidden sm:block"
+          >
             <XCircle className="h-5 w-5" />
           </Button>
         )}

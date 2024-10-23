@@ -49,6 +49,7 @@ export type UserEssentials = Pick<
 export type UserSettings = {
   firstName: User["firstName"];
   lastName: User["lastName"];
+  email: User["email"];
   dateOfBirth: User["dateOfBirth"] | null;
   bio: User["bio"] | null;
   phoneNumber: User["phoneNumber"] | null;

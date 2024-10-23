@@ -40,7 +40,7 @@ export default async function OrdersPage() {
           <OrderSummaryCard type="week" orders={weeklyOrders} />
         </div>
 
-        <section className="grid grid-cols-1 gap-6 xl:grid-cols-[1200px_1fr]">
+        <section className="grid grid-cols-1 gap-6 xl:grid-cols-[1150px_1fr]">
           <div>
             <RecentOrdersTable columns={columns} data={orders} />
           </div>

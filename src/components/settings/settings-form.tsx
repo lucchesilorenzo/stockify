@@ -76,6 +76,16 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
           )}
         </div>
 
+        <div className="space-y-1">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            placeholder="johndoe@gmail.com"
+            defaultValue={userSettings?.email}
+            disabled
+          />
+        </div>
+
         <div className="space-y-1 flex flex-col">
           <Label htmlFor="dateOfBirth">Date of birth</Label>
           <DatePicker
@@ -96,6 +106,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
             id="bio"
             placeholder="Tell us a bit about yourself"
             rows={3}
+            spellCheck={false}
             defaultValue={userSettings?.bio ?? ""}
             {...register("bio")}
           />
