@@ -13,7 +13,7 @@ export const settingsFormSchema = z.object({
     .max(20, "Last name is too long."),
   dateOfBirth: z.date().optional(),
   bio: z.string().trim().max(200, "Bio is too long."),
-  phoneNumber: z.string().max(30, "Phone number is too long."),
+  phoneNumber: z.string().trim().max(30, "Phone number is too long."),
   location: z.string().trim().max(20, "Location is too long."),
 });
 

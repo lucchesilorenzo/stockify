@@ -25,6 +25,7 @@ export async function getSettingsByUserId(id: User["id"]) {
     select: {
       firstName: true,
       lastName: true,
+      email: true,
       dateOfBirth: true,
       bio: true,
       phoneNumber: true,
