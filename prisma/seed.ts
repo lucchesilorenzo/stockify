@@ -21,17 +21,40 @@ async function main() {
   const productsData = [];
   const baseDate = new Date();
 
+  const productNames = [
+    "Laptop",
+    "Smartphone",
+    "Office Chair",
+    "T-Shirt",
+    "Bicycle",
+    "Headphones",
+    "Bookshelf",
+    "Sneakers",
+    "Tablet",
+    "Basketball",
+    "Smartwatch",
+    "Jacket",
+    "Desk",
+    "Novel",
+    "Running Shoes",
+    "Monitor",
+    "Backpack",
+    "Gaming Console",
+    "Soccer Ball",
+    "Camera",
+  ];
+
   for (let i = 0; i < 20; i++) {
     const categoryIndex = i % categories.length;
     const product = {
-      name: `Product ${i + 1}`,
+      name: productNames[i],
       slug: `product-${i + 1}`,
-      price: Math.floor(Math.random() * 100) + 1,
+      price: Math.floor(Math.random() * 200) + 20,
       quantity: Math.floor(Math.random() * 50) + 1,
       maxQuantity: 100,
       minQuantity: 1,
-      description: `Description for Product ${i + 1}`,
-      status: "Available",
+      description: `Description for ${productNames[i]}`,
+      status: i % 2 === 0 ? "Available" : "Archived",
       image: null,
       categoryId: categories[categoryIndex].id,
       updatedAt: subMonths(baseDate, i % 12),
@@ -51,13 +74,25 @@ async function main() {
   const orders = [];
   for (let i = 0; i < 15; i++) {
     const productIndex = Math.floor(Math.random() * products.length);
+    const orderedQuantity = Math.floor(Math.random() * 10) + 1;
+
+    // Calcolo realistico dei costi
+    const options = {
+      price: products[productIndex].price,
+    };
+
+    const subtotal = orderedQuantity * options.price;
+    const shipping = subtotal > 100 ? 0 : 5;
+    const tax = +(subtotal * 0.22).toFixed(2);
+    const totalPrice = +(subtotal + shipping + tax).toFixed(2);
+
     const order = {
-      quantity: Math.floor(Math.random() * 10) + 1,
-      totalPrice: Math.floor(Math.random() * 100) + 1,
-      subtotal: Math.floor(Math.random() * 100) + 1,
-      shipping: Math.floor(Math.random() * 10) + 1,
-      tax: Math.floor(Math.random() * 5) + 1,
-      status: "Pending",
+      quantity: orderedQuantity,
+      totalPrice: totalPrice,
+      subtotal: subtotal,
+      shipping: shipping,
+      tax: tax,
+      status: i % 2 === 0 ? "Pending" : "Completed",
       productId: products[productIndex].id,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -69,22 +104,7 @@ async function main() {
     data: orders,
   });
 
-  const activities = [];
-  for (let i = 0; i < 10; i++) {
-    const activity = {
-      activity: `Activity ${i + 1}`,
-      entity: `Entity ${Math.floor(Math.random() * 5) + 1}`,
-      product: products[i % products.length].name,
-      createdAt: new Date(),
-    };
-    activities.push(activity);
-  }
-
-  await prisma.activity.createMany({
-    data: activities,
-  });
-
-  console.log("Seeded successfully.");
+  console.log("Seeded successfully with realistic data.");
 }
 
 main()
