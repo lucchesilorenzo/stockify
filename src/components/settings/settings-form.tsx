@@ -8,6 +8,7 @@ import DatePicker from "../common/date-picker";
 import { LoadingButton } from "../common/loading-button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { PhoneInput } from "../ui/phone-input";
 import { Textarea } from "../ui/textarea";
 
 import { updateSettings } from "@/app/actions/settings-actions";
@@ -117,11 +118,12 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
 
         <div className="space-y-1">
           <Label htmlFor="phoneNumber">Phone number</Label>
-          <Input
+          <PhoneInput
             id="phoneNumber"
             placeholder="123-456-789"
-            defaultValue={userSettings?.phoneNumber ?? ""}
-            {...register("phoneNumber")}
+            value={userSettings?.phoneNumber ?? ""}
+            defaultCountry="IT"
+            onChange={(value) => setValue("phoneNumber", value)}
           />
           {errors.phoneNumber && (
             <p className="px-1 text-xs text-red-600">
