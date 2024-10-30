@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
 import * as RPNInput from "react-phone-number-input";
+import { formatPhoneNumberIntl } from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 
 import { ScrollArea } from "./scroll-area";
@@ -51,9 +52,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
            * @param {E164Number | undefined} value - The entered value
            */
           onChange={(value) => {
-            if (value) {
-              onChange?.(value);
-            }
+            if (value) onChange?.(value);
           }}
           {...props}
         />

@@ -120,7 +120,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
           <Label htmlFor="phoneNumber">Phone number</Label>
           <PhoneInput
             id="phoneNumber"
-            placeholder="123-456-789"
+            placeholder="339 755 0176"
             value={userSettings?.phoneNumber ?? ""}
             defaultCountry="IT"
             onChange={(value) => setValue("phoneNumber", value)}
