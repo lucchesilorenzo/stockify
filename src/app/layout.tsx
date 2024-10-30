@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 
 import "./styles/globals.css";
 
-import ThemeContextProvider from "@/contexts/theme-context-provider";
+import ThemeProvider from "@/contexts/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,14 +25,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} text-sm antialiased`}>
-        <ThemeContextProvider
+        <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           {children}
-        </ThemeContextProvider>
+        </ThemeProvider>
         <Toaster position="top-right" duration={4000} />
       </body>
     </html>

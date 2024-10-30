@@ -72,8 +72,8 @@ Stockify is built using modern and efficient web technologies:
   - [Tailwind CSS](https://tailwindcss.com/) for utility-first styling.
   - [Shadcn/ui](https://ui.shadcn.com/) for pre-built, customizable UI components.
 - **Back-end**:
-  - [Auth.js](https://authjs.dev/) for authentication and authorization.
   - [Next.js](https://nextjs.org/) for handling backend logic.
+  - [Auth.js](https://authjs.dev/) for authentication and authorization.
 - **Database**:
   - [Prisma](https://www.prisma.io/) as the database ORM.
 - **Form Management and Validation**:
@@ -117,7 +117,7 @@ Stockify is built using modern and efficient web technologies:
 
    ```bash
    DATABASE_URL="file:./dev.db"
-   AUTH_SECRET="your-auth-secret" (you can generate one with `openssl rand -base64 32`)
+   AUTH_SECRET="your-auth-secret" # You can generate one with `openssl rand -base64 32`
    ```
 
 4. **Run database push**:
@@ -146,11 +146,3 @@ The project uses **Prisma** ORM for database management. Here’s a basic overvi
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
-
-## Contact
-
-For any questions or inquiries, please reach out to:
-
-- **Author**: Lorenzo Lucchesi
-- **Email**: lorenzolucchesi3@gmail.com
-- **GitHub**: [github.com/lucchesilorenzo](https://github.com/lucchesilorenzo)

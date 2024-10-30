@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import MobileNavigation from "./mobile-navigation";
 
-import { logOut } from "@/app/actions/auth-actions";
+import { logOutAction } from "@/app/actions/auth-actions";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -23,7 +23,7 @@ export default function Header() {
   const [isPending, startTransition] = useTransition();
 
   function handleLogOut() {
-    startTransition(async () => await logOut());
+    startTransition(async () => await logOutAction());
   }
 
   return (

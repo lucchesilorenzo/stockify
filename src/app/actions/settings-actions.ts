@@ -6,7 +6,7 @@ import { updateSettingsByUserId } from "@/lib/queries/settings-queries";
 import { checkAuth } from "@/lib/utils";
 import { settingsFormSchema } from "@/lib/validations/settings-validations";
 
-export async function updateSettings(settings: unknown) {
+export async function updateSettingsAction(settings: unknown) {
   // Check if user is authenticated
   const session = await checkAuth();
 

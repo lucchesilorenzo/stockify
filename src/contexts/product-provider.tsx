@@ -6,17 +6,17 @@ import { Category, Product } from "@prisma/client";
 import { toast } from "sonner";
 
 import {
-  addProduct,
-  checkIfProductMaxQuantityIsReached,
-  deleteProduct,
-  updateProduct,
+  createProductAction,
+  deleteProductAction,
+  isMaxProductQuantityReachedAction,
+  updateProductAction,
 } from "@/app/actions/product-actions";
 import {
   TProductEditFormSchema,
   TProductFormSchema,
 } from "@/lib/validations/product-validations";
 
-type ProductContextProviderProps = {
+type ProductProviderProps = {
   children: React.ReactNode;
   categoriesData: Category[];
 };
@@ -37,14 +37,14 @@ type TProductContext = {
 
 export const ProductContext = createContext<TProductContext | null>(null);
 
-export default function ProductContextProvider({
+export default function ProductProvider({
   children,
   categoriesData,
-}: ProductContextProviderProps) {
+}: ProductProviderProps) {
   const [categories] = useState(categoriesData);
 
   async function handleAddProduct(product: TProductFormSchema) {
-    const result = await addProduct(product);
+    const result = await createProductAction(product);
     if (result?.message) {
       toast.error(result.message);
       return;
@@ -53,7 +53,7 @@ export default function ProductContextProvider({
   }
 
   async function handleDeleteProduct(productId: Product["id"]) {
-    const result = await deleteProduct(productId);
+    const result = await deleteProductAction(productId);
     if (result?.message) {
       toast.error(result.message);
       return;
@@ -65,7 +65,7 @@ export default function ProductContextProvider({
     productId: Product["id"],
     product: TProductEditFormSchema,
   ) {
-    const result = await updateProduct(productId, product);
+    const result = await updateProductAction(productId, product);
     if (result?.message) {
       toast.error(result.message);
       return;
@@ -77,7 +77,7 @@ export default function ProductContextProvider({
     productId: Product["id"],
     maxQuantity: Product["maxQuantity"],
   ) {
-    const result = await checkIfProductMaxQuantityIsReached(
+    const result = await isMaxProductQuantityReachedAction(
       productId,
       maxQuantity,
     );

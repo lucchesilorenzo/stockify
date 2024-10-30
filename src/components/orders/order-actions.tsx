@@ -4,7 +4,7 @@ import { Paperclip } from "lucide-react";
 
 import { Button } from "../ui/button";
 
-import { useInvoiceContext } from "@/lib/hooks";
+import { useInvoice } from "@/hooks/use-invoice";
 import { OrderWithProduct } from "@/lib/types";
 
 type OrderActionsProps = {
@@ -12,7 +12,7 @@ type OrderActionsProps = {
 };
 
 export default function OrderActions({ order }: OrderActionsProps) {
-  const { handleIsInvoiceOpenAndSetOrder } = useInvoiceContext();
+  const { handleIsInvoiceOpenAndSetOrder } = useInvoice();
 
   return (
     <Button

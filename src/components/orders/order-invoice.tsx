@@ -9,11 +9,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useInvoiceContext } from "@/lib/hooks";
+import { useInvoice } from "@/hooks/use-invoice";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 export default function OrderInvoice() {
-  const { isInvoiceOpen, order } = useInvoiceContext();
+  const { isInvoiceOpen, order } = useInvoice();
 
   if (!isInvoiceOpen || !order) return null;
 

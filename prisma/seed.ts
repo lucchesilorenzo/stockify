@@ -76,7 +76,6 @@ async function main() {
     const productIndex = Math.floor(Math.random() * products.length);
     const orderedQuantity = Math.floor(Math.random() * 10) + 1;
 
-    // Calcolo realistico dei costi
     const options = {
       price: products[productIndex].price,
     };

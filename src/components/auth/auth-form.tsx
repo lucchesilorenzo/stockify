@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 import { LoadingButton } from "../common/loading-button";
 
-import { logIn, signUp } from "@/app/actions/auth-actions";
+import { logInAction, signUpAction } from "@/app/actions/auth-actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -33,7 +33,9 @@ export default function AuthForm({ authType }: AuthFormProps) {
 
   async function onSubmit(data: TSignUpSchema & TLogInSchema) {
     const result =
-      authType === "signup" ? await signUp(data) : await logIn(data);
+      authType === "signup"
+        ? await signUpAction(data)
+        : await logInAction(data);
     if (result?.message) {
       toast.error(result?.message);
       return;

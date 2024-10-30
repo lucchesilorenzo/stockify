@@ -9,7 +9,7 @@ import { signIn, signOut } from "@/lib/auth";
 import { createUser } from "@/lib/queries/auth-queries";
 import { logInSchema, signUpSchema } from "@/lib/validations/auth-validations";
 
-export async function signUp(credentials: unknown) {
+export async function signUpAction(credentials: unknown) {
   // Validation
   const validatedCredentials = signUpSchema.safeParse(credentials);
   if (!validatedCredentials.success) {
@@ -46,7 +46,7 @@ export async function signUp(credentials: unknown) {
   redirect("/app/dashboard");
 }
 
-export async function logIn(credentials: unknown) {
+export async function logInAction(credentials: unknown) {
   // Validation
   const validatedCredentials = logInSchema.safeParse(credentials);
   if (!validatedCredentials.success) {
@@ -71,6 +71,6 @@ export async function logIn(credentials: unknown) {
   redirect("/app/dashboard");
 }
 
-export async function logOut() {
+export async function logOutAction() {
   await signOut({ redirectTo: "/login" });
 }

@@ -20,7 +20,7 @@ import {
   productIdSchema,
 } from "@/lib/validations/product-validations";
 
-export async function addProduct(product: unknown) {
+export async function createProductAction(product: unknown) {
   const validatedProduct = productFormSchema.safeParse(product);
   if (!validatedProduct.success) {
     return { message: "Invalid product." };
@@ -59,7 +59,7 @@ export async function addProduct(product: unknown) {
   revalidatePath("/app/products");
 }
 
-export async function deleteProduct(productId: unknown) {
+export async function deleteProductAction(productId: unknown) {
   const validatedProductId = productIdSchema.safeParse(productId);
   if (!validatedProductId.success) {
     return { message: "Invalid product ID." };
@@ -102,7 +102,10 @@ export async function deleteProduct(productId: unknown) {
   revalidatePath("/app/products");
 }
 
-export async function updateProduct(productId: unknown, product: unknown) {
+export async function updateProductAction(
+  productId: unknown,
+  product: unknown,
+) {
   // Check if product ID is valid
   const validatedProductId = productIdSchema.safeParse(productId);
   if (!validatedProductId.success) {
@@ -142,7 +145,7 @@ export async function updateProduct(productId: unknown, product: unknown) {
   revalidatePath(`/app/products/${productToUpdate.slug}/edit`);
 }
 
-export async function checkIfProductMaxQuantityIsReached(
+export async function isMaxProductQuantityReachedAction(
   productId: Product["id"],
   maxQuantity: Product["maxQuantity"],
 ) {

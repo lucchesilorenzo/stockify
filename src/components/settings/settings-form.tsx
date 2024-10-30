@@ -11,7 +11,7 @@ import { Label } from "../ui/label";
 import { PhoneInput } from "../ui/phone-input";
 import { Textarea } from "../ui/textarea";
 
-import { updateSettings } from "@/app/actions/settings-actions";
+import { updateSettingsAction } from "@/app/actions/settings-actions";
 import { UserSettings } from "@/lib/types";
 import {
   TSettingsFormSchema,
@@ -33,7 +33,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
   });
 
   async function onSubmit(data: TSettingsFormSchema) {
-    const result = await updateSettings(data);
+    const result = await updateSettingsAction(data);
     if (result?.message) {
       toast.error(result?.message);
       return;

@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useProductContext } from "@/lib/hooks";
+import { useProduct } from "@/hooks/use-product";
 import {
   TProductFormSchema,
   productFormSchema,
@@ -25,7 +25,7 @@ type ProductFormProps = {
 };
 
 export default function ProductForm({ onFormSubmit }: ProductFormProps) {
-  const { categories, handleAddProduct } = useProductContext();
+  const { categories, handleAddProduct } = useProduct();
 
   const {
     register,

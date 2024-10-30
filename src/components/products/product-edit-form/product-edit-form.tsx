@@ -20,9 +20,9 @@ import H1 from "@/components/common/h1";
 import { LoadingButton } from "@/components/common/loading-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useProduct } from "@/hooks/use-product";
 import { uploadImage } from "@/lib/api";
 import { productStatuses } from "@/lib/data";
-import { useProductContext } from "@/lib/hooks";
 import {
   TProductEditFormSchema,
   productEditFormSchema,
@@ -35,7 +35,7 @@ type ProductEditFormProps = {
 export default function ProductEditForm({ product }: ProductEditFormProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
   const { categories, handleUpdateProduct, handleCheckProductMaxQuantity } =
-    useProductContext();
+    useProduct();
   const {
     register,
     setValue,

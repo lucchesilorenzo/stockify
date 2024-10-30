@@ -13,7 +13,7 @@ import {
 import { ActivityEssentials } from "@/lib/types";
 import { orderFormSchema } from "@/lib/validations/order-validations";
 
-export async function createOrder(order: unknown) {
+export async function createOrderAction(order: unknown) {
   const validatedOrder = orderFormSchema.safeParse(order);
   if (!validatedOrder.success) {
     return { message: "Invalid order data." };

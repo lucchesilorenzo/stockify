@@ -6,7 +6,7 @@ import { Order } from "@prisma/client";
 
 import { OrderWithProduct } from "@/lib/types";
 
-type InvoiceContextProviderProps = {
+type InvoiceProviderProps = {
   children: React.ReactNode;
 };
 
@@ -18,9 +18,7 @@ type TInvoiceContext = {
 
 export const InvoiceContext = createContext<TInvoiceContext | null>(null);
 
-export default function InvoiceContextProvider({
-  children,
-}: InvoiceContextProviderProps) {
+export default function InvoiceProvider({ children }: InvoiceProviderProps) {
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [order, setOrder] = useState<OrderWithProduct | null>(null);
   const [selectedOrderId, setSelectedOrderId] = useState<Order["id"] | null>(

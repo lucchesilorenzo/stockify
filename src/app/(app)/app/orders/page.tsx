@@ -7,7 +7,7 @@ import OrderInvoice from "@/components/orders/order-invoice";
 import OrderSummaryCard from "@/components/orders/order-summary-card";
 import OrdersActionCard from "@/components/orders/orders-action-card";
 import RecentOrdersTable from "@/components/orders/recent-orders-table";
-import InvoiceContextProvider from "@/contexts/invoice-context-provider";
+import InvoiceProvider from "@/contexts/invoice-provider";
 import {
   getMonthlyOrders,
   getOrders,
@@ -24,7 +24,7 @@ export default async function OrdersPage() {
   const weeklyOrders = await getWeeklyOrders();
 
   return (
-    <InvoiceContextProvider>
+    <InvoiceProvider>
       <main>
         <H1>Orders</H1>
 
@@ -49,6 +49,6 @@ export default async function OrdersPage() {
           </div>
         </section>
       </main>
-    </InvoiceContextProvider>
+    </InvoiceProvider>
   );
 }

@@ -16,7 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useProductContext } from "@/lib/hooks";
+import { useProduct } from "@/hooks/use-product";
 import { ProductWithCategory } from "@/lib/types";
 
 type ProductActionsProps = {
@@ -24,7 +24,7 @@ type ProductActionsProps = {
 };
 
 export default function ProductActions({ product }: ProductActionsProps) {
-  const { handleDeleteProduct } = useProductContext();
+  const { handleDeleteProduct } = useProduct();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   async function onDeleteProduct() {

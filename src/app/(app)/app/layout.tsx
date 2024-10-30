@@ -1,8 +1,8 @@
 import Header from "@/components/layout/header";
 import Sidebar from "@/components/layout/sidebar";
 import ThemeToggle from "@/components/layout/theme-toggle";
-import OrderContextProvider from "@/contexts/order-context-provider";
-import ProductContextProvider from "@/contexts/product-context-provider";
+import OrderProvider from "@/contexts/order-provider";
+import ProductProvider from "@/contexts/product-provider";
 import { getCategories } from "@/lib/queries/category-queries";
 
 type AppLayoutProps = {
@@ -18,15 +18,15 @@ export default async function AppLayout({ children }: AppLayoutProps) {
       <div className="flex flex-col">
         <Header />
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-8">
-          <OrderContextProvider>
-            <ProductContextProvider categoriesData={categories}>
+          <OrderProvider>
+            <ProductProvider categoriesData={categories}>
               {children}
 
               <div className="fixed bottom-5 right-5">
                 <ThemeToggle />
               </div>
-            </ProductContextProvider>
-          </OrderContextProvider>
+            </ProductProvider>
+          </OrderProvider>
         </main>
       </div>
     </div>
