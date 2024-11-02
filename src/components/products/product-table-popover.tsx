@@ -3,7 +3,6 @@
 import * as React from "react";
 
 import { Table } from "@tanstack/react-table";
-import { XCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -44,10 +44,7 @@ export default function ProductTablePopover<T>({
     <div className="flex items-center space-x-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className="w-[110px] sm:w-[150px] justify-start"
-          >
+          <Button variant="outline" className=" justify-start">
             {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
           </Button>
         </PopoverTrigger>
@@ -78,19 +75,17 @@ export default function ProductTablePopover<T>({
                     {status.label}
                   </CommandItem>
                 ))}
+                <CommandSeparator />
+                <CommandItem
+                  onSelect={handleResetStatus}
+                  className="flex justify-center text-red-500 hover:bg-red-50 font-semibold"
+                >
+                  Reset
+                </CommandItem>
               </CommandGroup>
             </CommandList>
           </Command>
         </PopoverContent>
-        {selectedStatus && (
-          <Button
-            variant="ghost"
-            onClick={handleResetStatus}
-            className="p-2 hidden sm:block"
-          >
-            <XCircle className="h-5 w-5" />
-          </Button>
-        )}
       </Popover>
     </div>
   );

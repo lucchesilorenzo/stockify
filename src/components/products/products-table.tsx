@@ -18,7 +18,13 @@ import { File, Plus } from "lucide-react";
 import CSVExport from "../common/csv-export";
 import EntityDialog from "../common/entity-dialog";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import ProductTablePopover from "./product-table-popover";
 
 import {
@@ -29,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useProduct } from "@/hooks/use-product";
 
 export interface ProductsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -43,6 +50,7 @@ export default function ProductsTable<TData, TValue>({
 }: ProductsTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const { categories } = useProduct();
 
   const table = useReactTable({
     data,
@@ -63,22 +71,28 @@ export default function ProductsTable<TData, TValue>({
     <>
       {/* Filters and actions */}
       <div>
-        <div className="flex items-center justify-between py-4 gap-x-4">
+        <div className="flex items-center justify-between py-4 gap-x-4 ">
           <div className="flex items-center gap-x-4">
-            <Input
-              placeholder="Filter categories..."
-              value={
-                (table
-                  .getColumn("category.name")
-                  ?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
+            <Select
+              onValueChange={(value) =>
                 table
                   .getColumn("category.name")
-                  ?.setFilterValue(event.target.value)
+                  ?.setFilterValue(value === "all" ? "" : value)
               }
-              className="max-w-72"
-            />
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.name}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
             <ProductTablePopover table={table} />
             <CSVExport data={csvData} filename="products.csv">
               <File className="sm:mr-2 h-4 w-4" />
