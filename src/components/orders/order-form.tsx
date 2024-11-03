@@ -44,7 +44,9 @@ export default function OrderForm({
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="space-y-6">
         <div className="flex flex-col space-y-1">
-          <Label htmlFor="productId">Product</Label>
+          <Label htmlFor="productId">
+            Product <span className="text-red-600">*</span>
+          </Label>
           <OrderCombobox
             products={filteredProducts}
             setValue={setValue} // setValue is used to set the value of the form
@@ -58,7 +60,9 @@ export default function OrderForm({
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="quantity">Quantity</Label>
+          <Label htmlFor="quantity">
+            Quantity <span className="text-red-600">*</span>
+          </Label>
           <Input id="quantity" {...register("quantity")} />
           {errors.quantity && (
             <p className="px-1 text-xs text-red-600">

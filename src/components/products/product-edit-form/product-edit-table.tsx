@@ -31,6 +31,7 @@ export default function ProductEditTable({
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Product</TableHead>
+          <TableHead>Barcode</TableHead>
           <TableHead>Stock</TableHead>
           <TableHead>Price</TableHead>
         </TableRow>
@@ -38,6 +39,7 @@ export default function ProductEditTable({
       <TableBody>
         <TableRow>
           <TableCell className="font-semibold">{product.name}</TableCell>
+          <TableCell>{product.barcode ?? "-"}</TableCell>
           <TableCell>
             <Label htmlFor="stock" className="sr-only">
               Stock

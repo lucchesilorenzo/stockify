@@ -1,7 +1,9 @@
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
   AlertTriangle,
   Home,
   LineChart,
+  Monitor,
   Package,
   ShoppingCart,
   TrendingUp,
@@ -42,5 +44,23 @@ export const dashboardData = [
     title: "Total Products",
     description: "In stock",
     icon: Package,
+  },
+];
+
+export const themeData = [
+  {
+    name: "Light",
+    value: "light",
+    icon: SunIcon,
+  },
+  {
+    name: "Dark",
+    value: "dark",
+    icon: MoonIcon,
+  },
+  {
+    name: "System",
+    value: "system",
+    icon: Monitor,
   },
 ];

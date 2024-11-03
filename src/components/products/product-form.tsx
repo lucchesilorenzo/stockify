@@ -45,7 +45,9 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="space-y-6">
         <div className="space-y-1">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">
+            Name <span className="text-red-600">*</span>
+          </Label>
           <Input id="name" {...register("name")} />
           {errors.name && (
             <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
@@ -53,7 +55,19 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="categoryId">Category</Label>
+          <Label htmlFor="barcode">Barcode</Label>
+          <Input id="barcode" {...register("barcode")} />
+          {errors.barcode && (
+            <p className="px-1 text-xs text-red-600">
+              {errors.barcode.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="categoryId">
+            Category <span className="text-red-600">*</span>
+          </Label>
           <Select onValueChange={(value) => setValue("categoryId", value)}>
             <SelectTrigger id="categoryId">
               <SelectValue placeholder="Select a category" />
@@ -74,7 +88,9 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="price">Price</Label>
+          <Label htmlFor="price">
+            Price <span className="text-red-600">*</span>
+          </Label>
           <Input id="price" {...register("price")} />
           {errors.price && (
             <p className="px-1 text-xs text-red-600">{errors.price.message}</p>
@@ -82,7 +98,9 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="minQuantity">Min Quantity</Label>
+          <Label htmlFor="minQuantity">
+            Min Quantity <span className="text-red-600">*</span>
+          </Label>
           <Input id="minQuantity" {...register("minQuantity")} />
           {errors.minQuantity && (
             <p className="px-1 text-xs text-red-600">
@@ -92,7 +110,9 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="maxQuantity">Max Quantity</Label>
+          <Label htmlFor="maxQuantity">
+            Max Quantity <span className="text-red-600">*</span>
+          </Label>
           <Input id="maxQuantity" {...register("maxQuantity")} />
           {errors.maxQuantity && (
             <p className="px-1 text-xs text-red-600">
@@ -102,7 +122,9 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="quantity">Quantity</Label>
+          <Label htmlFor="quantity">
+            Quantity <span className="text-red-600">*</span>
+          </Label>
           <Input id="quantity" {...register("quantity")} />
           {errors.quantity && (
             <p className="px-1 text-xs text-red-600">

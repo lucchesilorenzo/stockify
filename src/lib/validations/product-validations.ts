@@ -7,6 +7,7 @@ export const productFormSchema = z
       .trim()
       .min(1, "Name is required.")
       .max(20, "Name is too long."),
+    barcode: z.string().trim().max(15, "Barcode is too long."),
     categoryId: z.string({
       required_error: "Category is required.",
     }),

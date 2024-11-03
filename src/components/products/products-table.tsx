@@ -18,6 +18,7 @@ import { File, Plus } from "lucide-react";
 import CSVExport from "../common/csv-export";
 import EntityDialog from "../common/entity-dialog";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
@@ -73,6 +74,16 @@ export default function ProductsTable<TData, TValue>({
       <div>
         <div className="flex items-center justify-between py-4 gap-x-4 ">
           <div className="flex items-center gap-x-4">
+            <Input
+              placeholder="Filter products..."
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(e) =>
+                table.getColumn("name")?.setFilterValue(e.target.value)
+              }
+              className="max-w-sm"
+            />
             <Select
               onValueChange={(value) =>
                 table

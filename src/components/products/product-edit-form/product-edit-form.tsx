@@ -96,7 +96,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
             <span className="sr-only">Back</span>
           </Link>
         </Button>
-        <H1>Edit Product</H1>
+        <H1>{product.name}</H1>
         <Badge
           variant={product.status === "Archived" ? "destructive" : "default"}
           className="ml-auto sm:ml-0"

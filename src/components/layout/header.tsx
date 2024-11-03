@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { CircleUser } from "lucide-react";
 import Link from "next/link";
 
+import { BarcodeCommandDialog } from "../common/barcode-command-dialog";
 import MobileNavigation from "./mobile-navigation";
 
 import { logOutAction } from "@/app/actions/auth-actions";
@@ -29,7 +30,9 @@ export default function Header() {
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <MobileNavigation />
-      <div className="w-full flex-1">{/* TODO: More to be added */}</div>
+      <div className="w-full flex-1">
+        <BarcodeCommandDialog />
+      </div>
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
