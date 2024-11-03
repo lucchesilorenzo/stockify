@@ -19,7 +19,8 @@ export async function updateSettingsAction(settings: unknown) {
   // Update settings
   try {
     await updateSettingsByUserId(session.user.id, validatedSettings.data);
-  } catch {
+  } catch (err) {
+    console.log(err);
     return { message: "Failed to update settings." };
   }
 

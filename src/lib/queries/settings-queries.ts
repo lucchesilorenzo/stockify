@@ -29,7 +29,9 @@ export async function getSettingsByUserId(id: User["id"]) {
       dateOfBirth: true,
       bio: true,
       phoneNumber: true,
-      location: true,
+      address: true,
+      city: true,
+      zipcode: true,
     },
   });
 

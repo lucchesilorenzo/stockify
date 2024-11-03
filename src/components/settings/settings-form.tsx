@@ -133,16 +133,44 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="location">Location</Label>
+          <Label htmlFor="address">Address</Label>
           <Input
-            id="location"
-            placeholder="San Francisco, CA"
-            defaultValue={userSettings?.location ?? ""}
-            {...register("location")}
+            id="address"
+            placeholder="123 Main St."
+            defaultValue={userSettings?.address ?? ""}
+            {...register("address")}
           />
-          {errors.location && (
+          {errors.address && (
             <p className="px-1 text-xs text-red-600">
-              {errors.location.message}
+              {errors.address.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="city">City</Label>
+          <Input
+            id="city"
+            placeholder="San Francisco"
+            defaultValue={userSettings?.city ?? ""}
+            {...register("city")}
+          />
+          {errors.city && (
+            <p className="px-1 text-xs text-red-600">{errors.city.message}</p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="zipcode">Zipcode</Label>
+          <Input
+            id="zipcode"
+            placeholder="94105"
+            defaultValue={userSettings?.zipcode ?? ""}
+            {...register("zipcode")}
+          />
+          {errors.zipcode && (
+            <p className="px-1 text-xs text-red-600">
+              {errors.zipcode.message}
             </p>
           )}
         </div>

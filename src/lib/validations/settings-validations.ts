@@ -13,8 +13,14 @@ export const settingsFormSchema = z.object({
     .max(20, "Last name is too long."),
   dateOfBirth: z.date().optional(),
   bio: z.string().trim().max(200, "Bio is too long."),
-  phoneNumber: z.string().trim().max(30, "Phone number is too long."),
-  location: z.string().trim().max(20, "Location is too long."),
+  phoneNumber: z
+    .string()
+    .trim()
+    .max(30, "Phone number is too long.")
+    .optional(),
+  address: z.string().trim().max(20, "Address is too long."),
+  city: z.string().trim().max(20, "City is too long."),
+  zipcode: z.string().trim().max(5, "Zipcode is too long."),
 });
 
 export type TSettingsFormSchema = z.infer<typeof settingsFormSchema>;

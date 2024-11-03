@@ -53,5 +53,7 @@ export type UserSettings = {
   dateOfBirth: User["dateOfBirth"] | null;
   bio: User["bio"] | null;
   phoneNumber: User["phoneNumber"] | null;
-  location: User["location"] | null;
+  address: User["address"] | null;
+  city: User["city"] | null;
+  zipcode: User["zipcode"] | null;
 } | null;
