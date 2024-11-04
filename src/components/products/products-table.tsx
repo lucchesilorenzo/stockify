@@ -72,7 +72,7 @@ export default function ProductsTable<TData, TValue>({
     <>
       {/* Filters and actions */}
       <div>
-        <div className="flex items-center justify-between py-4 gap-x-4 ">
+        <div className="flex items-center justify-between py-4 gap-x-4">
           <div className="flex items-center gap-x-4">
             <Input
               placeholder="Filter products..."
@@ -82,7 +82,7 @@ export default function ProductsTable<TData, TValue>({
               onChange={(e) =>
                 table.getColumn("name")?.setFilterValue(e.target.value)
               }
-              className="max-w-sm"
+              className="max-w-sm hidden sm:block"
             />
             <Select
               onValueChange={(value) =>

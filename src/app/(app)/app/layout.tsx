@@ -1,6 +1,6 @@
+import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import Sidebar from "@/components/layout/sidebar";
-import ThemeToggle from "@/components/layout/theme-toggle";
 import OrderProvider from "@/contexts/order-provider";
 import ProductProvider from "@/contexts/product-provider";
 import { getCategories } from "@/lib/queries/category-queries";
@@ -21,13 +21,10 @@ export default async function AppLayout({ children }: AppLayoutProps) {
           <OrderProvider>
             <ProductProvider categoriesData={categories}>
               {children}
-
-              <div className="fixed bottom-5 right-5">
-                <ThemeToggle />
-              </div>
             </ProductProvider>
           </OrderProvider>
         </main>
+        <Footer />
       </div>
     </div>
   );

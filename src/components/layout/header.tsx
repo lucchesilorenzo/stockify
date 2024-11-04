@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { BarcodeCommandDialog } from "../common/barcode-command-dialog";
 import MobileNavigation from "./mobile-navigation";
+import ThemeToggle from "./theme-toggle";
 
 import { logOutAction } from "@/app/actions/auth-actions";
 import { Button } from "@/components/ui/button";
@@ -33,9 +34,10 @@ export default function Header() {
       <div className="w-full flex-1">
         <BarcodeCommandDialog />
       </div>
+      <ThemeToggle />
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondary" size="icon" className="rounded-full">
+          <Button variant="outline" size="icon" className="rounded-full">
             <CircleUser className="h-5 w-5" />
             <span className="sr-only">Toggle user menu</span>
           </Button>
