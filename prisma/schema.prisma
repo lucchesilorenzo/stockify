@@ -38,22 +38,59 @@ model Order {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique
+  id          String      @id @default(cuid())
+  name        String      @unique
+  slug        String      @unique
   barcode     String?
   price       Float
   quantity    Int
   maxQuantity Int
   minQuantity Int
   description String?
-  status      String   @default("Available")
+  status      String      @default("Available")
   image       String?
+  category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
   order       Order[]
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
+  orderItem   OrderItem[]
+  updatedAt   DateTime    @updatedAt
+  createdAt   DateTime    @default(now())
+}
+
+model Customer {
+  id            String          @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String          @unique
+  phone         String?
+  address       String
+  city          String
+  zipcode       String
+  customerOrder CustomerOrder[]
+  updatedAt     DateTime        @updatedAt
+  createdAt     DateTime        @default(now())
+}
+
+model CustomerOrder {
+  id          String      @id @default(cuid())
+  status      String      @default("Pending")
+  totalAmount Float
+  customer    Customer    @relation(fields: [customerId], references: [id])
+  customerId  String
+  orderItem   OrderItem[]
+  updatedAt   DateTime    @updatedAt
+  createdAt   DateTime    @default(now())
+}
+
+model OrderItem {
+  id              String        @id @default(cuid())
+  customerOrder   CustomerOrder @relation(fields: [customerOrderId], references: [id])
+  customerOrderId String
+  product         Product       @relation(fields: [productId], references: [id])
+  productId       String
+  quantity        Int
+  subtotal        Float
+  totalPrice      Float
 }
 
 model Category {

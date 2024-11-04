@@ -27,7 +27,7 @@ export type OrderWithProduct = Prisma.OrderGetPayload<{
 
 export type OrderEssentials = Omit<
   Order,
-  "id" | "createdAt" | "updatedAt" | "status"
+  "id" | "createdAt" | "updatedAt" | "status" | "customerId"
 >;
 
 export type Status = {
