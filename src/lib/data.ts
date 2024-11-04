@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   TrendingUp,
   Truck,
+  UserRound,
 } from "lucide-react";
 
 import { Status } from "./types";
@@ -16,6 +17,7 @@ export const routes = [
   { name: "Dashboard", href: "/app/dashboard", icon: Home },
   { name: "Orders", href: "/app/orders", icon: ShoppingCart },
   { name: "Products", href: "/app/products", icon: Package },
+  { name: "Customers", href: "/app/customers", icon: UserRound },
   { name: "Analytics", href: "/app/analytics", icon: LineChart },
 ];
 
