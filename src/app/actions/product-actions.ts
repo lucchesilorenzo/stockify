@@ -40,7 +40,6 @@ export async function createProductAction(product: unknown) {
         return { message: "Product already exists." };
       }
     }
-    console.log(error);
     return { message: "Failed to create product." };
   }
 

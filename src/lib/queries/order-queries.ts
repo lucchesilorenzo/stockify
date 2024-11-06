@@ -1,11 +1,11 @@
-import { Order, Product } from "@prisma/client";
+import { Product, RestockOrder } from "@prisma/client";
 import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
 
 import prisma from "../db";
-import { OrderEssentials } from "../types";
+import { RestockOrderEssentials } from "../types";
 
 export async function getOrders() {
-  const orders = await prisma.order.findMany({
+  const orders = await prisma.restockOrder.findMany({
     include: {
       product: {
         select: {
@@ -19,7 +19,7 @@ export async function getOrders() {
 }
 
 export async function checkIfProductHasOrder(productId: Product["id"]) {
-  const productHasOrder = await prisma.order.findFirst({
+  const productHasOrder = await prisma.restockOrder.findFirst({
     where: {
       productId,
     },
@@ -28,8 +28,8 @@ export async function checkIfProductHasOrder(productId: Product["id"]) {
   return productHasOrder;
 }
 
-export async function createNewOrder(orderDetails: OrderEssentials) {
-  const newOrder = await prisma.order.create({
+export async function createNewOrder(orderDetails: RestockOrderEssentials) {
+  const newOrder = await prisma.restockOrder.create({
     data: orderDetails,
   });
 
@@ -40,7 +40,7 @@ export async function getMonthlyOrders() {
   const start = startOfMonth(new Date());
   const end = endOfMonth(new Date());
 
-  const ordersThisMonth = await prisma.order.findMany({
+  const ordersThisMonth = await prisma.restockOrder.findMany({
     where: {
       createdAt: {
         gte: start,
@@ -56,7 +56,7 @@ export async function getWeeklyOrders() {
   const start = startOfWeek(new Date(), { weekStartsOn: 1 });
   const end = endOfWeek(new Date(), { weekStartsOn: 1 });
 
-  const ordersLastWeek = await prisma.order.findMany({
+  const ordersLastWeek = await prisma.restockOrder.findMany({
     where: {
       createdAt: {
         gte: start,
@@ -68,8 +68,8 @@ export async function getWeeklyOrders() {
   return ordersLastWeek;
 }
 
-export async function updateOrderStatus(orderId: Order["id"]) {
-  const updatedOrder = await prisma.order.update({
+export async function updateOrderStatus(orderId: RestockOrder["id"]) {
+  const updatedOrder = await prisma.restockOrder.update({
     where: {
       id: orderId,
     },

@@ -99,7 +99,7 @@ async function main() {
     orders.push(order);
   }
 
-  await prisma.order.createMany({
+  await prisma.restockOrder.createMany({
     data: orders,
   });
 

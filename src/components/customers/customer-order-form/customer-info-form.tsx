@@ -31,7 +31,7 @@ export default function CustomerInfoCard({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div>
+        <div className="space-y-1">
           <Label htmlFor="firstName">
             First Name <span className="text-red-600">*</span>
           </Label>
@@ -41,7 +41,7 @@ export default function CustomerInfoCard({
           )}
         </div>
 
-        <div>
+        <div className="space-y-1">
           <Label htmlFor="lastName">
             Last Name <span className="text-red-600">*</span>
           </Label>
@@ -51,7 +51,7 @@ export default function CustomerInfoCard({
           )}
         </div>
 
-        <div>
+        <div className="space-y-1">
           <Label htmlFor="email">
             Email <span className="text-red-600">*</span>
           </Label>
@@ -61,7 +61,7 @@ export default function CustomerInfoCard({
           )}
         </div>
 
-        <div>
+        <div className="space-y-1">
           <Label htmlFor="phone">Phone</Label>
           <Input id="phone" {...register("phone")} />
           {errors.phone && (
@@ -69,7 +69,7 @@ export default function CustomerInfoCard({
           )}
         </div>
 
-        <div>
+        <div className="space-y-1">
           <Label htmlFor="address">
             Address <span className="text-red-600">*</span>
           </Label>
@@ -79,7 +79,7 @@ export default function CustomerInfoCard({
           )}
         </div>
 
-        <div>
+        <div className="space-y-1">
           <Label htmlFor="city">
             City <span className="text-red-600">*</span>
           </Label>
@@ -89,7 +89,7 @@ export default function CustomerInfoCard({
           )}
         </div>
 
-        <div>
+        <div className="space-y-1">
           <Label htmlFor="zipcode">
             Zipcode <span className="text-red-600">*</span>
           </Label>

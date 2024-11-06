@@ -23,6 +23,7 @@ export default function CustomerOrderForm({
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<CustomerFormSchema>({
     resolver: zodResolver(customerFormSchema),
@@ -39,7 +40,7 @@ export default function CustomerOrderForm({
     >
       <CustomerInfoCard register={register} errors={errors} />
 
-      <ProductSelectionCard products={products} />
+      <ProductSelectionCard products={products} setValue={setValue} />
 
       <LoadingButton type="submit" isLoading={isSubmitting} className="ml-auto">
         Submit Order

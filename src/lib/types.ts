@@ -1,4 +1,4 @@
-import { Order, Prisma, Product, User } from "@prisma/client";
+import { Prisma, Product, RestockOrder, User } from "@prisma/client";
 
 export type ProductWithCategory = Prisma.ProductGetPayload<{
   include: {
@@ -15,7 +15,7 @@ export type ProductEssentials = Omit<
   "id" | "createdAt" | "updatedAt" | "status" | "description" | "image"
 >;
 
-export type OrderWithProduct = Prisma.OrderGetPayload<{
+export type RestockOrderWithProduct = Prisma.RestockOrderGetPayload<{
   include: {
     product: {
       select: {
@@ -25,8 +25,8 @@ export type OrderWithProduct = Prisma.OrderGetPayload<{
   };
 }>;
 
-export type OrderEssentials = Omit<
-  Order,
+export type RestockOrderEssentials = Omit<
+  RestockOrder,
   "id" | "createdAt" | "updatedAt" | "status" | "customerId"
 >;
 
@@ -57,3 +57,10 @@ export type UserSettings = {
   city: User["city"] | null;
   zipcode: User["zipcode"] | null;
 } | null;
+
+export type CustomerSelectedProduct = {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+};

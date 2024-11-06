@@ -36,7 +36,6 @@ export default function OrderCombobox({
 }: OrderComboboxProps) {
   const [open, setOpen] = useState(false);
   const [internalValue, setInternalValue] = useState("");
-  console.log(products);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

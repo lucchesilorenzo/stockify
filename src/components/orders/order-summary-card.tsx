@@ -1,4 +1,4 @@
-import { Order } from "@prisma/client";
+import { RestockOrder } from "@prisma/client";
 import { CalendarDays } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +6,7 @@ import { formatCurrency } from "@/lib/utils";
 
 type OrderSummaryCardProps = {
   type: "month" | "week";
-  orders: Order[];
+  orders: RestockOrder[];
 };
 
 export default function OrderSummaryCard({

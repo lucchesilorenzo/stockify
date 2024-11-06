@@ -6,10 +6,10 @@ import { ChevronsUpDown } from "lucide-react";
 import OrderActions from "@/components/orders/order-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { OrderWithProduct } from "@/lib/types";
+import { RestockOrderWithProduct } from "@/lib/types";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
-export const columns: ColumnDef<OrderWithProduct>[] = [
+export const columns: ColumnDef<RestockOrderWithProduct>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {

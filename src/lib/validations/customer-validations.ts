@@ -20,6 +20,15 @@ export const customerFormSchema = z.object({
   address: z.string().trim().max(20, "Address is too long."),
   city: z.string().trim().max(20, "City is too long."),
   zipcode: z.string().trim().max(5, "Zipcode is too long."),
+  products: z
+    .array(
+      z.object({
+        productId: z.string(),
+        price: z.number(),
+        quantity: z.number(),
+      }),
+    )
+    .min(1, "At least one product is required."),
 });
 
 export type CustomerFormSchema = z.infer<typeof customerFormSchema>;

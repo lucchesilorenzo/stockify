@@ -49,8 +49,8 @@ export default function OrderForm({
           </Label>
           <OrderCombobox
             products={filteredProducts}
-            setValue={setValue} // setValue is used to set the value of the form
-            fieldName="productId" // fieldName is used to get the value of the form
+            setValue={setValue}
+            fieldName="productId"
           />
           {errors.productId && (
             <p className="px-1 text-xs text-red-600">
