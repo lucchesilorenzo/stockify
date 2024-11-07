@@ -1,4 +1,11 @@
-import { Prisma, Product, RestockOrder, User } from "@prisma/client";
+import {
+  Customer,
+  CustomerOrder,
+  Prisma,
+  Product,
+  RestockOrder,
+  User,
+} from "@prisma/client";
 
 export type ProductWithCategory = Prisma.ProductGetPayload<{
   include: {
@@ -37,8 +44,8 @@ export type Status = {
 
 export type ActivityEssentials = {
   activity: "Created" | "Updated" | "Deleted";
-  entity: "Product" | "Order";
-  product: ProductEssentials["name"];
+  entity: "Product" | "Order" | "Shipping";
+  product?: ProductEssentials["name"];
 };
 
 export type UserEssentials = Pick<
@@ -58,9 +65,19 @@ export type UserSettings = {
   zipcode: User["zipcode"] | null;
 } | null;
 
+export type CustomerEssentials = Omit<
+  Customer,
+  "id" | "createdAt" | "updatedAt"
+>;
+
 export type CustomerSelectedProduct = {
   productId: string;
   name: string;
   price: number;
   quantity: number;
 };
+
+export type CustomerOrderEssentials = Omit<
+  CustomerOrder,
+  "id" | "createdAt" | "updatedAt" | "status"
+>;

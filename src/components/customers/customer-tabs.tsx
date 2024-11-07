@@ -7,13 +7,13 @@ export default async function CustomerTabs() {
   const availableProducts = await getFilteredProducts();
 
   return (
-    <Tabs defaultValue="new-order" className="space-y-4">
+    <Tabs defaultValue="prepare-shipment" className="space-y-4">
       <TabsList>
-        <TabsTrigger value="new-order">New Order</TabsTrigger>
+        <TabsTrigger value="prepare-shipment">Prepare Shipment</TabsTrigger>
         <TabsTrigger value="customers">Customers</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="new-order">
+      <TabsContent value="prepare-shipment">
         <CustomerOrderForm products={availableProducts} />
       </TabsContent>
 

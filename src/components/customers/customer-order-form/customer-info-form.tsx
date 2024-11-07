@@ -27,7 +27,7 @@ export default function CustomerInfoCard({
       <CardHeader>
         <CardTitle className="text-xl">Customer Information</CardTitle>
         <CardDescription>
-          Enter the customer&apos;s details to create an order
+          Enter the customer&apos;s details for shipment preparation.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

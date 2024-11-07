@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const customerFormSchema = z.object({
+export const shippingFormSchema = z.object({
   firstName: z
     .string()
     .trim()
@@ -16,7 +16,7 @@ export const customerFormSchema = z.object({
     .trim()
     .min(1, "Email is required.")
     .email("Invalid email address."),
-  phone: z.string().trim().max(30, "Phone number is too long.").optional(),
+  phone: z.string().trim().max(30, "Phone number is too long."),
   address: z.string().trim().max(20, "Address is too long."),
   city: z.string().trim().max(20, "City is too long."),
   zipcode: z.string().trim().max(5, "Zipcode is too long."),
@@ -24,6 +24,7 @@ export const customerFormSchema = z.object({
     .array(
       z.object({
         productId: z.string(),
+        name: z.string(),
         price: z.number(),
         quantity: z.number(),
       }),
@@ -31,4 +32,4 @@ export const customerFormSchema = z.object({
     .min(1, "At least one product is required."),
 });
 
-export type CustomerFormSchema = z.infer<typeof customerFormSchema>;
+export type ShippingFormSchema = z.infer<typeof shippingFormSchema>;

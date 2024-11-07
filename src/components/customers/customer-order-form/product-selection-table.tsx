@@ -52,7 +52,7 @@ export default function ProductSelectionTable({
       </TableHeader>
       <TableBody>
         {products.map((product) => (
-          <TableRow key={product.productId}>
+          <TableRow key={product.productId} className="hover:bg-background">
             <TableCell>{product.name}</TableCell>
             <TableCell>
               {formatCurrency(product.price * product.quantity)}

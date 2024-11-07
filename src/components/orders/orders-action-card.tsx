@@ -17,9 +17,9 @@ export default async function OrdersActionCard() {
   return (
     <Card className="sm:col-span-2">
       <CardHeader className="pb-3">
-        <CardTitle>Your Orders</CardTitle>
+        <CardTitle>Restock Inventory</CardTitle>
         <CardDescription className="max-w-lg text-balance leading-relaxed">
-          Manage your orders efficiently with our comprehensive dashboard.
+          Track and manage your inventory restocks with ease.
         </CardDescription>
       </CardHeader>
       <CardFooter>
@@ -28,7 +28,7 @@ export default async function OrdersActionCard() {
           filteredProducts={filteredProducts}
         >
           <Plus className="mr-1 h-5 w-5" />
-          Create New Order
+          Restock Product
         </EntityDialog>
       </CardFooter>
     </Card>
