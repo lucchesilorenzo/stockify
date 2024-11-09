@@ -6,15 +6,16 @@ import { revalidatePath } from "next/cache";
 import {
   createCustomer,
   createCustomerItems,
-  createCustomerOrder,
+  createCustomerShipment,
   getCustomerByEmail,
-  updateCustomerOrderStatus,
+  updateCustomerShipmentStatus,
+  updateProductQuantities,
 } from "@/lib/queries/customer-queries";
 import { createActivity } from "@/lib/queries/dashboard-queries";
 import { ActivityEssentials } from "@/lib/types";
 import { shippingFormSchema } from "@/lib/validations/customer-validations";
 
-export async function createShipment(shipment: unknown) {
+export async function createShipmentAction(shipment: unknown) {
   // Validation
   const validatedShipment = shippingFormSchema.safeParse(shipment);
   if (!validatedShipment.success) {
@@ -50,35 +51,47 @@ export async function createShipment(shipment: unknown) {
   const customerId = customer?.id || newCustomer?.id;
   if (!customerId) return;
 
-  // Create shipment for customer order
+  // Create customer shipment
   try {
-    const customerOrder = await createCustomerOrder({ customerId });
+    const customerShipment = await createCustomerShipment({ customerId });
 
-    // Update customer order status in 1 minute
+    // Update customer shipment status in 1 minute
     setTimeout(async () => {
       try {
-        await updateCustomerOrderStatus(customerOrder.id);
+        await updateCustomerShipmentStatus(customerShipment.id);
       } catch {
-        return { message: "Failed to update order status." };
+        return { message: "Failed to update shipment status." };
       }
     }, 60000);
 
-    // Create customer order items object
-    const customerOrderItems = validatedShipment.data.products.map((p) => ({
+    // Create items for shipment
+    const customerShipmentItems = validatedShipment.data.products.map((p) => ({
       productId: p.productId,
-      customerOrderId: customerOrder.id,
+      customerShipmentId: customerShipment.id,
       quantity: p.quantity,
     }));
 
-    // Assign customer order items to customer order
-    await createCustomerItems(customerOrderItems);
+    // Assign items to shipment and add to customer
+    await createCustomerItems(customerShipmentItems);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        return { message: "Customer order already exists." };
+        return { message: "Shipment already exists." };
       }
     }
-    return { message: "Failed to create customer order." };
+    return { message: "Failed to create shipment." };
+  }
+
+  // Subtract quantity from inventory
+  const productsToUpdate = validatedShipment.data.products.map((p) => ({
+    id: p.productId,
+    quantity: p.quantity,
+  }));
+
+  try {
+    await updateProductQuantities(productsToUpdate);
+  } catch {
+    return { message: "Failed to update product quantities." };
   }
 
   // Create new activity

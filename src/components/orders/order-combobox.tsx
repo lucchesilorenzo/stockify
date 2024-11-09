@@ -80,6 +80,14 @@ export default function OrderCombobox({
                     )}
                   />
                   {product.name}
+                  {product.quantity <= 10 && (
+                    <>
+                      <span className="mx-1">-</span>
+                      <span className="text-red-600">
+                        {product.quantity} left
+                      </span>
+                    </>
+                  )}
                 </CommandItem>
               ))}
             </CommandGroup>

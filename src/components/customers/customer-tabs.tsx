@@ -1,10 +1,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import CustomerOrderForm from "./customer-order-form/customer-order-form";
+import CustomerShipmentForm from "./customer-shipment-form/customer-shipment-form";
 
+import { getCustomers } from "@/lib/queries/customer-queries";
 import { getFilteredProducts } from "@/lib/queries/product-queries";
 
 export default async function CustomerTabs() {
   const availableProducts = await getFilteredProducts();
+  const customers = await getCustomers();
 
   return (
     <Tabs defaultValue="prepare-shipment" className="space-y-4">
@@ -14,7 +16,10 @@ export default async function CustomerTabs() {
       </TabsList>
 
       <TabsContent value="prepare-shipment">
-        <CustomerOrderForm products={availableProducts} />
+        <CustomerShipmentForm
+          products={availableProducts}
+          customers={customers}
+        />
       </TabsContent>
 
       <TabsContent value="customers"></TabsContent>

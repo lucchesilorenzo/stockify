@@ -1,14 +1,12 @@
-import { CustomerOrder } from "@prisma/client";
+import { CustomerShipment, Product } from "@prisma/client";
 
 import prisma from "../db";
 import { CustomerEssentials, CustomerOrderEssentials } from "../types";
 
-export async function createCustomer(customer: CustomerEssentials) {
-  const newCustomer = await prisma.customer.create({
-    data: customer,
-  });
+export async function getCustomers() {
+  const customers = await prisma.customer.findMany();
 
-  return newCustomer;
+  return customers;
 }
 
 export async function getCustomerByEmail(email: CustomerEssentials["email"]) {
@@ -21,18 +19,38 @@ export async function getCustomerByEmail(email: CustomerEssentials["email"]) {
   return customer;
 }
 
-export async function createCustomerOrder(order: CustomerOrderEssentials) {
-  const newCustomerOrder = await prisma.customerOrder.create({
-    data: order,
+export async function createCustomer(customer: CustomerEssentials) {
+  const newCustomer = await prisma.customer.create({
+    data: customer,
   });
 
-  return newCustomerOrder;
+  return newCustomer;
 }
 
-export async function updateCustomerOrderStatus(
-  customerOrderId: CustomerOrder["id"],
+export async function createCustomerShipment(
+  shipment: CustomerOrderEssentials,
 ) {
-  const updatedCustomerOrder = await prisma.customerOrder.update({
+  const newCustomerShipment = await prisma.customerShipment.create({
+    data: shipment,
+  });
+
+  return newCustomerShipment;
+}
+
+export async function createCustomerItems(
+  items: { productId: string; customerShipmentId: string; quantity: number }[],
+) {
+  const newCustomerItems = await prisma.shipmentItem.createMany({
+    data: items,
+  });
+
+  return newCustomerItems;
+}
+
+export async function updateCustomerShipmentStatus(
+  customerOrderId: CustomerShipment["id"],
+) {
+  const updatedCustomerOrder = await prisma.customerShipment.update({
     where: {
       id: customerOrderId,
     },
@@ -44,12 +62,23 @@ export async function updateCustomerOrderStatus(
   return updatedCustomerOrder;
 }
 
-export async function createCustomerItems(
-  items: { productId: string; customerOrderId: string; quantity: number }[],
+export async function updateProductQuantities(
+  productsToUpdate: { id: Product["id"]; quantity: Product["quantity"] }[],
 ) {
-  const newCustomerItems = await prisma.customerOrderItem.createMany({
-    data: items,
+  const updatePromises = productsToUpdate.map(({ id, quantity }) => {
+    return prisma.product.update({
+      where: {
+        id,
+      },
+      data: {
+        quantity: {
+          decrement: quantity,
+        },
+      },
+    });
   });
 
-  return newCustomerItems;
+  const updatedProducts = await Promise.all(updatePromises);
+
+  return updatedProducts;
 }

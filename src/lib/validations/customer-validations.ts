@@ -17,9 +17,21 @@ export const shippingFormSchema = z.object({
     .min(1, "Email is required.")
     .email("Invalid email address."),
   phone: z.string().trim().max(30, "Phone number is too long."),
-  address: z.string().trim().max(20, "Address is too long."),
-  city: z.string().trim().max(20, "City is too long."),
-  zipcode: z.string().trim().max(5, "Zipcode is too long."),
+  address: z
+    .string()
+    .trim()
+    .min(1, "Address is required.")
+    .max(20, "Address is too long."),
+  city: z
+    .string()
+    .trim()
+    .min(1, "City is required.")
+    .max(20, "City is too long."),
+  zipcode: z
+    .string()
+    .trim()
+    .min(1, "Zipcode is required.")
+    .max(5, "Zipcode is too long."),
   products: z
     .array(
       z.object({
@@ -32,4 +44,4 @@ export const shippingFormSchema = z.object({
     .min(1, "At least one product is required."),
 });
 
-export type ShippingFormSchema = z.infer<typeof shippingFormSchema>;
+export type TShippingFormSchema = z.infer<typeof shippingFormSchema>;

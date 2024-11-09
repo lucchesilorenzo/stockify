@@ -48,14 +48,15 @@ export async function getPendingOrders() {
   return pendingOrders;
 }
 
-export async function getAvailableProducts() {
-  const availableProducts = await prisma.product.count({
-    where: {
-      status: "Available",
-    },
-  });
+export async function getUnitsInStock() {
+  const unitsInStock = await prisma.product.findMany();
 
-  return availableProducts;
+  const totalUnitsInStock = unitsInStock.reduce(
+    (total, { quantity, price }) => total + price * quantity,
+    0,
+  );
+
+  return totalUnitsInStock;
 }
 
 export async function getRecentActivities() {

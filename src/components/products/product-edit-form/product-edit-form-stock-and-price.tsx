@@ -30,7 +30,7 @@ export default function ProductEditFormStockAndPrice({
       <CardHeader>
         <CardTitle>Stock</CardTitle>
         <CardDescription>
-          Change the stock and price of your product
+          Change the stock and price of your product.
         </CardDescription>
       </CardHeader>
       <CardContent>

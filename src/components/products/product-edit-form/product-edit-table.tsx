@@ -32,7 +32,7 @@ export default function ProductEditTable({
         <TableRow>
           <TableHead className="w-[100px]">Product</TableHead>
           <TableHead>Barcode</TableHead>
-          <TableHead>Stock</TableHead>
+          <TableHead>Max Quantity</TableHead>
           <TableHead>Price</TableHead>
         </TableRow>
       </TableHeader>
@@ -41,11 +41,11 @@ export default function ProductEditTable({
           <TableCell className="font-semibold">{product.name}</TableCell>
           <TableCell>{product.barcode ?? "-"}</TableCell>
           <TableCell>
-            <Label htmlFor="stock" className="sr-only">
+            <Label htmlFor="maxQuantity" className="sr-only">
               Stock
             </Label>
             <Input
-              id="stock"
+              id="maxQuantity"
               defaultValue={product.maxQuantity}
               {...register("maxQuantity")}
             />

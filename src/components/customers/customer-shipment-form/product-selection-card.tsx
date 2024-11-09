@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { FieldErrors, UseFormSetValue } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,14 +21,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CustomerSelectedProduct, ProductWithCategory } from "@/lib/types";
+import { useCustomer } from "@/hooks/use-customer";
+import { ProductWithCategory } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import { ShippingFormSchema } from "@/lib/validations/customer-validations";
+import { TShippingFormSchema } from "@/lib/validations/customer-validations";
 
 type ProductSelectionCardProps = {
   products: ProductWithCategory[];
-  setValue: UseFormSetValue<ShippingFormSchema>;
-  errors: FieldErrors<ShippingFormSchema>;
+  setValue: UseFormSetValue<TShippingFormSchema>;
+  errors: FieldErrors<TShippingFormSchema>;
 };
 
 export default function ProductSelectionCard({
@@ -38,10 +37,12 @@ export default function ProductSelectionCard({
   setValue,
   errors,
 }: ProductSelectionCardProps) {
-  const [selectedProductId, setSelectedProductId] = useState("");
-  const [selectedProducts, setSelectedProducts] = useState<
-    CustomerSelectedProduct[]
-  >([]);
+  const {
+    selectedProductId,
+    setSelectedProductId,
+    selectedProducts,
+    setSelectedProducts,
+  } = useCustomer();
 
   const totalPrice = selectedProducts.reduce(
     (total, { price, quantity }) => total + price * quantity,
@@ -146,10 +147,10 @@ export default function ProductSelectionCard({
                 <ScrollArea className="max-h-60 overflow-y-auto">
                   {products.map((product) => (
                     <SelectItem key={product.id} value={product.id}>
-                      {product.name} - {formatCurrency(product.price)}{" "}
+                      {product.name} - {formatCurrency(product.price)}
                       {product.quantity <= 10 && (
                         <>
-                          <span>-</span>{" "}
+                          <span className="mx-1">-</span>
                           <span className="text-red-600">
                             {product.quantity} left
                           </span>

@@ -1,6 +1,6 @@
 import {
   Customer,
-  CustomerOrder,
+  CustomerShipment,
   Prisma,
   Product,
   RestockOrder,
@@ -45,7 +45,7 @@ export type Status = {
 export type ActivityEssentials = {
   activity: "Created" | "Updated" | "Deleted";
   entity: "Product" | "Order" | "Shipping";
-  product?: ProductEssentials["name"];
+  product: ProductEssentials["name"] | "-";
 };
 
 export type UserEssentials = Pick<
@@ -78,6 +78,6 @@ export type CustomerSelectedProduct = {
 };
 
 export type CustomerOrderEssentials = Omit<
-  CustomerOrder,
+  CustomerShipment,
   "id" | "createdAt" | "updatedAt" | "status"
 >;

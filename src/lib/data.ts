@@ -43,7 +43,7 @@ export const dashboardData = [
     icon: Truck,
   },
   {
-    title: "Total Products",
+    title: "Total Units",
     description: "In stock",
     icon: Package,
   },

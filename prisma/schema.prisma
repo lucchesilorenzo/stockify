@@ -38,56 +38,56 @@ model RestockOrder {
 }
 
 model Product {
-  id                String              @id @default(cuid())
-  categoryId        String
-  name              String              @unique
-  slug              String              @unique
-  barcode           String?
-  price             Float
-  quantity          Int
-  maxQuantity       Int
-  minQuantity       Int
-  description       String?
-  status            String              @default("Available")
-  image             String?
-  category          Category            @relation(fields: [categoryId], references: [id])
-  restockOrder      RestockOrder[]
-  customerOrderItem CustomerOrderItem[]
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  id           String         @id @default(cuid())
+  categoryId   String
+  name         String         @unique
+  slug         String         @unique
+  barcode      String?
+  price        Float
+  quantity     Int
+  maxQuantity  Int
+  minQuantity  Int
+  description  String?
+  status       String         @default("Available")
+  image        String?
+  category     Category       @relation(fields: [categoryId], references: [id])
+  restockOrder RestockOrder[]
+  shipmentItem ShipmentItem[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }
 
 model Customer {
-  id            String          @id @default(cuid())
-  firstName     String
-  lastName      String
-  email         String          @unique
-  phone         String?
-  address       String
-  city          String
-  zipcode       String
-  customerOrder CustomerOrder[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id               String             @id @default(cuid())
+  firstName        String
+  lastName         String
+  email            String             @unique
+  phone            String?
+  address          String
+  city             String
+  zipcode          String
+  customerShipment CustomerShipment[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
-model CustomerOrder {
-  id                String              @id @default(cuid())
-  customerId        String
-  status            String              @default("Pending")
-  customer          Customer            @relation(fields: [customerId], references: [id])
-  customerOrderItem CustomerOrderItem[]
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+model CustomerShipment {
+  id           String         @id @default(cuid())
+  customerId   String
+  status       String         @default("Pending")
+  customer     Customer       @relation(fields: [customerId], references: [id])
+  shipmentItem ShipmentItem[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }
 
-model CustomerOrderItem {
-  id              String        @id @default(cuid())
-  productId       String
-  customerOrderId String
-  quantity        Int
-  product         Product       @relation(fields: [productId], references: [id])
-  customerOrder   CustomerOrder @relation(fields: [customerOrderId], references: [id])
+model ShipmentItem {
+  id                 String           @id @default(cuid())
+  productId          String
+  customerShipmentId String
+  quantity           Int
+  product            Product          @relation(fields: [productId], references: [id])
+  customerShipment   CustomerShipment @relation(fields: [customerShipmentId], references: [id])
 }
 
 model Category {
