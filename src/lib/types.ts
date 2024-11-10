@@ -44,8 +44,8 @@ export type Status = {
 
 export type ActivityEssentials = {
   activity: "Created" | "Updated" | "Deleted";
-  entity: "Product" | "Order" | "Shipping";
-  product: ProductEssentials["name"] | "-";
+  entity: "Product" | "Order" | "Shipment";
+  product?: ProductEssentials["name"];
 };
 
 export type UserEssentials = Pick<

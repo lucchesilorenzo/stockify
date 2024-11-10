@@ -102,6 +102,6 @@ model Activity {
   id        String   @id @default(cuid())
   activity  String
   entity    String
-  product   String
+  product   String?
   createdAt DateTime @default(now())
 }

@@ -81,6 +81,11 @@ export const columns: ColumnDef<Activity>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const product: ActivityEssentials["product"] = row.getValue("product");
+
+      return <div>{product ?? "N/A"}</div>;
+    },
   },
   {
     accessorKey: "createdAt",

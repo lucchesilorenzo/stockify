@@ -23,7 +23,7 @@ export default function CustomerInfoFormSelect({
 
   return (
     <Select
-      value={selectedCustomer ? selectedCustomer : ""}
+      value={selectedCustomer ?? ""}
       onValueChange={(value) => handleSelectCustomer(value)}
     >
       <SelectTrigger className="w-full">

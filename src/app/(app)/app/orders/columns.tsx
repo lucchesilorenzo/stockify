@@ -3,8 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown } from "lucide-react";
 
+import StatusBadge from "@/components/common/status-badge";
 import OrderActions from "@/components/orders/order-actions";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RestockOrderWithProduct } from "@/lib/types";
 import { formatCurrency, formatDate } from "@/lib/utils";
@@ -73,12 +73,9 @@ export const columns: ColumnDef<RestockOrderWithProduct>[] = [
     },
     cell: ({ row }) => {
       const status: string = row.getValue("status");
+      const id: string = row.getValue("id");
 
-      return (
-        <Badge variant={status === "Pending" ? "secondary" : "default"}>
-          {status}
-        </Badge>
-      );
+      return <StatusBadge initialStatus={status} orderId={id} />;
     },
   },
   {

@@ -13,4 +13,9 @@ export const orderFormSchema = z.object({
     .min(1, "Quantity is required."),
 });
 
+export const orderStatusSchema = z.object({
+  id: z.string().cuid(),
+  status: z.enum(["Pending", "Completed"]),
+});
+
 export type TOrderFormSchema = z.infer<typeof orderFormSchema>;

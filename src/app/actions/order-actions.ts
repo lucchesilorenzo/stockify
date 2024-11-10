@@ -11,7 +11,10 @@ import {
   updateProductQuantity,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
-import { orderFormSchema } from "@/lib/validations/order-validations";
+import {
+  orderFormSchema,
+  orderStatusSchema,
+} from "@/lib/validations/order-validations";
 
 export async function createOrderAction(order: unknown) {
   const validatedOrder = orderFormSchema.safeParse(order);
@@ -64,16 +67,7 @@ export async function createOrderAction(order: unknown) {
 
   // Create order
   try {
-    const newOrder = await createNewOrder(orderDetails);
-
-    // Update order status in 1 minute
-    setTimeout(async () => {
-      try {
-        await updateOrderStatus(newOrder.id);
-      } catch {
-        return { message: "Failed to update order status." };
-      }
-    }, 60000);
+    await createNewOrder(orderDetails);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
@@ -98,6 +92,33 @@ export async function createOrderAction(order: unknown) {
     activity: "Created",
     entity: "Order",
     product: product.name,
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
+  }
+
+  revalidatePath("/app/orders");
+}
+
+export async function updateOrderStatusAction(newOrderData: unknown) {
+  // Validation
+  const validatedOrderData = orderStatusSchema.safeParse(newOrderData);
+  if (!validatedOrderData.success) return { message: "Invalid order data." };
+
+  // Update order status
+  try {
+    await updateOrderStatus(validatedOrderData.data.id);
+  } catch {
+    return { message: "Failed to update order status." };
+  }
+
+  // Create new activity
+  const activity: ActivityEssentials = {
+    activity: "Updated",
+    entity: "Order",
   };
 
   try {

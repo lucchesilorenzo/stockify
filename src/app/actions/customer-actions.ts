@@ -97,8 +97,7 @@ export async function createShipmentAction(shipment: unknown) {
   // Create new activity
   const activity: ActivityEssentials = {
     activity: "Created",
-    entity: "Shipping",
-    product: "-",
+    entity: "Shipment",
   };
 
   try {
