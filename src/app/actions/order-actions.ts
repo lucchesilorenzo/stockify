@@ -8,7 +8,7 @@ import { createNewOrder, updateOrderStatus } from "@/lib/queries/order-queries";
 import {
   getProductById,
   getProductOptions,
-  updateProductQuantity,
+  updateProductQuantityAndStatus,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
 import {
@@ -79,7 +79,7 @@ export async function createOrderAction(order: unknown) {
 
   // Update product quantity
   try {
-    await updateProductQuantity(
+    await updateProductQuantityAndStatus(
       validatedOrder.data.productId,
       validatedOrder.data.quantity,
     );

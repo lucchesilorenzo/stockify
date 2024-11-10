@@ -2,10 +2,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import CustomerShipmentForm from "./customer-shipment-form/customer-shipment-form";
 
 import { getCustomers } from "@/lib/queries/customer-queries";
-import { getFilteredProducts } from "@/lib/queries/product-queries";
+import { getAvailableProducts } from "@/lib/queries/product-queries";
 
 export default async function CustomerTabs() {
-  const availableProducts = await getFilteredProducts();
+  const availableProducts = await getAvailableProducts();
   const customers = await getCustomers();
 
   return (

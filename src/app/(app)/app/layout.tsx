@@ -14,7 +14,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
   const categories = await getCategories();
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[200px_1fr]">
+    <div className="grid min-h-screen w-full md:grid-cols-[180px_1fr]">
       <Sidebar />
       <div className="flex flex-col">
         <Header />

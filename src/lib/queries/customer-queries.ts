@@ -1,4 +1,4 @@
-import { CustomerShipment, Product } from "@prisma/client";
+import { CustomerShipment } from "@prisma/client";
 
 import prisma from "../db";
 import { CustomerEssentials, CustomerOrderEssentials } from "../types";
@@ -60,25 +60,4 @@ export async function updateCustomerShipmentStatus(
   });
 
   return updatedCustomerOrder;
-}
-
-export async function updateProductQuantities(
-  productsToUpdate: { id: Product["id"]; quantity: Product["quantity"] }[],
-) {
-  const updatePromises = productsToUpdate.map(({ id, quantity }) => {
-    return prisma.product.update({
-      where: {
-        id,
-      },
-      data: {
-        quantity: {
-          decrement: quantity,
-        },
-      },
-    });
-  });
-
-  const updatedProducts = await Promise.all(updatePromises);
-
-  return updatedProducts;
 }

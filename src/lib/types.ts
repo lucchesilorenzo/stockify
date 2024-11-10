@@ -38,8 +38,8 @@ export type RestockOrderEssentials = Omit<
 >;
 
 export type Status = {
-  value: "available" | "archived";
-  label: "Available" | "Archived";
+  value: "in-stock" | "out-of-stock";
+  label: "In Stock" | "Out of Stock";
 };
 
 export type ActivityEssentials = {

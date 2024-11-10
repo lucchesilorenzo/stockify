@@ -4,7 +4,7 @@ import { ActivityEssentials } from "../types";
 export async function getInventoryValue() {
   const products = await prisma.product.findMany({
     where: {
-      status: "Available",
+      status: "In Stock",
     },
     select: {
       quantity: true,
@@ -23,7 +23,7 @@ export async function getInventoryValue() {
 export async function getLowStockProducts() {
   const products = await prisma.product.findMany({
     where: {
-      status: "Available",
+      status: "In Stock",
     },
     select: {
       quantity: true,

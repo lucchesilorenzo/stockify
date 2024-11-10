@@ -17,13 +17,10 @@ import {
 
 type OrderFormProps = {
   onFormSubmit: () => void;
-  filteredProducts: ProductWithCategory[];
+  products: ProductWithCategory[];
 };
 
-export default function OrderForm({
-  onFormSubmit,
-  filteredProducts,
-}: OrderFormProps) {
+export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
   const { handleCreateOrder } = useOrder();
 
   const {
@@ -48,7 +45,7 @@ export default function OrderForm({
             Product <span className="text-red-600">*</span>
           </Label>
           <OrderCombobox
-            products={filteredProducts}
+            products={products}
             setValue={setValue}
             fieldName="productId"
           />

@@ -1,5 +1,6 @@
 "use client";
 
+import { Product } from "@prisma/client";
 import { FieldErrors, UseFormSetValue } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -22,12 +23,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCustomer } from "@/hooks/use-customer";
-import { ProductWithCategory } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 import { TShippingFormSchema } from "@/lib/validations/customer-validations";
 
 type ProductSelectionCardProps = {
-  products: ProductWithCategory[];
+  products: Product[];
   setValue: UseFormSetValue<TShippingFormSchema>;
   errors: FieldErrors<TShippingFormSchema>;
 };

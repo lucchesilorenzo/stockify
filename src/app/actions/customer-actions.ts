@@ -9,9 +9,9 @@ import {
   createCustomerShipment,
   getCustomerByEmail,
   updateCustomerShipmentStatus,
-  updateProductQuantities,
 } from "@/lib/queries/customer-queries";
 import { createActivity } from "@/lib/queries/dashboard-queries";
+import { updateProductQuantitiesAndStatus } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
 import { shippingFormSchema } from "@/lib/validations/customer-validations";
 
@@ -89,9 +89,9 @@ export async function createShipmentAction(shipment: unknown) {
   }));
 
   try {
-    await updateProductQuantities(productsToUpdate);
+    await updateProductQuantitiesAndStatus(productsToUpdate);
   } catch {
-    return { message: "Failed to update product quantities." };
+    return { message: "Failed to update product quantities and status." };
   }
 
   // Create new activity

@@ -41,7 +41,7 @@ export async function getInventoryValueByMonth() {
       updatedAt: true,
     },
     where: {
-      status: "Available",
+      status: "In Stock",
     },
   });
 
@@ -73,7 +73,7 @@ export async function getInventoryValueByMonth() {
 export async function getTopProducts() {
   const products = await prisma.product.findMany({
     where: {
-      status: "Available",
+      status: "In Stock",
     },
     select: {
       name: true,

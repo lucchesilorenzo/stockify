@@ -80,7 +80,7 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
       const status: string = row.getValue("status");
 
       return (
-        <Badge variant={status === "Available" ? "default" : "destructive"}>
+        <Badge variant={status === "In Stock" ? "default" : "destructive"}>
           {status}
         </Badge>
       );

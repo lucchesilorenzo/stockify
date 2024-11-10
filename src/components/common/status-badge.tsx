@@ -49,7 +49,11 @@ export default function StatusBadge({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="p-0 bg-transparent border-none">
+        <Button
+          variant="ghost"
+          className="p-0 bg-transparent border-none focus-visible:ring-0 hover:bg-transparent"
+          tabIndex={-1}
+        >
           <Badge
             variant={status === "Pending" ? "secondary" : "default"}
             className="cursor-pointer"

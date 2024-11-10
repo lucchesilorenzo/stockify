@@ -20,21 +20,17 @@ export async function getProducts() {
   return products;
 }
 
-export async function getFilteredProducts() {
-  const filteredProducts = await prisma.product.findMany({
-    include: {
-      category: {
-        select: {
-          name: true,
-        },
-      },
-    },
+export async function getAvailableProducts() {
+  const availableProducts = await prisma.product.findMany({
     where: {
-      status: "Available",
+      status: "In Stock",
+      quantity: {
+        gt: 0,
+      },
     },
   });
 
-  return filteredProducts;
+  return availableProducts;
 }
 
 export async function getProductById(productId: Product["id"]) {
@@ -95,11 +91,11 @@ export async function updateProductById(
   });
 }
 
-export async function updateProductQuantity(
+export async function updateProductQuantityAndStatus(
   productId: Product["id"],
   quantity: Product["quantity"],
 ) {
-  const updatedProduct = await prisma.product.update({
+  const productToUpdate = await prisma.product.update({
     where: {
       id: productId,
     },
@@ -107,10 +103,40 @@ export async function updateProductQuantity(
       quantity: {
         increment: quantity,
       },
+      status: "In Stock",
     },
   });
 
-  return updatedProduct;
+  return productToUpdate;
+}
+
+export async function updateProductQuantitiesAndStatus(
+  productsToUpdate: { id: Product["id"]; quantity: Product["quantity"] }[],
+) {
+  const updatePromises = productsToUpdate.map(async ({ id, quantity }) => {
+    const product = await prisma.product.findUnique({
+      where: { id },
+      select: { quantity: true },
+    });
+
+    if (product && product.quantity >= quantity) {
+      const newQuantity = product.quantity - quantity;
+
+      return prisma.product.update({
+        where: { id },
+        data: {
+          quantity: {
+            decrement: quantity,
+          },
+          status: newQuantity === 0 ? "Out of Stock" : "In Stock",
+        },
+      });
+    }
+  });
+
+  const updatedProducts = await Promise.all(updatePromises);
+
+  return updatedProducts;
 }
 
 export async function deleteProductById(productId: Product["id"]) {

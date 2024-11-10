@@ -33,8 +33,8 @@ export default function ProductSelectionTable({
     }
   }
 
-  function handleOnBlur(
-    e: React.FocusEvent<HTMLInputElement>,
+  function handleOnChange(
+    e: React.ChangeEvent<HTMLInputElement>,
     product: CustomerSelectedProduct,
   ) {
     const quantity = Number(e.target.value);
@@ -63,7 +63,7 @@ export default function ProductSelectionTable({
                 min={1}
                 step={1}
                 defaultValue={product.quantity}
-                onBlur={(e) => handleOnBlur(e, product)}
+                onChange={(e) => handleOnChange(e, product)}
                 onKeyDown={(e) => handleKeyDown(e)}
                 required
               />

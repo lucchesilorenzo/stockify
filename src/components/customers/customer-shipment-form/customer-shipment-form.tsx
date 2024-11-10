@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Customer } from "@prisma/client";
+import { Customer, Product } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -13,14 +13,13 @@ import ProductSelectionCard from "./product-selection-card";
 
 import { createShipmentAction } from "@/app/actions/customer-actions";
 import { useCustomer } from "@/hooks/use-customer";
-import { ProductWithCategory } from "@/lib/types";
 import {
   TShippingFormSchema,
   shippingFormSchema,
 } from "@/lib/validations/customer-validations";
 
 type CustomerOrderFormProps = {
-  products: ProductWithCategory[];
+  products: Product[];
   customers: Customer[];
 };
 

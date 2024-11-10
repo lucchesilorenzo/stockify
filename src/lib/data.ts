@@ -22,8 +22,8 @@ export const routes = [
 ];
 
 export const productStatuses: Status[] = [
-  { value: "available", label: "Available" },
-  { value: "archived", label: "Archived" },
+  { value: "in-stock", label: "In Stock" },
+  { value: "out-of-stock", label: "Out of Stock" },
 ];
 
 export const dashboardData = [
@@ -50,19 +50,7 @@ export const dashboardData = [
 ];
 
 export const themeData = [
-  {
-    name: "Light",
-    value: "light",
-    icon: SunIcon,
-  },
-  {
-    name: "Dark",
-    value: "dark",
-    icon: MoonIcon,
-  },
-  {
-    name: "System",
-    value: "system",
-    icon: Monitor,
-  },
+  { name: "Light", value: "light", icon: SunIcon },
+  { name: "Dark", value: "dark", icon: MoonIcon },
+  { name: "System", value: "system", icon: Monitor },
 ];
