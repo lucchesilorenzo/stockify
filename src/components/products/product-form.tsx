@@ -98,18 +98,6 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="minQuantity">
-            Min Quantity <span className="text-red-600">*</span>
-          </Label>
-          <Input id="minQuantity" {...register("minQuantity")} />
-          {errors.minQuantity && (
-            <p className="px-1 text-xs text-red-600">
-              {errors.minQuantity.message}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-1">
           <Label htmlFor="maxQuantity">
             Max Quantity <span className="text-red-600">*</span>
           </Label>

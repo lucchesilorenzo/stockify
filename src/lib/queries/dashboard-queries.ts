@@ -27,12 +27,11 @@ export async function getLowStockProducts() {
     },
     select: {
       quantity: true,
-      minQuantity: true,
     },
   });
 
   const lowStockProducts = products.filter(
-    ({ quantity, minQuantity }) => quantity <= minQuantity,
+    ({ quantity }) => quantity <= 10,
   ).length;
 
   return lowStockProducts;

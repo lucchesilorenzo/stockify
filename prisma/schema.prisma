@@ -46,7 +46,6 @@ model Product {
   price        Float
   quantity     Int
   maxQuantity  Int
-  minQuantity  Int
   description  String?
   status       String         @default("In Stock")
   image        String?

@@ -20,7 +20,6 @@ export default async function ProductsPage() {
     Status: product.status,
     Quantity: product.quantity,
     MaxQuantity: product.maxQuantity,
-    MinQuantity: product.minQuantity,
   }));
 
   return (

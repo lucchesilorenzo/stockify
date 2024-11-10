@@ -34,15 +34,15 @@ export async function createOrderAction(order: unknown) {
   const orderedQuantity = validatedOrder.data.quantity;
   const currentQuantity = options.quantity;
   const maxQuantity = options.maxQuantity;
-  const minQuantity = options.minQuantity;
 
-  if (orderedQuantity > maxQuantity) {
+  if (orderedQuantity <= 0) {
     return {
-      message: `The selected quantity cannot exceed the maximum limit of ${maxQuantity}.`,
+      message: "The selected quantity must be at least 1.",
     };
-  } else if (orderedQuantity < minQuantity) {
+  } else if (currentQuantity >= maxQuantity) {
     return {
-      message: `The selected quantity must be at least ${minQuantity}.`,
+      message:
+        "You cannot order more units of this product. The maximum quantity is already reached.",
     };
   } else if (orderedQuantity + currentQuantity > maxQuantity) {
     return {

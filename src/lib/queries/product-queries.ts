@@ -62,7 +62,6 @@ export async function getProductOptions(productId: Product["id"]) {
     },
     select: {
       quantity: true,
-      minQuantity: true,
       maxQuantity: true,
       price: true,
     },

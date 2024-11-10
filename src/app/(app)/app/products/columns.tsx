@@ -102,11 +102,10 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
     cell: ({ row }) => {
       const quantity: number = row.getValue("quantity");
       const maxQuantity = row.original.maxQuantity;
-      const minQuantity = row.original.minQuantity;
 
       let quantityColor;
 
-      if (quantity <= minQuantity) {
+      if (quantity <= 10) {
         quantityColor = "bg-red-100 text-red-800";
       } else if (quantity >= maxQuantity / 2) {
         quantityColor = "bg-green-100 text-green-800";
@@ -140,20 +139,20 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
       );
     },
   },
-  {
-    accessorKey: "minQuantity",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Min Quantity
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "minQuantity",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Min Quantity
+  //         <ChevronsUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
     id: "actions",
     cell: ({ row }) => {

@@ -34,21 +34,9 @@ export const productFormSchema = z
       .positive("Max Quantity must be a positive number.")
       .min(1, "Max Quantity is required.")
       .max(100, "Max Quantity is too long."),
-    minQuantity: z.coerce
-      .number({
-        invalid_type_error: "Min Quantity must be a number.",
-      })
-      .int("Min Quantity must be an integer.")
-      .positive("Min Quantity must be a positive number.")
-      .min(1, "Min Quantity is required.")
-      .max(100, "Min Quantity is too long."),
   })
   .refine((data) => data.quantity <= data.maxQuantity, {
     message: "Quantity must be less than or equal to Max Quantity.",
-    path: ["quantity"],
-  })
-  .refine((data) => data.quantity >= data.minQuantity, {
-    message: "Quantity must be greater than or equal to Min Quantity.",
     path: ["quantity"],
   });
 
