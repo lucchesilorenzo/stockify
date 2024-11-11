@@ -9,9 +9,11 @@ import { Button } from "@/components/ui/button";
 
 // Dynamically imports the CSVLink component from react-csv
 const CSVLink = dynamic(() => import("react-csv").then((mod) => mod.CSVLink), {
+  ssr: false,
   loading: () => (
     <Button variant="outline" disabled>
-      <Loader2 className="h-5 w-5 animate-spin mr-2" />,
+      <Loader2 className="h-5 w-5 animate-spin mr-2" />
+      Loading...
     </Button>
   ),
 });

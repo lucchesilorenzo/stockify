@@ -18,11 +18,14 @@ import {
 import { DialogDescription, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
 
-import { routes, themeData } from "@/lib/data";
+import { useFontSize } from "@/hooks/use-font-size";
+import { fontSizeData, routes, themeData } from "@/lib/data";
+import { cn } from "@/lib/utils";
 
-export function BarcodeCommandDialog() {
+export function MainCommandDialog() {
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
+  const { fontSize, handleFontSizeChange } = useFontSize();
 
   const router = useRouter();
 
@@ -49,19 +52,26 @@ export function BarcodeCommandDialog() {
           onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
         />
 
-        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 absolute top-2 left-[220px]">
+        <kbd
+          className={cn(
+            "pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 absolute top-2",
+            fontSize === "text-md"
+              ? "left-[220px]"
+              : fontSize === "text-lg"
+                ? "left-[210px]"
+                : "left-[200px]",
+          )}
+        >
           <span className="text-xs">Ctrl + K</span>
         </kbd>
       </div>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
         <VisuallyHidden>
-          <DialogTitle>Barcode Command Dialog</DialogTitle>
+          <DialogTitle>Main Command Dialog</DialogTitle>
         </VisuallyHidden>
         <VisuallyHidden>
-          <DialogDescription>
-            Enter a barcode to search for available products.
-          </DialogDescription>
+          <DialogDescription>Type a command or search...</DialogDescription>
         </VisuallyHidden>
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
@@ -92,6 +102,21 @@ export function BarcodeCommandDialog() {
               >
                 <theme.icon className="h-5 w-5 mr-3" />
                 {theme.name}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Font Size">
+            {fontSizeData.map((fontSize) => (
+              <CommandItem
+                key={fontSize.value}
+                onSelect={() => {
+                  setOpen(false);
+                  handleFontSizeChange(fontSize.value);
+                }}
+              >
+                <fontSize.icon className="h-5 w-5 mr-3" />
+                {fontSize.name}
               </CommandItem>
             ))}
           </CommandGroup>

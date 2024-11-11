@@ -1,4 +1,4 @@
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { FontSizeIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
   AlertTriangle,
   Home,
@@ -53,4 +53,10 @@ export const themeData = [
   { name: "Light", value: "light", icon: SunIcon },
   { name: "Dark", value: "dark", icon: MoonIcon },
   { name: "System", value: "system", icon: Monitor },
+];
+
+export const fontSizeData = [
+  { name: "Medium", value: "text-md", icon: FontSizeIcon },
+  { name: "Large", value: "text-lg", icon: FontSizeIcon },
+  { name: "Extra Large", value: "text-xl", icon: FontSizeIcon },
 ];

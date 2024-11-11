@@ -48,10 +48,14 @@ export async function getPendingOrders() {
 }
 
 export async function getUnitsInStock() {
-  const unitsInStock = await prisma.product.findMany();
+  const unitsInStock = await prisma.product.findMany({
+    select: {
+      quantity: true,
+    },
+  });
 
   const totalUnitsInStock = unitsInStock.reduce(
-    (total, { quantity, price }) => total + price * quantity,
+    (total, { quantity }) => total + quantity,
     0,
   );
 
