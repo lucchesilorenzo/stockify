@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 
-import { columns } from "./columns";
-
 import H1 from "@/components/common/h1";
-import ProductsTable from "@/components/products/products-table";
+import { columns } from "@/components/tables/products/columns";
+import ProductsTable from "@/components/tables/products/products-table";
 import { getProducts } from "@/lib/queries/product-queries";
 
 export const metadata: Metadata = {

@@ -98,10 +98,12 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         </Button>
         <H1>{product.name}</H1>
         <Badge
-          variant={product.status === "Archived" ? "destructive" : "default"}
+          variant={
+            product.status === "Out of Stock" ? "destructive" : "default"
+          }
           className="ml-auto sm:ml-0"
         >
-          {product.status === "Available" ? "Available" : "Archived"}
+          {product.status === "In Stock" ? "In Stock" : "Out of Stock"}
         </Badge>
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
           <Button
@@ -141,6 +143,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         </div>
 
         <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+          {/* TODO: Warehouse Management (?) */}
           <ProductEditFormStatus
             product={product}
             productStatuses={productStatuses}

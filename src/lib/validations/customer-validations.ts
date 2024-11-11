@@ -27,7 +27,7 @@ export const shippingFormSchema = z.object({
     .trim()
     .min(1, "City is required.")
     .max(20, "City is too long."),
-  zipcode: z
+  zipCode: z
     .string()
     .trim()
     .min(1, "Zipcode is required.")

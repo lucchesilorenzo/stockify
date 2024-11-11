@@ -10,7 +10,7 @@ import { ChartConfig } from "@/components/ui/chart";
 type AnalyticsOverviewProps = {
   pieChartData: {
     category: Category["name"];
-    products: number;
+    units: number;
     fill: string;
   }[];
   pieChartConfig: ChartConfig;

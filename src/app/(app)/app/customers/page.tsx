@@ -12,7 +12,7 @@ export default function CustomersPage() {
     <main>
       <H1>Customers</H1>
 
-      <div className="my-6">
+      <div className="my-6 grid grid-cols-1">
         <CustomerTabs />
       </div>
     </main>

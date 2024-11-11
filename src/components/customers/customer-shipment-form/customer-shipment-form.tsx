@@ -56,7 +56,7 @@ export default function CustomerOrderForm({
       setValue("phone", selectedCustomerInfo.phone ?? "");
       setValue("address", selectedCustomerInfo.address);
       setValue("city", selectedCustomerInfo.city);
-      setValue("zipcode", selectedCustomerInfo.zipcode);
+      setValue("zipCode", selectedCustomerInfo.zipCode);
     }
   }, [selectedCustomerInfo, setValue]);
 

@@ -12,8 +12,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Button } from "../ui/button";
-
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -23,15 +22,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface RecentOrdersTableProps<TData, TValue> {
+interface OrdersTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export default function RecentOrdersTable<TData, TValue>({
+export default function OrdersTable<TData, TValue>({
   columns,
   data,
-}: RecentOrdersTableProps<TData, TValue>) {
+}: OrdersTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({

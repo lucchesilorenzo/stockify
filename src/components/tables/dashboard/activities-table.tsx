@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 import {
   Table,
@@ -24,15 +24,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export interface RecentActivitiesProps<TData, TValue> {
+export interface ActivitiesTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export default function RecentActivities<TData, TValue>({
+export default function ActivitiesTable<TData, TValue>({
   columns,
   data,
-}: RecentActivitiesProps<TData, TValue>) {
+}: ActivitiesTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({

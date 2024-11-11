@@ -1,10 +1,14 @@
 import { CustomerShipment } from "@prisma/client";
 
 import prisma from "../db";
-import { CustomerEssentials, CustomerOrderEssentials } from "../types";
+import { CustomerEssentials, CustomerShipmentEssentials } from "../types";
 
 export async function getCustomers() {
-  const customers = await prisma.customer.findMany();
+  const customers = await prisma.customer.findMany({
+    include: {
+      customerShipment: true,
+    },
+  });
 
   return customers;
 }
@@ -28,7 +32,7 @@ export async function createCustomer(customer: CustomerEssentials) {
 }
 
 export async function createCustomerShipment(
-  shipment: CustomerOrderEssentials,
+  shipment: CustomerShipmentEssentials,
 ) {
   const newCustomerShipment = await prisma.customerShipment.create({
     data: shipment,

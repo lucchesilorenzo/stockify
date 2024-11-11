@@ -161,16 +161,16 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="zipcode">Zipcode</Label>
+          <Label htmlFor="zipCode">Zip Code</Label>
           <Input
-            id="zipcode"
+            id="zipCode"
             placeholder="94105"
-            defaultValue={userSettings?.zipcode ?? ""}
-            {...register("zipcode")}
+            defaultValue={userSettings?.zipCode ?? ""}
+            {...register("zipCode")}
           />
-          {errors.zipcode && (
+          {errors.zipCode && (
             <p className="px-1 text-xs text-red-600">
-              {errors.zipcode.message}
+              {errors.zipCode.message}
             </p>
           )}
         </div>

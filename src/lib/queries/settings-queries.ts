@@ -31,7 +31,7 @@ export async function getSettingsByUserId(id: User["id"]) {
       phoneNumber: true,
       address: true,
       city: true,
-      zipcode: true,
+      zipCode: true,
     },
   });
 

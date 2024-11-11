@@ -15,19 +15,18 @@ import {
 } from "@tanstack/react-table";
 import { File, Plus } from "lucide-react";
 
-import CSVExport from "../common/csv-export";
-import EntityDialog from "../common/entity-dialog";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import CSVExport from "@/components/common/csv-export";
+import EntityDialog from "@/components/common/entity-dialog";
+import ProductTablePopover from "@/components/products/product-table-popover";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import ProductTablePopover from "./product-table-popover";
-
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,

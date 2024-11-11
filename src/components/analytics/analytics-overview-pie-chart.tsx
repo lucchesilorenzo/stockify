@@ -21,7 +21,7 @@ import {
 type AnalyticsOverviewPieChartProps = {
   pieChartData: {
     category: string;
-    products: number;
+    units: number;
   }[];
   pieChartConfig: ChartConfig;
 };
@@ -31,7 +31,7 @@ export default function AnalyticsOverviewPieChart({
   pieChartConfig,
 }: AnalyticsOverviewPieChartProps) {
   const productsTotal = pieChartData.reduce(
-    (total, item) => total + item.products,
+    (total, item) => total + item.units,
     0,
   );
 
@@ -39,7 +39,9 @@ export default function AnalyticsOverviewPieChart({
     <Card>
       <CardHeader>
         <CardTitle>Product Categories</CardTitle>
-        <CardDescription>Distribution of products by category</CardDescription>
+        <CardDescription>
+          Distribution of product units by category
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {!productsTotal ? (
@@ -53,11 +55,7 @@ export default function AnalyticsOverviewPieChart({
                   content={<ChartLegendContent />}
                   className="flex flex-wrap"
                 />
-                <Pie
-                  data={pieChartData}
-                  nameKey="category"
-                  dataKey="products"
-                />
+                <Pie data={pieChartData} nameKey="category" dataKey="units" />
               </PieChart>
             </ChartContainer>
           </ResponsiveContainer>

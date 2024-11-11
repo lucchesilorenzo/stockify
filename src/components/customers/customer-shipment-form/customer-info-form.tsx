@@ -106,12 +106,12 @@ export default function CustomerInfoCard({
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="zipcode">
-              Zipcode <span className="text-red-600">*</span>
+            <Label htmlFor="zipCode">
+              Zip Code <span className="text-red-600">*</span>
             </Label>
-            <Input id="zipcode" {...register("zipcode")} />
-            {errors.zipcode && (
-              <p className="text-sm text-red-500">{errors.zipcode.message}</p>
+            <Input id="zipCode" {...register("zipCode")} />
+            {errors.zipCode && (
+              <p className="text-sm text-red-500">{errors.zipCode.message}</p>
             )}
           </div>
         </div>
