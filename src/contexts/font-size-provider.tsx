@@ -8,7 +8,7 @@ type FontSizeProviderProps = {
 
 type TFontSizeContext = {
   fontSize: string;
-  handleFontSizeChange: (size: string) => void;
+  handleFontSizeChange: (size: "text-sm" | "text-md" | "text-lg") => void;
 };
 
 export const FontSizeContext = createContext<TFontSizeContext | null>(null);
@@ -18,20 +18,17 @@ export default function FontSizeProvider({ children }: FontSizeProviderProps) {
 
   useEffect(() => {
     const savedFontSize = localStorage.getItem("fontSize") || "text-md";
-    const savedTheme = localStorage.getItem("theme") || "light";
-
-    document.documentElement.className = `${savedFontSize} ${savedTheme}`;
+    document.documentElement.classList.add(savedFontSize);
 
     setFontSize(savedFontSize);
   }, []);
 
-  function handleFontSizeChange(size: string) {
-    const currentTheme = localStorage.getItem("theme") || "light";
+  function handleFontSizeChange(size: "text-sm" | "text-md" | "text-lg") {
+    document.documentElement.classList.remove(fontSize);
+    document.documentElement.classList.add(size);
+    localStorage.setItem("fontSize", size);
 
     setFontSize(size);
-    document.documentElement.className = `${size} ${currentTheme}`;
-
-    localStorage.setItem("fontSize", size);
   }
 
   return (
