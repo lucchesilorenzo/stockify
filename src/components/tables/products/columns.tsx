@@ -139,20 +139,6 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: "minQuantity",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Min Quantity
-  //         <ChevronsUpDown className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     );
-  //   },
-  // },
   {
     id: "actions",
     cell: ({ row }) => {

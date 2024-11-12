@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, startOfMonth } from "date-fns";
 
 import { COLORS } from "../constants";
 import prisma from "../db";
@@ -43,7 +43,7 @@ export async function getProductsByCategory() {
   return { pieChartData, pieChartConfig };
 }
 
-export async function getInventoryValueByMonth() {
+export async function updateCurrentMonthInventoryValue() {
   const inventoryData = await prisma.product.findMany({
     where: {
       status: "In Stock",
@@ -51,43 +51,43 @@ export async function getInventoryValueByMonth() {
     select: {
       price: true,
       quantity: true,
-      updatedAt: true,
     },
   });
 
-  const inventoryByMonthObj = inventoryData.reduce(
-    (total, { price, quantity, updatedAt }) => {
-      const month = format(updatedAt, "MMMM");
-      const value = price * quantity;
-
-      total[month] = (total[month] || 0) + value;
-
-      return total;
-    },
-    {} as Record<string, number>,
+  const totalValue = inventoryData.reduce(
+    (total, { price, quantity }) => total + price * quantity,
+    0,
   );
 
-  const sortedMonths = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const currentMonth = startOfMonth(new Date());
 
-  const inventoryValueByMonth = sortedMonths.map((month) => ({
-    month,
-    value: inventoryByMonthObj[month] || 0,
+  await prisma.monthlyInventoryValue.upsert({
+    where: {
+      month: currentMonth,
+    },
+    update: {
+      totalValue,
+    },
+    create: {
+      month: currentMonth,
+      totalValue,
+    },
+  });
+}
+
+export async function getMonthlyInventoryValues() {
+  const inventoryData = await prisma.monthlyInventoryValue.findMany({
+    orderBy: {
+      month: "asc",
+    },
+  });
+
+  const lineChartData = inventoryData.map(({ month, totalValue }) => ({
+    month: format(month, "MMMM"),
+    value: totalValue,
   }));
 
-  return inventoryValueByMonth;
+  return lineChartData;
 }
 
 export async function getTopProducts() {

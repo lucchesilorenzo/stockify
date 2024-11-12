@@ -6,6 +6,7 @@ import "./styles/globals.css";
 
 import FontSizeProvider from "@/contexts/font-size-provider";
 import ThemeProvider from "@/contexts/theme-provider";
+import { inventoryCronJob } from "@/lib/cron";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +18,8 @@ export const metadata: Metadata = {
   description:
     "Stockify is a warehouse management system designed for stock clerks, allowing them to add new products, reorder stock, view recent orders, monitor statistics, efficiently manage inventory operations, and handle customer information and shipments.",
 };
+
+inventoryCronJob();
 
 type RootLayoutProps = {
   children: React.ReactNode;

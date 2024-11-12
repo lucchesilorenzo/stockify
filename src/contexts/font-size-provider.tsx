@@ -8,7 +8,7 @@ type FontSizeProviderProps = {
 
 type TFontSizeContext = {
   fontSize: string;
-  handleFontSizeChange: (size: "text-sm" | "text-md" | "text-lg") => void;
+  handleFontSizeChange: (size: string) => void;
 };
 
 export const FontSizeContext = createContext<TFontSizeContext | null>(null);
@@ -23,7 +23,7 @@ export default function FontSizeProvider({ children }: FontSizeProviderProps) {
     setFontSize(savedFontSize);
   }, []);
 
-  function handleFontSizeChange(size: "text-sm" | "text-md" | "text-lg") {
+  function handleFontSizeChange(size: string) {
     document.documentElement.classList.remove(fontSize);
     document.documentElement.classList.add(size);
     localStorage.setItem("fontSize", size);

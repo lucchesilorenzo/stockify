@@ -104,3 +104,9 @@ model Activity {
   product   String?
   createdAt DateTime @default(now())
 }
+
+model MonthlyInventoryValue {
+  id         String   @id @default(cuid())
+  month      DateTime @unique
+  totalValue Float
+}

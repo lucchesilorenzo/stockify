@@ -3,14 +3,14 @@ import AnalyticsInventory from "./analytics-inventory";
 import AnalyticsOverview from "./analytics-overview";
 
 import {
-  getInventoryValueByMonth,
+  getMonthlyInventoryValues,
   getProductsByCategory,
   getTopProducts,
 } from "@/lib/queries/analytics-queries";
 
 export default async function AnalyticsTabs() {
   const { pieChartData, pieChartConfig } = await getProductsByCategory();
-  const inventoryValueByMonth = await getInventoryValueByMonth();
+  const monthlyInventoryValues = await getMonthlyInventoryValues();
   const topProducts = await getTopProducts();
 
   return (
@@ -24,7 +24,7 @@ export default async function AnalyticsTabs() {
         <AnalyticsOverview
           pieChartData={pieChartData}
           pieChartConfig={pieChartConfig}
-          lineChartData={inventoryValueByMonth}
+          lineChartData={monthlyInventoryValues}
         />
       </TabsContent>
 

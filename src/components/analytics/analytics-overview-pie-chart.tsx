@@ -31,7 +31,7 @@ export default function AnalyticsOverviewPieChart({
   pieChartConfig,
 }: AnalyticsOverviewPieChartProps) {
   const productsTotal = pieChartData.reduce(
-    (total, item) => total + item.units,
+    (total, { units }) => total + units,
     0,
   );
 
