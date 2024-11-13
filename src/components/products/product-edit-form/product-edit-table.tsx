@@ -39,7 +39,7 @@ export default function ProductEditTable({
       <TableBody>
         <TableRow>
           <TableCell className="font-semibold">{product.name}</TableCell>
-          <TableCell>{product.barcode ?? "-"}</TableCell>
+          <TableCell>{product.barcode || "N/A"}</TableCell>
           <TableCell>
             <Label htmlFor="maxQuantity" className="sr-only">
               Stock

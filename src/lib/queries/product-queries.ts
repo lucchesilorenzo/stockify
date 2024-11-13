@@ -14,6 +14,11 @@ export async function getProducts() {
           name: true,
         },
       },
+      warehouse: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 

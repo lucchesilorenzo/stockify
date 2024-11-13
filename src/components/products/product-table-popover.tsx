@@ -44,7 +44,7 @@ export default function ProductTablePopover<T>({
     <div className="flex items-center space-x-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className=" justify-start">
+          <Button variant="outline" className="justify-start">
             {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
           </Button>
         </PopoverTrigger>

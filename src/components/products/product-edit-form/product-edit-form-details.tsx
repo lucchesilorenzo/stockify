@@ -30,7 +30,7 @@ export default function ProductEditFormDetails({
     <Card x-chunk="dashboard-07-chunk-0">
       <CardHeader>
         <CardTitle>Product Details</CardTitle>
-        <CardDescription>Update your product details</CardDescription>
+        <CardDescription>Update your product details.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-6">

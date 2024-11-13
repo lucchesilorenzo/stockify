@@ -28,9 +28,9 @@ export default function ProductEditFormStockAndPrice({
   return (
     <Card x-chunk="dashboard-07-chunk-1">
       <CardHeader>
-        <CardTitle>Stock</CardTitle>
+        <CardTitle>Product Stock Details</CardTitle>
         <CardDescription>
-          Change the stock and price of your product.
+          Change the stock quantity and price of your product.
         </CardDescription>
       </CardHeader>
       <CardContent>

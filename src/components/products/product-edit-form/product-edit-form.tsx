@@ -13,8 +13,8 @@ import { toast } from "sonner";
 import ProductEditFormCategory from "./product-edit-form-category";
 import ProductEditFormDetails from "./product-edit-form-details";
 import ProductEditFormImage from "./product-edit-form-image";
-import ProductEditFormStatus from "./product-edit-form-status";
 import ProductEditFormStockAndPrice from "./product-edit-form-stock-and-price";
+import ProductEditFormWarehouse from "./product-edit-form-warehouse";
 
 import H1 from "@/components/common/h1";
 import { LoadingButton } from "@/components/common/loading-button";
@@ -22,7 +22,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useProduct } from "@/hooks/use-product";
 import { uploadImage } from "@/lib/api";
-import { productStatuses } from "@/lib/data";
 import {
   TProductEditFormSchema,
   productEditFormSchema,
@@ -34,8 +33,14 @@ type ProductEditFormProps = {
 
 export default function ProductEditForm({ product }: ProductEditFormProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const { categories, handleUpdateProduct, handleCheckProductMaxQuantity } =
-    useProduct();
+
+  const {
+    categories,
+    warehouses,
+    handleUpdateProduct,
+    handleCheckProductMaxQuantity,
+  } = useProduct();
+
   const {
     register,
     setValue,
@@ -143,10 +148,9 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         </div>
 
         <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-          {/* TODO: Warehouse Management (?) */}
-          <ProductEditFormStatus
+          <ProductEditFormWarehouse
             product={product}
-            productStatuses={productStatuses}
+            warehouses={warehouses}
             setValue={setValue}
             errors={errors}
           />

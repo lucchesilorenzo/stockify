@@ -26,7 +26,7 @@ export default function ProductEditFormImage({
     <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
       <CardHeader>
         <CardTitle>Product Image</CardTitle>
-        <CardDescription>Change the image of your product</CardDescription>
+        <CardDescription>Change the image of your product.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">

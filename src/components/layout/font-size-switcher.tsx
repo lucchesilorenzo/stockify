@@ -19,7 +19,7 @@ export default function FontSizeSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" className="hidden sm:flex">
           <FontSizeIcon className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Toggle font size</span>
         </Button>

@@ -9,7 +9,7 @@ import { Label } from "../ui/label";
 import OrderCombobox from "./order-combobox";
 
 import { useOrder } from "@/hooks/use-order";
-import { ProductWithCategory } from "@/lib/types";
+import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 import {
   TOrderFormSchema,
   orderFormSchema,
@@ -17,7 +17,7 @@ import {
 
 type OrderFormProps = {
   onFormSubmit: () => void;
-  products: ProductWithCategory[];
+  products: ProductWithCategoryAndWarehouse[];
 };
 
 export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
@@ -40,6 +40,10 @@ export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="space-y-6">
+        <div className="text-sm text-green-600">
+          Orders exceeding 50,00 € in product value qualify for free shipping.
+        </div>
+
         <div className="flex flex-col space-y-1">
           <Label htmlFor="productId">
             Product <span className="text-red-600">*</span>

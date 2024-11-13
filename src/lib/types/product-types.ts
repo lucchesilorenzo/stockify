@@ -1,8 +1,13 @@
 import { Prisma, Product } from "@prisma/client";
 
-export type ProductWithCategory = Prisma.ProductGetPayload<{
+export type ProductWithCategoryAndWarehouse = Prisma.ProductGetPayload<{
   include: {
     category: {
+      select: {
+        name: true;
+      };
+    };
+    warehouse: {
       select: {
         name: true;
       };

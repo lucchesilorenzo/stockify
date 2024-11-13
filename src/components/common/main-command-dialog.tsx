@@ -46,6 +46,7 @@ export function MainCommandDialog() {
     <>
       <div className="relative">
         <Input
+          id="command-dialog-search"
           placeholder="Search..."
           className="border rounded p-2 w-[300px]"
           onFocus={() => setOpen(true)}

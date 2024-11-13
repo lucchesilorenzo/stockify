@@ -49,7 +49,11 @@ export default function CustomerInfoCard({
             <Label htmlFor="firstName">
               First Name <span className="text-red-600">*</span>
             </Label>
-            <Input id="firstName" {...register("firstName")} />
+            <Input
+              id="firstName"
+              autoComplete="given-name"
+              {...register("firstName")}
+            />
             {errors.firstName && (
               <p className="text-sm text-red-500">{errors.firstName.message}</p>
             )}
@@ -59,7 +63,11 @@ export default function CustomerInfoCard({
             <Label htmlFor="lastName">
               Last Name <span className="text-red-600">*</span>
             </Label>
-            <Input id="lastName" {...register("lastName")} />
+            <Input
+              id="lastName"
+              autoComplete="family-name"
+              {...register("lastName")}
+            />
             {errors.lastName && (
               <p className="text-sm text-red-500">{errors.lastName.message}</p>
             )}
@@ -70,7 +78,7 @@ export default function CustomerInfoCard({
           <Label htmlFor="email">
             Email <span className="text-red-600">*</span>
           </Label>
-          <Input id="email" {...register("email")} />
+          <Input id="email" autoComplete="email" {...register("email")} />
           {errors.email && (
             <p className="text-sm text-red-500">{errors.email.message}</p>
           )}
@@ -78,7 +86,7 @@ export default function CustomerInfoCard({
 
         <div className="space-y-1">
           <Label htmlFor="phone">Phone</Label>
-          <Input id="phone" {...register("phone")} />
+          <Input id="phone" autoComplete="tel" {...register("phone")} />
           {errors.phone && (
             <p className="text-sm text-red-500">{errors.phone.message}</p>
           )}
@@ -88,7 +96,11 @@ export default function CustomerInfoCard({
           <Label htmlFor="address">
             Address <span className="text-red-600">*</span>
           </Label>
-          <Input id="address" {...register("address")} />
+          <Input
+            id="address"
+            autoComplete="street-address"
+            {...register("address")}
+          />
           {errors.address && (
             <p className="text-sm text-red-500">{errors.address.message}</p>
           )}
@@ -99,7 +111,11 @@ export default function CustomerInfoCard({
             <Label htmlFor="city">
               City <span className="text-red-600">*</span>
             </Label>
-            <Input id="city" {...register("city")} />
+            <Input
+              id="city"
+              autoComplete="address-level2"
+              {...register("city")}
+            />
             {errors.city && (
               <p className="text-sm text-red-500">{errors.city.message}</p>
             )}
@@ -109,7 +125,11 @@ export default function CustomerInfoCard({
             <Label htmlFor="zipCode">
               Zip Code <span className="text-red-600">*</span>
             </Label>
-            <Input id="zipCode" {...register("zipCode")} />
+            <Input
+              id="zipCode"
+              autoComplete="postal-code"
+              {...register("zipCode")}
+            />
             {errors.zipCode && (
               <p className="text-sm text-red-500">{errors.zipCode.message}</p>
             )}

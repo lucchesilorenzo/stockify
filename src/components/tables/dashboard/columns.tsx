@@ -84,7 +84,7 @@ export const columns: ColumnDef<Activity>[] = [
     cell: ({ row }) => {
       const product: ActivityEssentials["product"] = row.getValue("product");
 
-      return <div>{product ?? "N/A"}</div>;
+      return <div>{product || "N/A"}</div>;
     },
   },
   {

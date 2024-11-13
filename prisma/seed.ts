@@ -4,6 +4,7 @@ import { subMonths } from "date-fns";
 const prisma = new PrismaClient();
 
 async function main() {
+  // Creazione delle categorie
   const categoriesData = [
     { name: "Electronics" },
     { name: "Furniture" },
@@ -18,6 +19,45 @@ async function main() {
 
   const categories = await prisma.category.findMany();
 
+  // Creazione dei magazzini
+  const warehousesData = [
+    { name: "Warehouse 1", location: "Location 1" },
+    { name: "Warehouse 2", location: "Location 2" },
+  ];
+
+  await prisma.warehouse.createMany({
+    data: warehousesData,
+  });
+
+  const warehouses = await prisma.warehouse.findMany();
+
+  // Creazione dei clienti
+  const customersData = [
+    {
+      firstName: "John",
+      lastName: "Doe",
+      email: "john@example.com",
+      address: "123 Main St",
+      city: "New York",
+      zipCode: "10001",
+    },
+    {
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "jane@example.com",
+      address: "456 Elm St",
+      city: "Los Angeles",
+      zipCode: "90001",
+    },
+  ];
+
+  await prisma.customer.createMany({
+    data: customersData,
+  });
+
+  await prisma.customer.findMany();
+
+  // Creazione dei prodotti
   const productsData = [];
   const baseDate = new Date();
 
@@ -46,6 +86,7 @@ async function main() {
 
   for (let i = 0; i < 20; i++) {
     const categoryIndex = i % categories.length;
+    const warehouseIndex = i % warehouses.length;
     const product = {
       name: productNames[i],
       slug: `product-${i + 1}`,
@@ -56,6 +97,7 @@ async function main() {
       status: i % 2 === 0 ? "In Stock" : "Out Of Stock",
       image: null,
       categoryId: categories[categoryIndex].id,
+      warehouseId: warehouses[warehouseIndex].id, // Aggiungi il magazzino
       updatedAt: subMonths(baseDate, i % 12),
       createdAt: new Date(),
     };
@@ -70,6 +112,7 @@ async function main() {
     products.push(createdProduct);
   }
 
+  // Creazione degli ordini
   const orders = [];
   for (let i = 0; i < 15; i++) {
     const productIndex = Math.floor(Math.random() * products.length);
@@ -98,6 +141,7 @@ async function main() {
     orders.push(order);
   }
 
+  // Aggiungi ordini di rifornimento
   await prisma.restockOrder.createMany({
     data: orders,
   });

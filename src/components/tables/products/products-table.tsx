@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { File, Plus } from "lucide-react";
+import { File, Plus, Search } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
 import EntityDialog from "@/components/common/entity-dialog";
@@ -72,8 +72,11 @@ export default function ProductsTable<TData, TValue>({
       {/* Filters and actions */}
       <div>
         <div className="flex items-center justify-between py-4 gap-x-4">
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center space-x-2 relative">
+            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
             <Input
+              id="product-search"
+              type="search"
               placeholder="Filter products..."
               value={
                 (table.getColumn("name")?.getFilterValue() as string) ?? ""
@@ -81,7 +84,7 @@ export default function ProductsTable<TData, TValue>({
               onChange={(e) =>
                 table.getColumn("name")?.setFilterValue(e.target.value)
               }
-              className="max-w-sm hidden sm:block"
+              className="max-w-sm hidden sm:block pl-10"
             />
             <Select
               onValueChange={(value) =>
@@ -90,7 +93,7 @@ export default function ProductsTable<TData, TValue>({
                   ?.setFilterValue(value === "all" ? "" : value)
               }
             >
-              <SelectTrigger>
+              <SelectTrigger id="category-select">
                 <SelectValue placeholder="Select categories" />
               </SelectTrigger>
               <SelectContent>

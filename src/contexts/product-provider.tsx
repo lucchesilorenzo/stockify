@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-import { Category, Product } from "@prisma/client";
+import { Category, Product, Warehouse } from "@prisma/client";
 import { toast } from "sonner";
 
 import {
@@ -19,10 +19,12 @@ import {
 type ProductProviderProps = {
   children: React.ReactNode;
   categoriesData: Category[];
+  warehousesData: Warehouse[];
 };
 
 type TProductContext = {
   categories: Category[];
+  warehouses: Warehouse[];
   handleAddProduct: (product: TProductFormSchema) => Promise<void>;
   handleDeleteProduct: (productId: Product["id"]) => Promise<void>;
   handleUpdateProduct: (
@@ -40,8 +42,10 @@ export const ProductContext = createContext<TProductContext | null>(null);
 export default function ProductProvider({
   children,
   categoriesData,
+  warehousesData,
 }: ProductProviderProps) {
   const [categories] = useState(categoriesData);
+  const [warehouses] = useState(warehousesData);
 
   async function handleAddProduct(product: TProductFormSchema) {
     const result = await createProductAction(product);
@@ -94,6 +98,7 @@ export default function ProductProvider({
     <ProductContext.Provider
       value={{
         categories,
+        warehouses,
         handleAddProduct,
         handleDeleteProduct,
         handleUpdateProduct,

@@ -25,7 +25,7 @@ type ProductFormProps = {
 };
 
 export default function ProductForm({ onFormSubmit }: ProductFormProps) {
-  const { categories, handleAddProduct } = useProduct();
+  const { categories, warehouses, handleAddProduct } = useProduct();
 
   const {
     register,
@@ -83,6 +83,29 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
           {errors.categoryId && (
             <p className="px-1 text-xs text-red-600">
               {errors.categoryId.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="warehouseId">
+            Warehouse <span className="text-red-600">*</span>
+          </Label>
+          <Select onValueChange={(value) => setValue("warehouseId", value)}>
+            <SelectTrigger id="warehouseId">
+              <SelectValue placeholder="Select a warehouse" />
+            </SelectTrigger>
+            <SelectContent>
+              {warehouses.map((warehouse) => (
+                <SelectItem key={warehouse.id} value={warehouse.id}>
+                  {warehouse.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.warehouseId && (
+            <p className="px-1 text-xs text-red-600">
+              {errors.warehouseId.message}
             </p>
           )}
         </div>

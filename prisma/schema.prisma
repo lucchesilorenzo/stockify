@@ -23,6 +23,28 @@ model User {
   updatedAt      DateTime  @updatedAt
 }
 
+model Product {
+  id          String   @id @default(cuid())
+  categoryId  String
+  warehouseId String
+  name        String   @unique
+  slug        String   @unique
+  barcode     String?
+  price       Float
+  quantity    Int
+  maxQuantity Int
+  description String?
+  status      String   @default("In Stock")
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category     Category       @relation(fields: [categoryId], references: [id])
+  warehouse    Warehouse      @relation(fields: [warehouseId], references: [id])
+  restockOrder RestockOrder[]
+  shipmentItem ShipmentItem[]
+}
+
 model RestockOrder {
   id         String   @id @default(cuid())
   productId  String
@@ -32,69 +54,65 @@ model RestockOrder {
   tax        Float
   totalPrice Float
   status     String   @default("Pending")
-  product    Product  @relation(fields: [productId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id])
 }
 
-model Product {
-  id           String         @id @default(cuid())
-  categoryId   String
-  name         String         @unique
-  slug         String         @unique
-  barcode      String?
-  price        Float
-  quantity     Int
-  maxQuantity  Int
-  description  String?
-  status       String         @default("In Stock")
-  image        String?
-  category     Category       @relation(fields: [categoryId], references: [id])
-  restockOrder RestockOrder[]
-  shipmentItem ShipmentItem[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+model Warehouse {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  location  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
 }
 
 model Customer {
-  id               String             @id @default(cuid())
-  firstName        String
-  lastName         String
-  email            String             @unique
-  phone            String?
-  address          String
-  city             String
-  zipCode          String
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  phone     String?
+  address   String
+  city      String
+  zipCode   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   customerShipment CustomerShipment[]
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
 }
 
 model CustomerShipment {
-  id           String         @id @default(cuid())
-  customerId   String
-  status       String         @default("Pending")
+  id         String   @id @default(cuid())
+  customerId String
+  status     String   @default("Pending")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
   customer     Customer       @relation(fields: [customerId], references: [id])
   shipmentItem ShipmentItem[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
 }
 
 model ShipmentItem {
-  id                 String           @id @default(cuid())
+  id                 String @id @default(cuid())
   productId          String
   customerShipmentId String
   quantity           Int
-  product            Product          @relation(fields: [productId], references: [id])
-  customerShipment   CustomerShipment @relation(fields: [customerShipmentId], references: [id])
+
+  product          Product          @relation(fields: [productId], references: [id])
+  customerShipment CustomerShipment @relation(fields: [customerShipmentId], references: [id])
 }
 
 model Category {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
 }
 
 model Activity {

@@ -59,6 +59,7 @@ export default function ProductSelectionTable({
             </TableCell>
             <TableCell>
               <Input
+                id="product-quantity"
                 type="number"
                 min={1}
                 step={1}

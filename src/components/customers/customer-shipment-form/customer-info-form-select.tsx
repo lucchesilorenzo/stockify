@@ -26,7 +26,7 @@ export default function CustomerInfoFormSelect({
       value={selectedCustomer ?? ""}
       onValueChange={(value) => handleSelectCustomer(value)}
     >
-      <SelectTrigger className="w-full">
+      <SelectTrigger id="customer-select" className="w-full">
         <SelectValue placeholder="Select existing customer" />
       </SelectTrigger>
       <SelectContent>

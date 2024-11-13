@@ -30,12 +30,12 @@ export default function ProductEditFormCategory({
   return (
     <Card x-chunk="dashboard-07-chunk-2">
       <CardHeader>
-        <CardTitle>Product Category</CardTitle>
+        <CardTitle>Category Selection</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-6 sm:grid-cols-3">
           <div className="grid gap-3">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category">Select Category</Label>
             <Select
               onValueChange={(value) => setValue("categoryId", value)}
               defaultValue={product.categoryId}

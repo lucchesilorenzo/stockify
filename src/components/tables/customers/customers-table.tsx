@@ -58,9 +58,10 @@ export default function CustomersTable<TData, TValue>({
       {/* Filters and actions */}
       <div>
         <div className="flex items-center justify-between py-4 gap-x-4">
-          <div className="flex items-center space-x-2">
-            <Search className="w-5 h-5 text-gray-500" />
+          <div className="flex items-center space-x-2 relative">
+            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
             <Input
+              type="search"
               placeholder="Filter customers..."
               value={
                 (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
@@ -68,7 +69,7 @@ export default function CustomersTable<TData, TValue>({
               onChange={(e) =>
                 table.getColumn("fullName")?.setFilterValue(e.target.value)
               }
-              className="max-w-sm sm:block"
+              className="max-w-sm sm:block pl-10"
             />
           </div>
         </div>

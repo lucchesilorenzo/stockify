@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { LoadingButton } from "../common/loading-button";
+import EmailInput from "../ui/email-input";
+import PasswordInput from "../ui/password-input";
 
 import { logInAction, signUpAction } from "@/app/actions/auth-actions";
 import { Input } from "@/components/ui/input";
@@ -63,10 +65,10 @@ export default function AuthForm({ authType }: AuthFormProps) {
 
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
-        <Input
+        <EmailInput
           id="email"
           placeholder="johndoe@gmail.com"
-          {...register("email")}
+          register={register}
         />
         {errors.email && (
           <p className="px-1 text-xs text-red-600">{errors.email.message}</p>
@@ -75,11 +77,11 @@ export default function AuthForm({ authType }: AuthFormProps) {
 
       <div className="grid gap-2">
         <Label htmlFor="password">Password</Label>
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
-          placeholder="••••••••"
-          {...register("password")}
+          placeholder="Choose a password"
+          register={register}
+          registerValue="password"
         />
         {errors.password && (
           <p className="px-1 text-xs text-red-600">{errors.password.message}</p>
@@ -89,11 +91,11 @@ export default function AuthForm({ authType }: AuthFormProps) {
       {authType === "signup" && (
         <div className="grid gap-2">
           <Label htmlFor="confirmPassword">Confirm password</Label>
-          <Input
+          <PasswordInput
             id="confirmPassword"
-            type="password"
-            placeholder="••••••••"
-            {...register("confirmPassword")}
+            placeholder="Re-enter your password"
+            register={register}
+            registerValue="confirmPassword"
           />
           {errors.confirmPassword && (
             <p className="px-1 text-xs text-red-600">

@@ -14,12 +14,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ProductWithCategory } from "@/lib/types";
+import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 
 type EntityDialogProps = {
   children: React.ReactNode;
   actionType: "addProduct" | "createOrder";
-  products?: ProductWithCategory[];
+  products?: ProductWithCategoryAndWarehouse[];
 };
 
 export default function EntityDialog({

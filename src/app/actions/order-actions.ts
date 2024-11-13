@@ -52,7 +52,7 @@ export async function createOrderAction(order: unknown) {
 
   // Calculate order details
   const subtotal = orderedQuantity * options.price;
-  const shipping = subtotal > 100 ? 0 : 5;
+  const shipping = subtotal > 50 ? 0 : 10;
   const tax = +(subtotal * 0.22).toFixed(2);
   const totalPrice = +(subtotal + shipping + tax).toFixed(2);
 

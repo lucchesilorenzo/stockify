@@ -140,7 +140,7 @@ export default function ProductSelectionCard({
               value={selectedProductId}
               onValueChange={handleProductSelection}
             >
-              <SelectTrigger className="w-[300px]">
+              <SelectTrigger id="product-select" className="w-[300px]">
                 <SelectValue placeholder="Select a product" />
               </SelectTrigger>
               <SelectContent>

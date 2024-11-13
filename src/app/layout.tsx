@@ -37,7 +37,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <FontSizeProvider>{children}</FontSizeProvider>
         </ThemeProvider>
-        <Toaster position="top-right" duration={4000} />
+        <Toaster position="top-right" duration={4000} visibleToasts={1} />
       </body>
     </html>
   );

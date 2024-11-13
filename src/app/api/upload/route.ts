@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     if (!file) {
       return NextResponse.json(
-        { message: "No file uploaded" },
+        { message: "No file uploaded." },
         { status: 400 },
       );
     }
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ filePath: `/uploads/${file.name}` });
   } catch {
     return NextResponse.json(
-      { message: "Failed to upload file" },
+      { message: "Failed to upload file." },
       { status: 500 },
     );
   }

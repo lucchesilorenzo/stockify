@@ -17,10 +17,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useProduct } from "@/hooks/use-product";
-import { ProductWithCategory } from "@/lib/types";
+import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 
 type ProductActionsProps = {
-  product: ProductWithCategory;
+  product: ProductWithCategoryAndWarehouse;
 };
 
 export default function ProductActions({ product }: ProductActionsProps) {

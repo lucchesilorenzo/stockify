@@ -11,6 +11,9 @@ export const productFormSchema = z
     categoryId: z.string({
       required_error: "Category is required.",
     }),
+    warehouseId: z.string({
+      required_error: "Warehouse is required.",
+    }),
     price: z.coerce
       .number({
         invalid_type_error: "Price must be a number.",
@@ -59,7 +62,7 @@ export const productEditFormSchema = z.object({
     .max(1000, "Max Quantity is too long."),
   categoryId: z.string().optional(),
   image: z.any().optional(),
-  status: z.string().optional(),
+  warehouseId: z.string().optional(),
 });
 
 export type TProductFormSchema = z.infer<typeof productFormSchema>;

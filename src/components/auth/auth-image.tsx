@@ -9,6 +9,7 @@ export default function AuthImage() {
         width="1920"
         height="1080"
         className="h-screen w-full object-cover dark:brightness-[0.8]"
+        priority
       />
     </div>
   );

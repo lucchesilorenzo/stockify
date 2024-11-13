@@ -6,10 +6,10 @@ import { ChevronsUpDown } from "lucide-react";
 import ProductActions from "@/components/products/product-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ProductWithCategory } from "@/lib/types";
+import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
 
-export const columns: ColumnDef<ProductWithCategory>[] = [
+export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -83,6 +83,21 @@ export const columns: ColumnDef<ProductWithCategory>[] = [
         <Badge variant={status === "In Stock" ? "default" : "destructive"}>
           {status}
         </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "warehouse.name",
+    id: "warehouse.name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Warehouse
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
       );
     },
   },
