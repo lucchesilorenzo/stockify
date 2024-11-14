@@ -52,7 +52,7 @@ export default function ProductEditFormWarehouse({
               </SelectContent>
             </Select>
             {errors.warehouseId && (
-              <p className="px-1 text-xs text-red-600">
+              <p className="px-1 text-sm text-red-600">
                 {errors.warehouseId.message}
               </p>
             )}

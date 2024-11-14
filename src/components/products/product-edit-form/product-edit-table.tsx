@@ -50,7 +50,7 @@ export default function ProductEditTable({
               {...register("maxQuantity")}
             />
             {errors.maxQuantity && (
-              <p className="px-1 text-xs text-red-600">
+              <p className="px-1 text-sm text-red-600">
                 {errors.maxQuantity.message}
               </p>
             )}
@@ -65,7 +65,7 @@ export default function ProductEditTable({
               {...register("price")}
             />
             {errors.price && (
-              <p className="px-1 text-xs text-red-600">
+              <p className="px-1 text-sm text-red-600">
                 {errors.price.message}
               </p>
             )}

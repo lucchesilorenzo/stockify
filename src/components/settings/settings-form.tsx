@@ -1,11 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import DatePicker from "../common/date-picker";
 import { LoadingButton } from "../common/loading-button";
+import EmailInput from "../ui/email-input";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { PhoneInput } from "../ui/phone-input";
@@ -26,6 +27,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
   const {
     register,
     setValue,
+    control,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<TSettingsFormSchema>({
@@ -50,13 +52,13 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         <div className="space-y-1">
           <Label htmlFor="firstName">First name</Label>
           <Input
+            defaultValue={userSettings?.firstName ?? ""}
             id="firstName"
             placeholder="John"
-            defaultValue={userSettings?.firstName}
             {...register("firstName")}
           />
           {errors.firstName && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.firstName.message}
             </p>
           )}
@@ -65,13 +67,13 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         <div className="space-y-1">
           <Label htmlFor="lastName">Last name</Label>
           <Input
+            defaultValue={userSettings?.lastName ?? ""}
             id="lastName"
             placeholder="Doe"
-            defaultValue={userSettings?.lastName}
             {...register("lastName")}
           />
           {errors.lastName && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.lastName.message}
             </p>
           )}
@@ -79,10 +81,9 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
 
         <div className="space-y-1">
           <Label htmlFor="email">Email</Label>
-          <Input
+          <EmailInput
             id="email"
-            placeholder="johndoe@gmail.com"
-            defaultValue={userSettings?.email}
+            defaultValue={userSettings?.email ?? ""}
             disabled
           />
         </div>
@@ -90,12 +91,12 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         <div className="space-y-1 flex flex-col">
           <Label htmlFor="dateOfBirth">Date of birth</Label>
           <DatePicker
-            setValue={setValue}
             defaultValue={userSettings?.dateOfBirth ?? undefined}
+            setValue={setValue}
             fieldName="dateOfBirth"
           />
           {errors.dateOfBirth && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.dateOfBirth.message}
             </p>
           )}
@@ -112,21 +113,28 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
             {...register("bio")}
           />
           {errors.bio && (
-            <p className="px-1 text-xs text-red-600">{errors.bio.message}</p>
+            <p className="px-1 text-sm text-red-600">{errors.bio.message}</p>
           )}
         </div>
 
         <div className="space-y-1">
           <Label htmlFor="phoneNumber">Phone number</Label>
-          <PhoneInput
-            id="phoneNumber"
-            placeholder="339 755 0176"
-            value={userSettings?.phoneNumber ?? ""}
-            defaultCountry="IT"
-            onChange={(value) => setValue("phoneNumber", value)}
+          <Controller
+            defaultValue={userSettings?.phoneNumber ?? ""}
+            name="phoneNumber"
+            control={control}
+            render={({ field }) => (
+              <PhoneInput
+                {...field}
+                id="phoneNumber"
+                placeholder="Enter phone number"
+                autoComplete="tel"
+                defaultCountry="IT"
+              />
+            )}
           />
           {errors.phoneNumber && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.phoneNumber.message}
             </p>
           )}
@@ -135,13 +143,14 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         <div className="space-y-1">
           <Label htmlFor="address">Address</Label>
           <Input
-            id="address"
-            placeholder="123 Main St."
             defaultValue={userSettings?.address ?? ""}
+            id="address"
+            autoComplete="address-line1"
+            placeholder="123 Main St."
             {...register("address")}
           />
           {errors.address && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.address.message}
             </p>
           )}
@@ -150,26 +159,26 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         <div className="space-y-1">
           <Label htmlFor="city">City</Label>
           <Input
+            defaultValue={userSettings?.city ?? ""}
             id="city"
             placeholder="San Francisco"
-            defaultValue={userSettings?.city ?? ""}
             {...register("city")}
           />
           {errors.city && (
-            <p className="px-1 text-xs text-red-600">{errors.city.message}</p>
+            <p className="px-1 text-sm text-red-600">{errors.city.message}</p>
           )}
         </div>
 
         <div className="space-y-1">
           <Label htmlFor="zipCode">Zip Code</Label>
           <Input
+            defaultValue={userSettings?.zipCode ?? ""}
             id="zipCode"
             placeholder="94105"
-            defaultValue={userSettings?.zipCode ?? ""}
             {...register("zipCode")}
           />
           {errors.zipCode && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.zipCode.message}
             </p>
           )}

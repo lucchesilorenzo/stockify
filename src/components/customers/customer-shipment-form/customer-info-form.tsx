@@ -1,7 +1,12 @@
 "use client";
 
 import { Customer } from "@prisma/client";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+} from "react-hook-form";
 
 import CustomerInfoFormSelect from "./customer-info-form-select";
 
@@ -12,21 +17,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import EmailInput from "@/components/ui/email-input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PhoneInput } from "@/components/ui/phone-input";
+import { useCustomer } from "@/hooks/use-customer";
 import { TShippingFormSchema } from "@/lib/validations/customer-validations";
 
 type CustomerInfoCardProps = {
   customers: Customer[];
+  control: Control<TShippingFormSchema>;
   register: UseFormRegister<TShippingFormSchema>;
   errors: FieldErrors<TShippingFormSchema>;
+  onClearAll: () => void;
 };
 
 export default function CustomerInfoCard({
   customers,
+  control,
   register,
   errors,
+  onClearAll,
 }: CustomerInfoCardProps) {
+  const { selectedCustomer } = useCustomer();
+
   return (
     <Card>
       <CardHeader>
@@ -41,35 +55,46 @@ export default function CustomerInfoCard({
       </CardHeader>
       <CardContent className="space-y-4">
         {customers.length > 0 && (
-          <CustomerInfoFormSelect customers={customers} />
+          <CustomerInfoFormSelect
+            customers={customers}
+            onClearAll={onClearAll}
+          />
         )}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-1">
             <Label htmlFor="firstName">
-              First Name <span className="text-red-600">*</span>
+              First name <span className="text-red-600">*</span>
             </Label>
             <Input
               id="firstName"
+              placeholder="Enter first name"
               autoComplete="given-name"
+              readOnly={!!selectedCustomer}
               {...register("firstName")}
             />
             {errors.firstName && (
-              <p className="text-sm text-red-500">{errors.firstName.message}</p>
+              <p className="px-1 text-sm text-red-600">
+                {errors.firstName.message}
+              </p>
             )}
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="lastName">
-              Last Name <span className="text-red-600">*</span>
+              Last name <span className="text-red-600">*</span>
             </Label>
             <Input
               id="lastName"
+              placeholder="Enter last name"
               autoComplete="family-name"
+              readOnly={!!selectedCustomer}
               {...register("lastName")}
             />
             {errors.lastName && (
-              <p className="text-sm text-red-500">{errors.lastName.message}</p>
+              <p className="px-1 text-sm text-red-600">
+                {errors.lastName.message}
+              </p>
             )}
           </div>
         </div>
@@ -78,17 +103,38 @@ export default function CustomerInfoCard({
           <Label htmlFor="email">
             Email <span className="text-red-600">*</span>
           </Label>
-          <Input id="email" autoComplete="email" {...register("email")} />
+          <EmailInput<TShippingFormSchema>
+            id="email"
+            placeholder="Enter email"
+            register={register}
+            registerValue="email"
+            readOnly={!!selectedCustomer}
+          />
           {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
+            <p className="px-1 text-sm text-red-600">{errors.email.message}</p>
           )}
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="phone">Phone</Label>
-          <Input id="phone" autoComplete="tel" {...register("phone")} />
+          <Label htmlFor="phone">
+            Phone <span className="text-red-600">*</span>
+          </Label>
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <PhoneInput
+                {...field}
+                id="phone"
+                placeholder="Enter phone number"
+                autoComplete="tel"
+                defaultCountry="IT"
+                readOnly={!!selectedCustomer}
+              />
+            )}
+          />
           {errors.phone && (
-            <p className="text-sm text-red-500">{errors.phone.message}</p>
+            <p className="px-1 text-sm text-red-600">{errors.phone.message}</p>
           )}
         </div>
 
@@ -98,11 +144,15 @@ export default function CustomerInfoCard({
           </Label>
           <Input
             id="address"
+            placeholder="Enter address"
             autoComplete="street-address"
             {...register("address")}
+            readOnly={!!selectedCustomer}
           />
           {errors.address && (
-            <p className="text-sm text-red-500">{errors.address.message}</p>
+            <p className="px-1 text-sm text-red-600">
+              {errors.address.message}
+            </p>
           )}
         </div>
 
@@ -113,11 +163,13 @@ export default function CustomerInfoCard({
             </Label>
             <Input
               id="city"
+              placeholder="Enter city"
               autoComplete="address-level2"
               {...register("city")}
+              readOnly={!!selectedCustomer}
             />
             {errors.city && (
-              <p className="text-sm text-red-500">{errors.city.message}</p>
+              <p className="px-1 text-sm text-red-600">{errors.city.message}</p>
             )}
           </div>
 
@@ -127,11 +179,15 @@ export default function CustomerInfoCard({
             </Label>
             <Input
               id="zipCode"
+              placeholder="Enter zip code"
               autoComplete="postal-code"
               {...register("zipCode")}
+              readOnly={!!selectedCustomer}
             />
             {errors.zipCode && (
-              <p className="text-sm text-red-500">{errors.zipCode.message}</p>
+              <p className="px-1 text-sm text-red-600">
+                {errors.zipCode.message}
+              </p>
             )}
           </div>
         </div>

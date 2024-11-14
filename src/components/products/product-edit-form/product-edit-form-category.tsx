@@ -52,7 +52,7 @@ export default function ProductEditFormCategory({
               </SelectContent>
             </Select>
             {errors.categoryId && (
-              <p className="px-1 text-xs text-red-600">
+              <p className="px-1 text-sm text-red-600">
                 {errors.categoryId.message}
               </p>
             )}

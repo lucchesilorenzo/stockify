@@ -16,12 +16,16 @@ export const shippingFormSchema = z.object({
     .trim()
     .min(1, "Email is required.")
     .email("Invalid email address."),
-  phone: z.string().trim().max(30, "Phone number is too long."),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone number is required.")
+    .max(15, "Phone number is too long."),
   address: z
     .string()
     .trim()
     .min(1, "Address is required.")
-    .max(20, "Address is too long."),
+    .max(40, "Address is too long."),
   city: z
     .string()
     .trim()
@@ -30,8 +34,8 @@ export const shippingFormSchema = z.object({
   zipCode: z
     .string()
     .trim()
-    .min(1, "Zipcode is required.")
-    .max(5, "Zipcode is too long."),
+    .min(1, "Zip Code is required.")
+    .max(5, "Zip Code is too long."),
   products: z
     .array(
       z.object({
@@ -44,4 +48,43 @@ export const shippingFormSchema = z.object({
     .min(1, "At least one product is required."),
 });
 
+export const customerEditFormSchema = z.object({
+  firstName: z
+    .string()
+    .trim()
+    .min(1, "First name is required.")
+    .max(20, "First name is too long."),
+  lastName: z
+    .string()
+    .trim()
+    .min(1, "Last name is required.")
+    .max(20, "Last name is too long."),
+  email: z
+    .string()
+    .trim()
+    .min(1, "Email is required.")
+    .email("Invalid email address."),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone number is required.")
+    .max(15, "Phone number is too long."),
+  address: z
+    .string()
+    .trim()
+    .min(1, "Address is required.")
+    .max(40, "Address is too long."),
+  city: z
+    .string()
+    .trim()
+    .min(1, "City is required.")
+    .max(20, "City is too long."),
+  zipCode: z
+    .string()
+    .trim()
+    .min(1, "Zip Code is required.")
+    .max(5, "Zip Code is too long."),
+});
+
 export type TShippingFormSchema = z.infer<typeof shippingFormSchema>;
+export type TCustomerEditFormSchema = z.infer<typeof customerEditFormSchema>;

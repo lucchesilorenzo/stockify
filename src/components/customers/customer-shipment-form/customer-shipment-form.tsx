@@ -40,6 +40,7 @@ export default function CustomerOrderForm({
 
   const {
     handleSubmit,
+    control,
     register,
     setValue,
     reset,
@@ -60,18 +61,22 @@ export default function CustomerOrderForm({
     }
   }, [selectedCustomerInfo, setValue]);
 
+  function handleClearAll() {
+    reset();
+    handleSelectCustomer(null);
+    setSelectedProductId("");
+    setSelectedProducts([]);
+  }
+
   async function onSubmit(data: TShippingFormSchema) {
+    console.log(data);
     const result = await createShipmentAction(data);
     if (result?.message) {
       toast.error(result?.message);
       return;
     }
 
-    reset();
-    handleSelectCustomer(null);
-    setSelectedProductId("");
-    setSelectedProducts([]);
-
+    handleClearAll();
     toast.success("Shipment created successfully.");
   }
 
@@ -82,8 +87,10 @@ export default function CustomerOrderForm({
     >
       <CustomerInfoCard
         customers={customers}
+        control={control}
         register={register}
         errors={errors}
+        onClearAll={handleClearAll}
       />
 
       <ProductSelectionCard

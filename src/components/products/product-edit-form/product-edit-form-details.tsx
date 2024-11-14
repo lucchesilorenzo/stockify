@@ -55,7 +55,7 @@ export default function ProductEditFormDetails({
               {...register("description")}
             />
             {errors.description && (
-              <p className="px-1 text-xs text-red-600">
+              <p className="px-1 text-sm text-red-600">
                 {errors.description.message}
               </p>
             )}

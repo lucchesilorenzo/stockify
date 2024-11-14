@@ -48,17 +48,25 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
           <Label htmlFor="name">
             Name <span className="text-red-600">*</span>
           </Label>
-          <Input id="name" {...register("name")} />
+          <Input
+            id="name"
+            placeholder="Enter product name"
+            {...register("name")}
+          />
           {errors.name && (
-            <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+            <p className="px-1 text-sm text-red-600">{errors.name.message}</p>
           )}
         </div>
 
         <div className="space-y-1">
           <Label htmlFor="barcode">Barcode</Label>
-          <Input id="barcode" {...register("barcode")} />
+          <Input
+            id="barcode"
+            placeholder="Enter product barcode"
+            {...register("barcode")}
+          />
           {errors.barcode && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.barcode.message}
             </p>
           )}
@@ -81,7 +89,7 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
             </SelectContent>
           </Select>
           {errors.categoryId && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.categoryId.message}
             </p>
           )}
@@ -104,7 +112,7 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
             </SelectContent>
           </Select>
           {errors.warehouseId && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.warehouseId.message}
             </p>
           )}
@@ -114,9 +122,13 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
           <Label htmlFor="price">
             Price <span className="text-red-600">*</span>
           </Label>
-          <Input id="price" {...register("price")} />
+          <Input
+            id="price"
+            placeholder="Enter product price"
+            {...register("price")}
+          />
           {errors.price && (
-            <p className="px-1 text-xs text-red-600">{errors.price.message}</p>
+            <p className="px-1 text-sm text-red-600">{errors.price.message}</p>
           )}
         </div>
 
@@ -124,9 +136,13 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
           <Label htmlFor="maxQuantity">
             Max Quantity <span className="text-red-600">*</span>
           </Label>
-          <Input id="maxQuantity" {...register("maxQuantity")} />
+          <Input
+            id="maxQuantity"
+            placeholder="Enter product max quantity"
+            {...register("maxQuantity")}
+          />
           {errors.maxQuantity && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.maxQuantity.message}
             </p>
           )}
@@ -136,9 +152,13 @@ export default function ProductForm({ onFormSubmit }: ProductFormProps) {
           <Label htmlFor="quantity">
             Quantity <span className="text-red-600">*</span>
           </Label>
-          <Input id="quantity" {...register("quantity")} />
+          <Input
+            id="quantity"
+            placeholder="Enter product quantity"
+            {...register("quantity")}
+          />
           {errors.quantity && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.quantity.message}
             </p>
           )}

@@ -171,6 +171,7 @@ export default function ProductSelectionCard({
             </Button>
             <Button
               type="button"
+              variant="destructive"
               disabled={!selectedProducts.length}
               onClick={handleClearAll}
             >
@@ -178,7 +179,9 @@ export default function ProductSelectionCard({
             </Button>
           </div>
           {errors.products && (
-            <p className="text-red-600">{errors.products.message}</p>
+            <p className="px-1 text-sm text-red-600">
+              {errors.products.message}
+            </p>
           )}
         </div>
 

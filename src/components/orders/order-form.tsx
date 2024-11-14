@@ -54,7 +54,7 @@ export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
             fieldName="productId"
           />
           {errors.productId && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.productId.message}
             </p>
           )}
@@ -64,9 +64,13 @@ export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
           <Label htmlFor="quantity">
             Quantity <span className="text-red-600">*</span>
           </Label>
-          <Input id="quantity" {...register("quantity")} />
+          <Input
+            id="quantity"
+            placeholder="Enter quantity"
+            {...register("quantity")}
+          />
           {errors.quantity && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.quantity.message}
             </p>
           )}

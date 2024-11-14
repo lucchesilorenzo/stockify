@@ -36,6 +36,7 @@ async function main() {
     {
       firstName: "John",
       lastName: "Doe",
+      phone: "123-456-7890",
       email: "john@example.com",
       address: "123 Main St",
       city: "New York",
@@ -44,6 +45,7 @@ async function main() {
     {
       firstName: "Jane",
       lastName: "Smith",
+      phone: "987-654-3210",
       email: "jane@example.com",
       address: "456 Elm St",
       city: "Los Angeles",

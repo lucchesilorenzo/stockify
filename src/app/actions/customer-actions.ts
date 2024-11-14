@@ -29,7 +29,7 @@ export async function createShipmentAction(shipment: unknown) {
 
   // If customer does not exist, create a new customer
   if (!customer) {
-    const { firstName, lastName, email, phone, address, city, zipCode } =
+    const { firstName, lastName, phone, email, address, city, zipCode } =
       validatedShipment.data;
 
     try {

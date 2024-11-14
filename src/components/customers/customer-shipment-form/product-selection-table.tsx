@@ -59,7 +59,7 @@ export default function ProductSelectionTable({
             </TableCell>
             <TableCell>
               <Input
-                id="product-quantity"
+                id={`product-quantity-${product.productId}`}
                 type="number"
                 min={1}
                 step={1}

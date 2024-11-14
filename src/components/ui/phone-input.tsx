@@ -75,6 +75,7 @@ type CountrySelectOption = { label: string; value: RPNInput.Country };
 
 type CountrySelectProps = {
   disabled?: boolean;
+  readOnly?: boolean;
   value: RPNInput.Country;
   onChange: (value: RPNInput.Country) => void;
   options: CountrySelectOption[];
@@ -82,15 +83,16 @@ type CountrySelectProps = {
 
 const CountrySelect = ({
   disabled,
+  readOnly,
   value,
   onChange,
   options,
 }: CountrySelectProps) => {
   const handleSelect = React.useCallback(
     (country: RPNInput.Country) => {
-      onChange(country);
+      if (!readOnly) onChange(country);
     },
-    [onChange],
+    [onChange, readOnly],
   );
 
   return (
@@ -100,7 +102,7 @@ const CountrySelect = ({
           type="button"
           variant={"outline"}
           className={cn("flex gap-1 rounded-e-none rounded-s-lg px-3")}
-          disabled={disabled}
+          disabled={disabled || readOnly}
         >
           <FlagComponent country={value} countryName={value} />
           <ChevronsUpDown

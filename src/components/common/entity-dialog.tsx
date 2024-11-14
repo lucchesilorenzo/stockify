@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import CustomerEditForm from "../customers/customer-edit-form/customer-edit-form";
 import OrderForm from "../orders/order-form";
 import ProductForm from "../products/product-form";
 import { Button } from "../ui/button";
@@ -14,18 +15,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ProductWithCategoryAndWarehouse } from "@/lib/types";
+import {
+  CustomerWithCustomerShipment,
+  ProductWithCategoryAndWarehouse,
+} from "@/lib/types";
 
 type EntityDialogProps = {
   children: React.ReactNode;
-  actionType: "addProduct" | "createOrder";
+  actionType: "addProduct" | "createOrder" | "editCustomer";
   products?: ProductWithCategoryAndWarehouse[];
+  customer?: CustomerWithCustomerShipment;
 };
 
 export default function EntityDialog({
   children,
   actionType,
   products,
+  customer,
 }: EntityDialogProps) {
   const [closeDialog, setCloseDialog] = useState(false);
 
@@ -37,22 +43,29 @@ export default function EntityDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {actionType === "createOrder"
-              ? "Create a new order"
-              : "Add a new product"}
+            {actionType === "createOrder" && "Create a new order"}
+            {actionType === "addProduct" && "Add a new product"}
+            {actionType === "editCustomer" && "Edit customer"}
           </DialogTitle>
           <DialogDescription>
             Fill in the details below. Ensure that all required fields are
             completed correctly before submitting.
           </DialogDescription>
         </DialogHeader>
-        {actionType === "createOrder" ? (
+        {actionType === "createOrder" && (
           <OrderForm
             onFormSubmit={() => setCloseDialog(!closeDialog)}
             products={products!}
           />
-        ) : (
+        )}
+        {actionType === "addProduct" && (
           <ProductForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
+        )}
+        {actionType === "editCustomer" && (
+          <CustomerEditForm
+            onFormSubmit={() => setCloseDialog(!closeDialog)}
+            customer={customer!}
+          />
         )}
       </DialogContent>
     </Dialog>

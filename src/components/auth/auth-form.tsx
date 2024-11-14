@@ -65,13 +65,14 @@ export default function AuthForm({ authType }: AuthFormProps) {
 
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
-        <EmailInput
+        <EmailInput<TLogInSchema & TSignUpSchema>
           id="email"
           placeholder="johndoe@gmail.com"
           register={register}
+          registerValue="email"
         />
         {errors.email && (
-          <p className="px-1 text-xs text-red-600">{errors.email.message}</p>
+          <p className="px-1 text-sm text-red-600">{errors.email.message}</p>
         )}
       </div>
 
@@ -84,7 +85,7 @@ export default function AuthForm({ authType }: AuthFormProps) {
           registerValue="password"
         />
         {errors.password && (
-          <p className="px-1 text-xs text-red-600">{errors.password.message}</p>
+          <p className="px-1 text-sm text-red-600">{errors.password.message}</p>
         )}
       </div>
 
@@ -98,7 +99,7 @@ export default function AuthForm({ authType }: AuthFormProps) {
             registerValue="confirmPassword"
           />
           {errors.confirmPassword && (
-            <p className="px-1 text-xs text-red-600">
+            <p className="px-1 text-sm text-red-600">
               {errors.confirmPassword.message}
             </p>
           )}

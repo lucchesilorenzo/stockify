@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { File, Plus, Search } from "lucide-react";
+import { File, PlusCircleIcon, Search } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
 import EntityDialog from "@/components/common/entity-dialog";
@@ -73,7 +73,7 @@ export default function ProductsTable<TData, TValue>({
       <div>
         <div className="flex items-center justify-between py-4 gap-x-4">
           <div className="flex items-center space-x-2 relative">
-            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
+            <Search className="hidden sm:block absolute left-5 h-5 w-5 text-gray-500" />
             <Input
               id="product-search"
               type="search"
@@ -113,7 +113,7 @@ export default function ProductsTable<TData, TValue>({
             </CSVExport>
           </div>
           <EntityDialog actionType="addProduct">
-            <Plus className="sm:mr-1 h-5 w-5" />
+            <PlusCircleIcon className="sm:mr-2 h-5 w-5" />
             <span className="hidden sm:block">Add Product</span>
           </EntityDialog>
         </div>

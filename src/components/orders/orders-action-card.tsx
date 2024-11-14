@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 
 import EntityDialog from "../common/entity-dialog";
 
@@ -24,7 +24,7 @@ export default async function OrdersActionCard() {
       </CardHeader>
       <CardFooter>
         <EntityDialog actionType="createOrder" products={products}>
-          <Plus className="mr-1 h-5 w-5" />
+          <PlusCircleIcon className="mr-2 h-5 w-5" />
           Restock Product
         </EntityDialog>
       </CardFooter>
