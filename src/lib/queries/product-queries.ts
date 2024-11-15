@@ -152,3 +152,23 @@ export async function deleteProductById(productId: Product["id"]) {
 
   return deletedProduct;
 }
+
+export async function checkIfProductHasOrder(productId: Product["id"]) {
+  const productHasOrder = await prisma.restockOrder.findFirst({
+    where: {
+      productId,
+    },
+  });
+
+  return productHasOrder;
+}
+
+export async function checkIfProductHasBeenShipped(productId: Product["id"]) {
+  const productHasBeenshipped = await prisma.shipmentItem.findFirst({
+    where: {
+      productId,
+    },
+  });
+
+  return productHasBeenshipped;
+}

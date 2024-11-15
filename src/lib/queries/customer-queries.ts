@@ -1,4 +1,4 @@
-import { CustomerShipment } from "@prisma/client";
+import { Customer, CustomerShipment } from "@prisma/client";
 
 import prisma from "../db";
 import { CustomerEssentials, CustomerShipmentEssentials } from "../types";
@@ -6,7 +6,20 @@ import { CustomerEssentials, CustomerShipmentEssentials } from "../types";
 export async function getCustomers() {
   const customers = await prisma.customer.findMany({
     include: {
-      customerShipment: true,
+      customerShipment: {
+        include: {
+          shipmentItem: {
+            include: {
+              product: {
+                select: {
+                  name: true,
+                  price: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 
@@ -64,4 +77,18 @@ export async function updateCustomerShipmentStatus(
   });
 
   return updatedCustomerOrder;
+}
+
+export async function updateCustomerById(
+  customerId: Customer["id"],
+  customer: CustomerEssentials,
+) {
+  const updatedCustomer = await prisma.customer.update({
+    where: {
+      id: customerId,
+    },
+    data: customer,
+  });
+
+  return updatedCustomer;
 }

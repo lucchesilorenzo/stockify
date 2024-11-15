@@ -20,25 +20,30 @@ import {
   ProductWithCategoryAndWarehouse,
 } from "@/lib/types";
 
-type EntityDialogProps = {
+type FormDialogProps = {
   children: React.ReactNode;
   actionType: "addProduct" | "createOrder" | "editCustomer";
   products?: ProductWithCategoryAndWarehouse[];
   customer?: CustomerWithCustomerShipment;
 };
 
-export default function EntityDialog({
+export default function FormDialog({
   children,
   actionType,
   products,
   customer,
-}: EntityDialogProps) {
+}: FormDialogProps) {
   const [closeDialog, setCloseDialog] = useState(false);
 
   return (
     <Dialog open={closeDialog} onOpenChange={setCloseDialog}>
       <DialogTrigger asChild>
-        <Button>{children}</Button>
+        <Button
+          variant={customer ? "outline" : "default"}
+          size={customer ? "icon" : "default"}
+        >
+          {children}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

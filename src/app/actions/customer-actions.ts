@@ -8,12 +8,16 @@ import {
   createCustomerItems,
   createCustomerShipment,
   getCustomerByEmail,
+  updateCustomerById,
   updateCustomerShipmentStatus,
 } from "@/lib/queries/customer-queries";
 import { createActivity } from "@/lib/queries/dashboard-queries";
 import { updateProductQuantitiesAndStatus } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
-import { shippingFormSchema } from "@/lib/validations/customer-validations";
+import {
+  customerEditFormSchema,
+  shippingFormSchema,
+} from "@/lib/validations/customer-validations";
 
 export async function createShipmentAction(shipment: unknown) {
   // Validation
@@ -98,6 +102,40 @@ export async function createShipmentAction(shipment: unknown) {
   const activity: ActivityEssentials = {
     activity: "Created",
     entity: "Shipment",
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
+  }
+
+  revalidatePath("/app/customers");
+}
+
+export async function updateCustomerAction(customer: unknown) {
+  // Validation
+  const validatedCustomer = customerEditFormSchema.safeParse(customer);
+  if (!validatedCustomer.success) {
+    return { message: "Invalid form data." };
+  }
+
+  // Update customer
+  try {
+    await updateCustomerById(validatedCustomer.data.id, validatedCustomer.data);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return { message: "Email has already been taken." };
+      }
+    }
+    return { message: "Failed to update customer." };
+  }
+
+  // Create new activity
+  const activity: ActivityEssentials = {
+    activity: "Updated",
+    entity: "Customer",
   };
 
   try {

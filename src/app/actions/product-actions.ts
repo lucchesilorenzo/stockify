@@ -4,8 +4,9 @@ import { Prisma, Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { createActivity } from "@/lib/queries/dashboard-queries";
-import { checkIfProductHasOrder } from "@/lib/queries/order-queries";
 import {
+  checkIfProductHasBeenShipped,
+  checkIfProductHasOrder,
   createNewProduct,
   deleteProductById,
   getProductById,
@@ -73,6 +74,14 @@ export async function deleteProductAction(productId: unknown) {
   const productHasOrder = await checkIfProductHasOrder(validatedProductId.data);
   if (productHasOrder) {
     return { message: "You cannot delete a product that has an order!" };
+  }
+
+  // Check if product has been shipped
+  const productHasBeenshipped = await checkIfProductHasBeenShipped(
+    validatedProductId.data,
+  );
+  if (productHasBeenshipped) {
+    return { message: "You cannot delete a product that has been shipped!" };
   }
 
   try {

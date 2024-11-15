@@ -44,6 +44,7 @@ export default function CustomerOrderForm({
     register,
     setValue,
     reset,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<TShippingFormSchema>({
     resolver: zodResolver(shippingFormSchema),
@@ -51,6 +52,7 @@ export default function CustomerOrderForm({
 
   useEffect(() => {
     if (selectedCustomerInfo) {
+      clearErrors();
       setValue("firstName", selectedCustomerInfo.firstName);
       setValue("lastName", selectedCustomerInfo.lastName);
       setValue("email", selectedCustomerInfo.email);
@@ -59,7 +61,7 @@ export default function CustomerOrderForm({
       setValue("city", selectedCustomerInfo.city);
       setValue("zipCode", selectedCustomerInfo.zipCode);
     }
-  }, [selectedCustomerInfo, setValue]);
+  }, [selectedCustomerInfo, setValue, clearErrors]);
 
   function handleClearAll() {
     reset();

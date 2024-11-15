@@ -2,8 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
+import { updateCustomerAction } from "@/app/actions/customer-actions";
 import { LoadingButton } from "@/components/common/loading-button";
+import EmailInput from "@/components/ui/email-input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -32,13 +35,21 @@ export default function CustomerEditForm({
   });
 
   async function onSubmit(data: TCustomerEditFormSchema) {
-    console.log(data);
+    const result = await updateCustomerAction(data);
+    if (result?.message) {
+      toast.error(result.message);
+      return;
+    }
+
     onFormSubmit();
+    toast.success("Customer updated successfully.");
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="space-y-6">
+        <input type="hidden" value={customer.id} {...register("id")} />
+
         <div className="space-y-1">
           <Label htmlFor="firstName">
             First name <span className="text-red-600">*</span>
@@ -77,11 +88,12 @@ export default function CustomerEditForm({
           <Label htmlFor="email">
             Email <span className="text-red-600">*</span>
           </Label>
-          <Input
+          <EmailInput<TCustomerEditFormSchema>
             defaultValue={customer?.email ?? ""}
             id="email"
             placeholder="Enter customer email"
-            {...register("email")}
+            register={register}
+            registerValue="email"
           />
           {errors.email && (
             <p className="px-1 text-sm text-red-600">{errors.email.message}</p>
@@ -117,6 +129,7 @@ export default function CustomerEditForm({
           </Label>
           <Input
             defaultValue={customer?.address ?? ""}
+            autoComplete="address"
             id="address"
             placeholder="Enter customer address"
             {...register("address")}

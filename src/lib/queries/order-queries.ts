@@ -1,4 +1,4 @@
-import { Product, RestockOrder } from "@prisma/client";
+import { RestockOrder } from "@prisma/client";
 import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
 
 import prisma from "../db";
@@ -16,16 +16,6 @@ export async function getOrders() {
   });
 
   return orders;
-}
-
-export async function checkIfProductHasOrder(productId: Product["id"]) {
-  const productHasOrder = await prisma.restockOrder.findFirst({
-    where: {
-      productId,
-    },
-  });
-
-  return productHasOrder;
 }
 
 export async function createNewOrder(orderDetails: RestockOrderEssentials) {

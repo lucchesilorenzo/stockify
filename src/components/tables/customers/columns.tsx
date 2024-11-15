@@ -1,9 +1,9 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit } from "lucide-react";
 
-import EntityDialog from "@/components/common/entity-dialog";
+import FormDialog from "@/components/common/form-dialog";
+import CustomerViewShipmentsDialog from "@/components/customers/customer-view-shipments/customer-view-shipments-dialog";
 import { CustomerWithCustomerShipment } from "@/lib/types";
 
 export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
@@ -59,11 +59,18 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
     id: "actions",
     cell: ({ row }) => {
       const customer = row.original;
+      const customerShipment = customer.customerShipment;
 
       return (
-        <EntityDialog actionType="editCustomer" customer={customer}>
-          <Edit className="h-5 w-5" />
-        </EntityDialog>
+        <div className="flex items-center gap-2">
+          <CustomerViewShipmentsDialog customerShipment={customerShipment}>
+            📋
+          </CustomerViewShipmentsDialog>
+
+          <FormDialog actionType="editCustomer" customer={customer}>
+            ✏️
+          </FormDialog>
+        </div>
       );
     },
   },

@@ -7,7 +7,35 @@ export type CustomerEssentials = Omit<
 
 export type CustomerWithCustomerShipment = Prisma.CustomerGetPayload<{
   include: {
-    customerShipment: true;
+    customerShipment: {
+      include: {
+        shipmentItem: {
+          include: {
+            product: {
+              select: {
+                name: true;
+                price: true;
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}>;
+
+export type CustomerShipmentWithItems = Prisma.CustomerShipmentGetPayload<{
+  include: {
+    shipmentItem: {
+      include: {
+        product: {
+          select: {
+            name: true;
+            price: true;
+          };
+        };
+      };
+    };
   };
 }>;
 

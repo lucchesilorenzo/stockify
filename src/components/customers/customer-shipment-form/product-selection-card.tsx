@@ -150,10 +150,11 @@ export default function ProductSelectionCard({
                       {product.name} - {formatCurrency(product.price)}
                       {product.quantity <= 10 && (
                         <>
-                          <span className="mx-1">-</span>
-                          <span className="text-red-600">
+                          <span className="ml-1">(</span>
+                          <span className="text-red-600 font-semibold">
                             {product.quantity} left
                           </span>
+                          <span>)</span>
                         </>
                       )}
                     </SelectItem>

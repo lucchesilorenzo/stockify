@@ -16,7 +16,7 @@ import {
 import { File, PlusCircleIcon, Search } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
-import EntityDialog from "@/components/common/entity-dialog";
+import FormDialog from "@/components/common/form-dialog";
 import ProductTablePopover from "@/components/products/product-table-popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -112,10 +112,10 @@ export default function ProductsTable<TData, TValue>({
               <span className="hidden sm:block">Export</span>
             </CSVExport>
           </div>
-          <EntityDialog actionType="addProduct">
+          <FormDialog actionType="addProduct">
             <PlusCircleIcon className="sm:mr-2 h-5 w-5" />
             <span className="hidden sm:block">Add Product</span>
-          </EntityDialog>
+          </FormDialog>
         </div>
       </div>
 

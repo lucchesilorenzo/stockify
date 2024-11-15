@@ -49,6 +49,7 @@ export const shippingFormSchema = z.object({
 });
 
 export const customerEditFormSchema = z.object({
+  id: z.string().cuid(),
   firstName: z
     .string()
     .trim()
