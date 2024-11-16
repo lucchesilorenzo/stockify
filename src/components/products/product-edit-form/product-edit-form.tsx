@@ -4,18 +4,17 @@ import { useRef } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product } from "@prisma/client";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Save, X } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-// import ProductEditFormArchive from "./product-edit-form-archive";
-import ProductEditFormCategory from "./product-edit-form-category";
 import ProductEditFormDetails from "./product-edit-form-details";
 import ProductEditFormImage from "./product-edit-form-image";
-import ProductEditFormStockAndPrice from "./product-edit-form-stock-and-price";
-import ProductEditFormWarehouse from "./product-edit-form-warehouse";
+import ProductEditFormSelection from "./product-edit-form-selection";
+import ProductEditFormStockDetails from "./product-edit-form-stock-details";
 
+// import ProductEditFormSupplier from "./product-edit-form-supplier";
 import H1 from "@/components/common/h1";
 import { LoadingButton } from "@/components/common/loading-button";
 import { Badge } from "@/components/ui/badge";
@@ -32,8 +31,6 @@ type ProductEditFormProps = {
 };
 
 export default function ProductEditForm({ product }: ProductEditFormProps) {
-  const imageInputRef = useRef<HTMLInputElement>(null);
-
   const {
     categories,
     warehouses,
@@ -50,6 +47,8 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
   } = useForm<TProductEditFormSchema>({
     resolver: zodResolver(productEditFormSchema),
   });
+
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   async function onSubmit(data: TProductEditFormSchema) {
     // Check if max quantity is reached
@@ -69,30 +68,27 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
 
         const uploadResponse = await uploadImage(formData);
 
-        // Checks if upload was successful
         if (uploadResponse.message) {
           toast.error(uploadResponse.message);
-          data.image = product.image; // Set image to previous image
+          data.image = product.image;
         } else {
-          data.image = uploadResponse.filePath; // Set image to new image
+          data.image = uploadResponse.filePath;
         }
       } else {
-        // If file is not an image, show error
         toast.error("Please upload a valid image.");
         return;
       }
     } else {
-      data.image = product.image; // If there's no file, set image to previous image
+      data.image = product.image;
     }
 
-    // Update product
     await handleUpdateProduct(product.id, data);
   }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4"
+      className="mx-auto grid max-w-7xl flex-1 auto-rows-max gap-4"
     >
       <div className="flex items-center gap-4">
         <Button variant="outline" size="icon" className="h-7 w-7" asChild>
@@ -111,15 +107,12 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
           {product.status === "In Stock" ? "In Stock" : "Out of Stock"}
         </Badge>
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => reset()}
-          >
+          <Button type="button" variant="outline" onClick={() => reset()}>
+            <X className="mr-2 h-4 w-4" />
             Discard
           </Button>
-          <LoadingButton type="submit" size="sm" isLoading={isSubmitting}>
+          <LoadingButton type="submit" isLoading={isSubmitting}>
+            <Save className="mr-2 h-4 w-4" />
             Save Product
           </LoadingButton>
         </div>
@@ -133,14 +126,15 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
             errors={errors}
           />
 
-          <ProductEditFormStockAndPrice
+          <ProductEditFormStockDetails
             product={product}
             register={register}
             errors={errors}
           />
 
-          <ProductEditFormCategory
+          <ProductEditFormSelection
             product={product}
+            warehouses={warehouses}
             categories={categories}
             setValue={setValue}
             errors={errors}
@@ -148,34 +142,24 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         </div>
 
         <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-          <ProductEditFormWarehouse
-            product={product}
-            warehouses={warehouses}
-            setValue={setValue}
-            errors={errors}
-          />
-
           <ProductEditFormImage
             product={product}
             imageInputRef={imageInputRef}
           />
 
-          {/* TODO: Archive Product */}
-          {/* <ProductEditFormArchive /> */}
+          {/* TODO: Add Supplier */}
+          {/* <ProductEditFormSupplier /> */}
         </div>
       </div>
 
-      {/* Save and Discard Buttons (Mobile) */}
+      {/* Mobile */}
       <div className="flex items-center justify-center gap-2 md:hidden">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() => reset()}
-        >
+        <Button type="button" variant="outline" onClick={() => reset()}>
+          <X className="mr-2 h-4 w-4" />
           Discard
         </Button>
-        <LoadingButton type="submit" size="sm" isLoading={isSubmitting}>
+        <LoadingButton type="submit" isLoading={isSubmitting}>
+          <Save className="mr-2 h-4 w-4" />
           Save Product
         </LoadingButton>
       </div>

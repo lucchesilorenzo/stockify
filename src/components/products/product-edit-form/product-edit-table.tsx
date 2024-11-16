@@ -4,7 +4,6 @@ import { Product } from "@prisma/client";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -29,46 +28,49 @@ export default function ProductEditTable({
   return (
     <Table>
       <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Product</TableHead>
-          <TableHead>Barcode</TableHead>
-          <TableHead>Max Quantity</TableHead>
-          <TableHead>Price</TableHead>
+        <TableRow className="hover:bg-transparent">
+          <TableHead className="w-[200px]">Product</TableHead>
+          <TableHead className="w-[150px]">Barcode</TableHead>
+          <TableHead className="w-[200px]">Max Quantity</TableHead>
+          <TableHead className="w-[200px]">Price</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
+        <TableRow className="hover:bg-transparent">
           <TableCell className="font-semibold">{product.name}</TableCell>
           <TableCell>{product.barcode || "N/A"}</TableCell>
           <TableCell>
-            <Label htmlFor="maxQuantity" className="sr-only">
-              Stock
-            </Label>
-            <Input
-              id="maxQuantity"
-              defaultValue={product.maxQuantity}
-              {...register("maxQuantity")}
-            />
-            {errors.maxQuantity && (
-              <p className="px-1 text-sm text-red-600">
-                {errors.maxQuantity.message}
-              </p>
-            )}
+            <div className="space-y-1">
+              <Input
+                id="maxQuantity"
+                defaultValue={product.maxQuantity}
+                className="w-full"
+                {...register("maxQuantity")}
+              />
+              {errors.maxQuantity && (
+                <p className="px-1 text-sm text-red-600">
+                  {errors.maxQuantity.message}
+                </p>
+              )}
+            </div>
           </TableCell>
           <TableCell>
-            <Label htmlFor="price" className="sr-only">
-              Price
-            </Label>
-            <Input
-              id="price"
-              defaultValue={product.price}
-              {...register("price")}
-            />
-            {errors.price && (
-              <p className="px-1 text-sm text-red-600">
-                {errors.price.message}
-              </p>
-            )}
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground">€</span>
+                <Input
+                  id="price"
+                  defaultValue={product.price}
+                  className="w-full"
+                  {...register("price")}
+                />
+              </div>
+              {errors.price && (
+                <p className="px-1 text-sm text-red-600">
+                  {errors.price.message}
+                </p>
+              )}
+            </div>
           </TableCell>
         </TableRow>
       </TableBody>

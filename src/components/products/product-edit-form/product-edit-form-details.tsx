@@ -1,6 +1,7 @@
 "use client";
 
 import { Product } from "@prisma/client";
+import { Package } from "lucide-react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 import {
@@ -29,12 +30,15 @@ export default function ProductEditFormDetails({
   return (
     <Card x-chunk="dashboard-07-chunk-0">
       <CardHeader>
-        <CardTitle>Product Details</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <Package className="h-5 w-5" />
+          <span className="text-xl">Product Details</span>
+        </CardTitle>
         <CardDescription>Update your product details.</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-6">
-          <div className="grid gap-3">
+        <div className="space-y-6">
+          <div className="space-y-3">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
@@ -44,7 +48,7 @@ export default function ProductEditFormDetails({
               disabled
             />
           </div>
-          <div className="grid gap-3">
+          <div className="space-y-3">
             <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"

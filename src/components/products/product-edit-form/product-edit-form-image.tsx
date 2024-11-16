@@ -1,7 +1,7 @@
 "use client";
 
 import { Product } from "@prisma/client";
-import { Upload } from "lucide-react";
+import { Image as ImageIcon, Upload } from "lucide-react";
 import Image from "next/image";
 
 import {
@@ -25,7 +25,10 @@ export default function ProductEditFormImage({
   return (
     <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
       <CardHeader>
-        <CardTitle>Product Image</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <ImageIcon className="h-5 w-5" />
+          <span className="text-xl">Product Image</span>
+        </CardTitle>
         <CardDescription>Change the image of your product.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -35,7 +38,8 @@ export default function ProductEditFormImage({
             alt="Product image"
             width="300"
             height="300"
-            className="aspect-square w-full rounded-md object-cover"
+            className="w-full rounded-md border object-cover"
+            priority
           />
           <div className="flex aspect-square w-full max-h-[80px]">
             <div className="relative flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
