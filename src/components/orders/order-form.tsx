@@ -6,10 +6,16 @@ import { useForm } from "react-hook-form";
 import { LoadingButton } from "../common/loading-button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import OrderCombobox from "./order-combobox";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useOrder } from "@/hooks/use-order";
-import { ProductWithCategoryAndWarehouse } from "@/lib/types";
+import { useProduct } from "@/hooks/use-product";
 import {
   TOrderFormSchema,
   orderFormSchema,
@@ -17,16 +23,16 @@ import {
 
 type OrderFormProps = {
   onFormSubmit: () => void;
-  products: ProductWithCategoryAndWarehouse[];
 };
 
-export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
+export default function OrderForm({ onFormSubmit }: OrderFormProps) {
+  const { categories, warehouses } = useProduct();
   const { handleCreateOrder } = useOrder();
 
   const {
     register,
-    setValue,
     handleSubmit,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm<TOrderFormSchema>({
     resolver: zodResolver(orderFormSchema),
@@ -40,22 +46,102 @@ export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="space-y-6">
-        <div className="text-sm text-green-600">
-          Orders exceeding 50,00 € in product value qualify for free shipping.
+        <div className="space-y-1">
+          <Label htmlFor="name">
+            Name <span className="text-red-600">*</span>
+          </Label>
+          <Input
+            id="name"
+            placeholder="Enter product name"
+            {...register("name")}
+          />
+          {errors.name && (
+            <p className="px-1 text-sm text-red-600">{errors.name.message}</p>
+          )}
         </div>
 
-        <div className="flex flex-col space-y-1">
-          <Label htmlFor="productId">
-            Product <span className="text-red-600">*</span>
-          </Label>
-          <OrderCombobox
-            products={products}
-            setValue={setValue}
-            fieldName="productId"
+        <div className="space-y-1">
+          <Label htmlFor="barcode">Barcode</Label>
+          <Input
+            id="barcode"
+            placeholder="Enter product barcode"
+            {...register("barcode")}
           />
-          {errors.productId && (
+          {errors.barcode && (
             <p className="px-1 text-sm text-red-600">
-              {errors.productId.message}
+              {errors.barcode.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="categoryId">
+            Category <span className="text-red-600">*</span>
+          </Label>
+          <Select onValueChange={(value) => setValue("categoryId", value)}>
+            <SelectTrigger id="categoryId">
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((category) => (
+                <SelectItem key={category.id} value={category.id}>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.categoryId && (
+            <p className="px-1 text-sm text-red-600">
+              {errors.categoryId.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="warehouseId">
+            Warehouse <span className="text-red-600">*</span>
+          </Label>
+          <Select onValueChange={(value) => setValue("warehouseId", value)}>
+            <SelectTrigger id="warehouseId">
+              <SelectValue placeholder="Select a warehouse" />
+            </SelectTrigger>
+            <SelectContent>
+              {warehouses.map((warehouse) => (
+                <SelectItem key={warehouse.id} value={warehouse.id}>
+                  {warehouse.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.warehouseId && (
+            <p className="px-1 text-sm text-red-600">
+              {errors.warehouseId.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="price">
+            Base Price (€) <span className="text-red-600">*</span>
+          </Label>
+          <Input id="price" placeholder="0.00" {...register("price")} />
+          {errors.price && (
+            <p className="px-1 text-sm text-red-600">{errors.price.message}</p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="maxQuantity">
+            Max Stock Level <span className="text-red-600">*</span>
+          </Label>
+          <Input
+            id="maxQuantity"
+            placeholder="100"
+            {...register("maxQuantity")}
+          />
+          {errors.maxQuantity && (
+            <p className="px-1 text-sm text-red-600">
+              {errors.maxQuantity.message}
             </p>
           )}
         </div>
@@ -64,11 +150,7 @@ export default function OrderForm({ onFormSubmit, products }: OrderFormProps) {
           <Label htmlFor="quantity">
             Quantity <span className="text-red-600">*</span>
           </Label>
-          <Input
-            id="quantity"
-            placeholder="Enter quantity"
-            {...register("quantity")}
-          />
+          <Input id="quantity" placeholder="1" {...register("quantity")} />
           {errors.quantity && (
             <p className="px-1 text-sm text-red-600">
               {errors.quantity.message}

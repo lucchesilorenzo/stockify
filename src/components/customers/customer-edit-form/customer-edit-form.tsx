@@ -174,7 +174,7 @@ export default function CustomerEditForm({
         </div>
 
         <LoadingButton isLoading={isSubmitting} className="w-full">
-          Edit customer
+          Edit
         </LoadingButton>
       </div>
     </form>

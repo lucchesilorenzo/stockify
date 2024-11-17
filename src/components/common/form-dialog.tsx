@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import CustomerEditForm from "../customers/customer-edit-form/customer-edit-form";
 import OrderForm from "../orders/order-form";
-import ProductForm from "../products/product-form";
+import RestockOrderForm from "../orders/restock-order-form";
 import { Button } from "../ui/button";
 
 import {
@@ -22,7 +22,7 @@ import {
 
 type FormDialogProps = {
   children: React.ReactNode;
-  actionType: "addProduct" | "createOrder" | "editCustomer";
+  actionType: "createOrder" | "createRestockOrder" | "editCustomer";
   products?: ProductWithCategoryAndWarehouse[];
   customer?: CustomerWithCustomerShipment;
 };
@@ -49,7 +49,8 @@ export default function FormDialog({
         <DialogHeader>
           <DialogTitle>
             {actionType === "createOrder" && "Create a new order"}
-            {actionType === "addProduct" && "Add a new product"}
+            {actionType === "createRestockOrder" &&
+              "Create a new restock order"}
             {actionType === "editCustomer" && "Edit customer"}
           </DialogTitle>
           <DialogDescription>
@@ -58,13 +59,13 @@ export default function FormDialog({
           </DialogDescription>
         </DialogHeader>
         {actionType === "createOrder" && (
-          <OrderForm
+          <OrderForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
+        )}
+        {actionType === "createRestockOrder" && (
+          <RestockOrderForm
             onFormSubmit={() => setCloseDialog(!closeDialog)}
             products={products!}
           />
-        )}
-        {actionType === "addProduct" && (
-          <ProductForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
         )}
         {actionType === "editCustomer" && (
           <CustomerEditForm

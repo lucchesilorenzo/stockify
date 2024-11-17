@@ -12,15 +12,28 @@ import {
   getOrders,
   getWeeklyOrders,
 } from "@/lib/queries/order-queries";
+import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Orders",
 };
 
 export default async function OrdersPage() {
-  const orders = await getOrders();
-  const monthlyOrders = await getMonthlyOrders();
-  const weeklyOrders = await getWeeklyOrders();
+  const [orders, monthlyOrders, weeklyOrders] = await Promise.all([
+    getOrders(),
+    getMonthlyOrders(),
+    getWeeklyOrders(),
+  ]);
+
+  const csvData = orders.map((order) => ({
+    ID: formatOrderId(order),
+    Type: order.type,
+    Name: order.product.name,
+    Quantity: order.quantity,
+    Status: order.status,
+    Amount: formatCurrency(order.totalPrice),
+    Date: formatDate(order.createdAt, "short"),
+  }));
 
   return (
     <InvoiceProvider>
@@ -41,7 +54,7 @@ export default async function OrdersPage() {
 
         <section className="grid grid-cols-1 gap-6 xl:grid-cols-[1150px_1fr]">
           <div>
-            <OrdersTable columns={columns} data={orders} />
+            <OrdersTable columns={columns} data={orders} csvData={csvData} />
           </div>
           <div>
             <OrderInvoice />

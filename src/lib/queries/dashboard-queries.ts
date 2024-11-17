@@ -38,7 +38,7 @@ export async function getLowStockProducts() {
 }
 
 export async function getPendingOrders() {
-  const pendingOrders = await prisma.restockOrder.count({
+  const pendingOrders = await prisma.order.count({
     where: {
       status: "Pending",
     },

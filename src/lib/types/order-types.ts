@@ -1,6 +1,16 @@
-import { RestockOrder } from "@prisma/client";
+import { Order, Prisma } from "@prisma/client";
 
-export type RestockOrderEssentials = Omit<
-  RestockOrder,
-  "id" | "createdAt" | "updatedAt" | "status" | "customerId"
+export type OrderEssentials = Omit<
+  Order,
+  "id" | "createdAt" | "updatedAt" | "status"
 >;
+
+export type OrderWithProduct = Prisma.OrderGetPayload<{
+  include: {
+    product: {
+      select: {
+        name: true;
+      };
+    };
+  };
+}>;

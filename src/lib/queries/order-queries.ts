@@ -1,11 +1,11 @@
-import { RestockOrder } from "@prisma/client";
+import { Order } from "@prisma/client";
 import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from "date-fns";
 
 import prisma from "../db";
-import { RestockOrderEssentials } from "../types";
+import { OrderEssentials } from "../types";
 
 export async function getOrders() {
-  const orders = await prisma.restockOrder.findMany({
+  const orders = await prisma.order.findMany({
     include: {
       product: {
         select: {
@@ -18,8 +18,8 @@ export async function getOrders() {
   return orders;
 }
 
-export async function createNewOrder(orderDetails: RestockOrderEssentials) {
-  const newOrder = await prisma.restockOrder.create({
+export async function createOrder(orderDetails: OrderEssentials) {
+  const newOrder = await prisma.order.create({
     data: orderDetails,
   });
 
@@ -30,7 +30,7 @@ export async function getMonthlyOrders() {
   const start = startOfMonth(new Date());
   const end = endOfMonth(new Date());
 
-  const ordersThisMonth = await prisma.restockOrder.findMany({
+  const ordersThisMonth = await prisma.order.findMany({
     where: {
       createdAt: {
         gte: start,
@@ -46,7 +46,7 @@ export async function getWeeklyOrders() {
   const start = startOfWeek(new Date(), { weekStartsOn: 1 });
   const end = endOfWeek(new Date(), { weekStartsOn: 1 });
 
-  const ordersLastWeek = await prisma.restockOrder.findMany({
+  const ordersLastWeek = await prisma.order.findMany({
     where: {
       createdAt: {
         gte: start,
@@ -58,8 +58,8 @@ export async function getWeeklyOrders() {
   return ordersLastWeek;
 }
 
-export async function updateOrderStatus(orderId: RestockOrder["id"]) {
-  const updatedOrder = await prisma.restockOrder.update({
+export async function updateOrderStatus(orderId: Order["id"]) {
+  const updatedOrder = await prisma.order.update({
     where: {
       id: orderId,
     },

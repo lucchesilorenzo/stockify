@@ -21,11 +21,11 @@ import {
 } from "@/components/ui/popover";
 import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { TOrderFormSchema } from "@/lib/validations/order-validations";
+import { TRestockOrderFormSchema } from "@/lib/validations/order-validations";
 
 type OrderComboboxProps = {
   products: ProductWithCategoryAndWarehouse[];
-  setValue: UseFormSetValue<TOrderFormSchema>;
+  setValue: UseFormSetValue<TRestockOrderFormSchema>;
   fieldName: "productId";
 };
 

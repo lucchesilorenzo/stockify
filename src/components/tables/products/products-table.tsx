@@ -13,10 +13,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { File, PlusCircleIcon, Search } from "lucide-react";
+import { File, Search } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
-import FormDialog from "@/components/common/form-dialog";
 import ProductTablePopover from "@/components/products/product-table-popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,9 +47,9 @@ export default function ProductsTable<TData, TValue>({
   data,
   csvData,
 }: ProductsTableProps<TData, TValue>) {
+  const { categories } = useProduct();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const { categories } = useProduct();
 
   const table = useReactTable({
     data,
@@ -73,7 +72,7 @@ export default function ProductsTable<TData, TValue>({
       <div>
         <div className="flex items-center justify-between py-4 gap-x-4">
           <div className="flex items-center space-x-2 relative">
-            <Search className="hidden sm:block absolute left-5 h-5 w-5 text-gray-500" />
+            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
             <Input
               id="product-search"
               type="search"
@@ -84,7 +83,7 @@ export default function ProductsTable<TData, TValue>({
               onChange={(e) =>
                 table.getColumn("name")?.setFilterValue(e.target.value)
               }
-              className="max-w-sm hidden sm:block pl-10"
+              className="max-w-sm pl-10"
             />
             <Select
               onValueChange={(value) =>
@@ -112,10 +111,10 @@ export default function ProductsTable<TData, TValue>({
               <span className="hidden sm:block">Export</span>
             </CSVExport>
           </div>
-          <FormDialog actionType="addProduct">
+          {/* <FormDialog actionType="addProduct">
             <PlusCircleIcon className="sm:mr-2 h-5 w-5" />
             <span className="hidden sm:block">Add Product</span>
-          </FormDialog>
+          </FormDialog> */}
         </div>
       </div>
 

@@ -41,13 +41,14 @@ model Product {
 
   category     Category       @relation(fields: [categoryId], references: [id])
   warehouse    Warehouse      @relation(fields: [warehouseId], references: [id])
-  restockOrder RestockOrder[]
+  restockOrder Order[]
   shipmentItem ShipmentItem[]
 }
 
-model RestockOrder {
+model Order {
   id         String   @id @default(cuid())
   productId  String
+  type       String
   quantity   Int
   subtotal   Float
   shipping   Float

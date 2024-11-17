@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="border-t py-4">
       <div className="container mx-auto px-4">
-        <p className="flex items-center justify-center flex-wrap text-sm text-center">
+        <p className="flex items-center justify-center flex-wrap text-xs text-center">
           <span className="mr-1">&copy; {new Date().getFullYear()}.</span>
           <span className="flex items-center">
             Made with

@@ -75,7 +75,7 @@ export async function getProductOptions(productId: Product["id"]) {
   return options;
 }
 
-export async function createNewProduct(product: ProductEssentials) {
+export async function createProduct(product: ProductEssentials) {
   const newProduct = await prisma.product.create({
     data: product,
   });
@@ -154,7 +154,7 @@ export async function deleteProductById(productId: Product["id"]) {
 }
 
 export async function checkIfProductHasOrder(productId: Product["id"]) {
-  const productHasOrder = await prisma.restockOrder.findFirst({
+  const productHasOrder = await prisma.order.findFirst({
     where: {
       productId,
     },
@@ -164,11 +164,11 @@ export async function checkIfProductHasOrder(productId: Product["id"]) {
 }
 
 export async function checkIfProductHasBeenShipped(productId: Product["id"]) {
-  const productHasBeenshipped = await prisma.shipmentItem.findFirst({
+  const hasProductBeenShipped = await prisma.shipmentItem.findFirst({
     where: {
       productId,
     },
   });
 
-  return productHasBeenshipped;
+  return hasProductBeenShipped;
 }

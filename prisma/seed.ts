@@ -130,6 +130,7 @@ async function main() {
     const totalPrice = +(subtotal + shipping + tax).toFixed(2);
 
     const order = {
+      type: i % 2 === 0 ? "New" : "Restock",
       quantity: orderedQuantity,
       totalPrice: totalPrice,
       subtotal: subtotal,
@@ -144,7 +145,7 @@ async function main() {
   }
 
   // Aggiungi ordini di rifornimento
-  await prisma.restockOrder.createMany({
+  await prisma.order.createMany({
     data: orders,
   });
 

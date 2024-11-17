@@ -4,6 +4,7 @@ import H1 from "@/components/common/h1";
 import { columns } from "@/components/tables/products/columns";
 import ProductsTable from "@/components/tables/products/products-table";
 import { getProducts } from "@/lib/queries/product-queries";
+import { formatCurrency } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -15,7 +16,7 @@ export default async function ProductsPage() {
   const csvData = products.map((product) => ({
     Name: product.name,
     Category: product.category?.name,
-    Price: product.price,
+    Price: formatCurrency(product.price),
     Status: product.status,
     Quantity: product.quantity,
     MaxQuantity: product.maxQuantity,

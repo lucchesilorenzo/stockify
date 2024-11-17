@@ -6,15 +6,11 @@ import { Category, Product, Warehouse } from "@prisma/client";
 import { toast } from "sonner";
 
 import {
-  createProductAction,
   deleteProductAction,
   isMaxProductQuantityReachedAction,
   updateProductAction,
 } from "@/app/actions/product-actions";
-import {
-  TProductEditFormSchema,
-  TProductFormSchema,
-} from "@/lib/validations/product-validations";
+import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
 type ProductProviderProps = {
   children: React.ReactNode;
@@ -25,7 +21,6 @@ type ProductProviderProps = {
 type TProductContext = {
   categories: Category[];
   warehouses: Warehouse[];
-  handleAddProduct: (product: TProductFormSchema) => Promise<void>;
   handleDeleteProduct: (productId: Product["id"]) => Promise<void>;
   handleUpdateProduct: (
     productId: Product["id"],
@@ -46,15 +41,6 @@ export default function ProductProvider({
 }: ProductProviderProps) {
   const [categories] = useState(categoriesData);
   const [warehouses] = useState(warehousesData);
-
-  async function handleAddProduct(product: TProductFormSchema) {
-    const result = await createProductAction(product);
-    if (result?.message) {
-      toast.error(result.message);
-      return;
-    }
-    toast.success("Product added successfully.");
-  }
 
   async function handleDeleteProduct(productId: Product["id"]) {
     const result = await deleteProductAction(productId);
@@ -99,7 +85,6 @@ export default function ProductProvider({
       value={{
         categories,
         warehouses,
-        handleAddProduct,
         handleDeleteProduct,
         handleUpdateProduct,
         handleCheckProductMaxQuantity,

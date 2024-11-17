@@ -5,10 +5,10 @@ import { Paperclip } from "lucide-react";
 import { Button } from "../ui/button";
 
 import { useInvoice } from "@/hooks/use-invoice";
-import { RestockOrderWithProduct } from "@/lib/types";
+import { OrderWithProduct } from "@/lib/types";
 
 type OrderActionsProps = {
-  order: RestockOrderWithProduct;
+  order: OrderWithProduct;
 };
 
 export default function OrderActions({ order }: OrderActionsProps) {

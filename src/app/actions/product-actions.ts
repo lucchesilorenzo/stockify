@@ -7,58 +7,16 @@ import { createActivity } from "@/lib/queries/dashboard-queries";
 import {
   checkIfProductHasBeenShipped,
   checkIfProductHasOrder,
-  createNewProduct,
   deleteProductById,
   getProductById,
   getProductOptions,
   updateProductById,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
-import { createSlug } from "@/lib/utils";
 import {
   productEditFormSchema,
-  productFormSchema,
   productIdSchema,
 } from "@/lib/validations/product-validations";
-
-export async function createProductAction(product: unknown) {
-  const validatedProduct = productFormSchema.safeParse(product);
-  if (!validatedProduct.success) {
-    return { message: "Invalid product." };
-  }
-
-  // Create a new product with slug
-  const newProduct = {
-    ...validatedProduct.data,
-    slug: createSlug(validatedProduct.data.name),
-  };
-
-  try {
-    await createNewProduct(newProduct);
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        return { message: "Product already exists." };
-      }
-    }
-    return { message: "Failed to create product." };
-  }
-
-  // Create a new activity
-  const activity: ActivityEssentials = {
-    activity: "Created",
-    entity: "Product",
-    product: validatedProduct.data.name,
-  };
-
-  try {
-    await createActivity(activity);
-  } catch {
-    return { message: "Failed to create activity." };
-  }
-
-  revalidatePath("/app/products");
-}
 
 export async function deleteProductAction(productId: unknown) {
   const validatedProductId = productIdSchema.safeParse(productId);
@@ -77,10 +35,10 @@ export async function deleteProductAction(productId: unknown) {
   }
 
   // Check if product has been shipped
-  const productHasBeenshipped = await checkIfProductHasBeenShipped(
+  const hasProductBeenShipped = await checkIfProductHasBeenShipped(
     validatedProductId.data,
   );
-  if (productHasBeenshipped) {
+  if (hasProductBeenShipped) {
     return { message: "You cannot delete a product that has been shipped!" };
   }
 

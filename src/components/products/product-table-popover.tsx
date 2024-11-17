@@ -20,7 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { productStatuses } from "@/lib/data";
-import { Status } from "@/lib/types";
+import { ProductStatus } from "@/lib/types";
 
 type ProductTablePopoverProps<T> = {
   table: Table<T>;
@@ -30,9 +30,8 @@ export default function ProductTablePopover<T>({
   table,
 }: ProductTablePopoverProps<T>) {
   const [open, setOpen] = React.useState(false);
-  const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    null,
-  );
+  const [selectedStatus, setSelectedStatus] =
+    React.useState<ProductStatus | null>(null);
 
   function handleResetStatus() {
     setSelectedStatus(null);

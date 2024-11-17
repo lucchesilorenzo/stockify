@@ -19,13 +19,3 @@ export type ProductEssentials = Omit<
   Product,
   "id" | "createdAt" | "updatedAt" | "status" | "description" | "image"
 >;
-
-export type RestockOrderWithProduct = Prisma.RestockOrderGetPayload<{
-  include: {
-    product: {
-      select: {
-        name: true;
-      };
-    };
-  };
-}>;

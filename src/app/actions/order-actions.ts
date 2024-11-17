@@ -4,34 +4,95 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { createActivity } from "@/lib/queries/dashboard-queries";
-import { createNewOrder, updateOrderStatus } from "@/lib/queries/order-queries";
+import { createOrder, updateOrderStatus } from "@/lib/queries/order-queries";
 import {
+  createProduct,
   getProductById,
   getProductOptions,
   updateProductQuantityAndStatus,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
+import { createSlug } from "@/lib/utils";
 import {
   orderFormSchema,
-  orderStatusSchema,
+  restockOrderFormSchema,
+  restockOrderStatusSchema,
 } from "@/lib/validations/order-validations";
 
 export async function createOrderAction(order: unknown) {
   const validatedOrder = orderFormSchema.safeParse(order);
   if (!validatedOrder.success) {
-    return { message: "Invalid order data." };
+    return { message: "Invalid form data." };
+  }
+
+  // Create a new product object with slug
+  const newProduct = {
+    ...validatedOrder.data,
+    slug: createSlug(validatedOrder.data.name),
+  };
+
+  // Create a new product and order
+  try {
+    const product = await createProduct(newProduct);
+
+    // Calculate order details
+    const subtotal = validatedOrder.data.quantity * product.price;
+    const shipping = subtotal > 50 ? 0 : 10;
+    const tax = +(subtotal * 0.22).toFixed(2);
+    const totalPrice = +(subtotal + shipping + tax).toFixed(2);
+
+    const orderDetails = {
+      productId: product.id,
+      type: "New",
+      quantity: validatedOrder.data.quantity,
+      subtotal,
+      shipping,
+      tax,
+      totalPrice,
+    };
+
+    await createOrder(orderDetails);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return { message: "Product or order already exists." };
+      }
+    }
+    return { message: "Failed to create product or order." };
+  }
+
+  // Create a new activity
+  const activity: ActivityEssentials = {
+    activity: "Created",
+    entity: "Order",
+    product: validatedOrder.data.name,
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
+  }
+
+  revalidatePath("/app/products");
+}
+
+export async function createRestockOrderAction(restockOrder: unknown) {
+  const validatedRestockOrder = restockOrderFormSchema.safeParse(restockOrder);
+  if (!validatedRestockOrder.success) {
+    return { message: "Invalid form data." };
   }
 
   // Check if product exists
-  const product = await getProductById(validatedOrder.data.productId);
+  const product = await getProductById(validatedRestockOrder.data.productId);
   if (!product) return { message: "Product not found." };
 
   // Check if quantity is present
-  const options = await getProductOptions(validatedOrder.data.productId);
+  const options = await getProductOptions(validatedRestockOrder.data.productId);
   if (!options) return { message: "Options not found." };
 
   // Check if quantity is valid
-  const orderedQuantity = validatedOrder.data.quantity;
+  const orderedQuantity = validatedRestockOrder.data.quantity;
   const currentQuantity = options.quantity;
   const maxQuantity = options.maxQuantity;
 
@@ -57,7 +118,8 @@ export async function createOrderAction(order: unknown) {
   const totalPrice = +(subtotal + shipping + tax).toFixed(2);
 
   const orderDetails = {
-    productId: validatedOrder.data.productId,
+    productId: validatedRestockOrder.data.productId,
+    type: "Restock",
     quantity: orderedQuantity,
     subtotal,
     shipping,
@@ -65,23 +127,23 @@ export async function createOrderAction(order: unknown) {
     totalPrice,
   };
 
-  // Create order
+  // Create restock order
   try {
-    await createNewOrder(orderDetails);
+    await createOrder(orderDetails);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        return { message: "Order already exists." };
+        return { message: "Restock order already exists." };
       }
     }
-    return { message: "Failed to create order." };
+    return { message: "Failed to create restock order." };
   }
 
   // Update product quantity
   try {
     await updateProductQuantityAndStatus(
-      validatedOrder.data.productId,
-      validatedOrder.data.quantity,
+      validatedRestockOrder.data.productId,
+      validatedRestockOrder.data.quantity,
     );
   } catch {
     return { message: "Failed to update product quantity." };
@@ -90,7 +152,7 @@ export async function createOrderAction(order: unknown) {
   // Create new activity
   const activity: ActivityEssentials = {
     activity: "Created",
-    entity: "Order",
+    entity: "Restock",
     product: product.name,
   };
 
@@ -105,8 +167,10 @@ export async function createOrderAction(order: unknown) {
 
 export async function updateOrderStatusAction(newOrderData: unknown) {
   // Validation
-  const validatedOrderData = orderStatusSchema.safeParse(newOrderData);
-  if (!validatedOrderData.success) return { message: "Invalid order data." };
+  const validatedOrderData = restockOrderStatusSchema.safeParse(newOrderData);
+  if (!validatedOrderData.success) {
+    return { message: "Invalid order data." };
+  }
 
   // Update order status
   try {

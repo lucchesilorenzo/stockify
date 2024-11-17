@@ -4,15 +4,27 @@ import { useState } from "react";
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { File, Search } from "lucide-react";
 
+import CSVExport from "@/components/common/csv-export";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -21,32 +33,103 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { orderStatuses, orderTypes } from "@/lib/data";
 
 interface OrdersTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  csvData: Record<string, string | number>[];
 }
 
 export default function OrdersTable<TData, TValue>({
   columns,
   data,
+  csvData,
 }: OrdersTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
+      columnFilters,
     },
+    onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
 
   return (
     <>
+      {/* Filters and actions */}
+      <div className="my-4">
+        <div className="flex items-center space-x-2 relative">
+          <Search className="absolute left-5 h-5 w-5 text-gray-500" />
+          <Input
+            id="order-search"
+            type="search"
+            placeholder="Filter orders..."
+            value={
+              (table.getColumn("product.name")?.getFilterValue() as string) ??
+              ""
+            }
+            onChange={(e) =>
+              table.getColumn("product.name")?.setFilterValue(e.target.value)
+            }
+            className="max-w-sm pl-10"
+          />
+          <Select
+            onValueChange={(value) =>
+              table
+                .getColumn("type")
+                ?.setFilterValue(value === "all" ? "" : value)
+            }
+          >
+            <SelectTrigger id="order-select">
+              <SelectValue placeholder="Select order type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              {orderTypes.map((type) => (
+                <SelectItem key={type.value} value={type.label}>
+                  {type.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select
+            onValueChange={(value) =>
+              table
+                .getColumn("status")
+                ?.setFilterValue(value === "all" ? "" : value)
+            }
+          >
+            <SelectTrigger id="status-select">
+              <SelectValue placeholder="Select order status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              {orderStatuses.map((status) => (
+                <SelectItem key={status.value} value={status.label}>
+                  {status.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <CSVExport data={csvData} filename="orders.csv">
+            <File className="mr-2 h-4 w-4" />
+            <span className="hidden sm:block">Export</span>
+          </CSVExport>
+        </div>
+      </div>
+
       {/* Table */}
       <div className="rounded-md border">
         <Table>

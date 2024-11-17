@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import { useCustomer } from "@/hooks/use-customer";
 import { CustomerShipmentWithItems } from "@/lib/types";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatShipmentId } from "@/lib/utils";
 
 type CustomerViewShipmentsTableProps = {
   customerShipment: CustomerShipmentWithItems[];
@@ -43,7 +43,9 @@ export default function CustomerViewShipmentsTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Shipment # {shipment.id}</CardTitle>
+        <CardTitle className="text-xl">
+          Shipment # {formatShipmentId(shipment)}
+        </CardTitle>
         <CardDescription>
           Date: {format(shipment.createdAt, "dd/MM/yyyy")}
           <span className="ml-4">Status: {shipment.status}</span>

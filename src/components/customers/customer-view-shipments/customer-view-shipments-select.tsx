@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useCustomer } from "@/hooks/use-customer";
 import { CustomerShipmentWithItems } from "@/lib/types";
+import { formatShipmentId } from "@/lib/utils";
 
 type CustomerViewShipmentsSelectProps = {
   customerShipment: CustomerShipmentWithItems[];
@@ -19,6 +20,7 @@ export default function CustomerViewShipmentsSelect({
   customerShipment,
 }: CustomerViewShipmentsSelectProps) {
   const { handleSelectShipment } = useCustomer();
+  console.log(customerShipment);
 
   return (
     <Select onValueChange={(value) => handleSelectShipment(value)}>
@@ -29,7 +31,7 @@ export default function CustomerViewShipmentsSelect({
         <ScrollArea className="max-h-60 overflow-y-auto">
           {customerShipment.map((shipment) => (
             <SelectItem key={shipment.id} value={shipment.id}>
-              Shipment # {shipment.id} -{" "}
+              Shipment # {formatShipmentId(shipment)} -{" "}
               {format(shipment.createdAt, "dd/MM/yyyy")}
             </SelectItem>
           ))}

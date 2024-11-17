@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useInvoice } from "@/hooks/use-invoice";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
 
 export default function OrderInvoice() {
   const { isInvoiceOpen, order } = useInvoice();
@@ -18,7 +18,6 @@ export default function OrderInvoice() {
   if (!isInvoiceOpen || !order) return null;
 
   const {
-    id,
     createdAt,
     totalPrice,
     updatedAt,
@@ -33,13 +32,13 @@ export default function OrderInvoice() {
     <Card className="overflow-hidden">
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
-          <CardTitle className="group flex items-center gap-2 text-lg">
-            Order # {id}
+          <CardTitle className="group flex items-center gap-2 text-xl">
+            Order # {formatOrderId(order)}
           </CardTitle>
           <CardDescription>Date: {formatDate(createdAt)}</CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="p-6 text-sm">
+      <CardContent className="p-6">
         <div className="grid gap-3">
           <div className="font-semibold">Order Details</div>
           <ul className="grid gap-3">

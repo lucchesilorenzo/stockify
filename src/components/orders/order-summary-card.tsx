@@ -1,4 +1,4 @@
-import { RestockOrder } from "@prisma/client";
+import { Order } from "@prisma/client";
 import { CalendarDays } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +6,7 @@ import { formatCurrency } from "@/lib/utils";
 
 type OrderSummaryCardProps = {
   type: "month" | "week";
-  orders: RestockOrder[];
+  orders: Order[];
 };
 
 export default function OrderSummaryCard({
@@ -15,14 +15,14 @@ export default function OrderSummaryCard({
 }: OrderSummaryCardProps) {
   const totalOrdersLength = orders.length;
   const totalOrders = orders.reduce(
-    (curr, order) => curr + order.totalPrice,
+    (total, order) => total + order.totalPrice,
     0,
   );
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">
+        <CardTitle className="font-medium">
           This {type === "month" ? "Month" : "Week"}
         </CardTitle>
         <CalendarDays className="h-4 w-4 text-muted-foreground" />

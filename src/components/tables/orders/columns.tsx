@@ -6,10 +6,10 @@ import { ChevronsUpDown } from "lucide-react";
 import StatusBadge from "@/components/common/status-badge";
 import OrderActions from "@/components/orders/order-actions";
 import { Button } from "@/components/ui/button";
-import { RestockOrderWithProduct } from "@/lib/types";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { OrderWithProduct } from "@/lib/types";
+import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
 
-export const columns: ColumnDef<RestockOrderWithProduct>[] = [
+export const columns: ColumnDef<OrderWithProduct>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -18,7 +18,26 @@ export const columns: ColumnDef<RestockOrderWithProduct>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          # Order ID
+          Order ID
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const order = row.original;
+
+      return <div>{formatOrderId(order)}</div>;
+    },
+  },
+  {
+    accessorKey: "type",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Order Type
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

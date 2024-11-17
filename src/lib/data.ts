@@ -11,7 +11,7 @@ import {
   UserRound,
 } from "lucide-react";
 
-import { Status } from "./types";
+import { OrderStatus, OrderType, ProductStatus } from "./types";
 
 export const routes = [
   { name: "Dashboard", href: "/app/dashboard", icon: Home },
@@ -19,11 +19,6 @@ export const routes = [
   { name: "Products", href: "/app/products", icon: Package },
   { name: "Customers", href: "/app/customers", icon: UserRound },
   { name: "Analytics", href: "/app/analytics", icon: LineChart },
-];
-
-export const productStatuses: Status[] = [
-  { value: "in-stock", label: "In Stock" },
-  { value: "out-of-stock", label: "Out of Stock" },
 ];
 
 export const dashboardData = [
@@ -59,4 +54,19 @@ export const fontSizeData = [
   { name: "Medium", value: "text-md", icon: FontSizeIcon },
   { name: "Large", value: "text-lg", icon: FontSizeIcon },
   { name: "Extra Large", value: "text-xl", icon: FontSizeIcon },
+];
+
+export const productStatuses: ProductStatus[] = [
+  { value: "in-stock", label: "In Stock" },
+  { value: "out-of-stock", label: "Out of Stock" },
+];
+
+export const orderTypes: OrderType[] = [
+  { value: "new", label: "New" },
+  { value: "restock", label: "Restock" },
+];
+
+export const orderStatuses: OrderStatus[] = [
+  { value: "pending", label: "Pending" },
+  { value: "completed", label: "Completed" },
 ];
