@@ -29,7 +29,7 @@ model Product {
   warehouseId String
   name        String   @unique
   slug        String   @unique
-  barcode     String?
+  sku         String?
   price       Float
   quantity    Int
   maxQuantity Int

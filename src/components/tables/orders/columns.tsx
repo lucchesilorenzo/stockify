@@ -6,7 +6,7 @@ import { ChevronsUpDown } from "lucide-react";
 import StatusBadge from "@/components/common/status-badge";
 import OrderActions from "@/components/orders/order-actions";
 import { Button } from "@/components/ui/button";
-import { OrderWithProduct } from "@/lib/types";
+import { OrderStatus, OrderWithProduct } from "@/lib/types";
 import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
 
 export const columns: ColumnDef<OrderWithProduct>[] = [
@@ -91,7 +91,7 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
       );
     },
     cell: ({ row }) => {
-      const status: string = row.getValue("status");
+      const status: OrderStatus["label"] = row.getValue("status");
       const id: string = row.getValue("id");
 
       return <StatusBadge initialStatus={status} orderId={id} />;

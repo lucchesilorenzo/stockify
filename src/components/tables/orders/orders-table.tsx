@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { File, Search } from "lucide-react";
+import { Download, Search } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
 import { Button } from "@/components/ui/button";
@@ -81,8 +81,9 @@ export default function OrdersTable<TData, TValue>({
             onChange={(e) =>
               table.getColumn("product.name")?.setFilterValue(e.target.value)
             }
-            className="max-w-sm pl-10"
+            className="w-[180px] sm:w-full pl-10"
           />
+
           <Select
             onValueChange={(value) =>
               table
@@ -90,13 +91,13 @@ export default function OrdersTable<TData, TValue>({
                 ?.setFilterValue(value === "all" ? "" : value)
             }
           >
-            <SelectTrigger id="order-select">
+            <SelectTrigger id="order-select" className="w-[100px] sm:w-full">
               <SelectValue placeholder="Select order type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">All Types</SelectItem>
               {orderTypes.map((type) => (
-                <SelectItem key={type.value} value={type.label}>
+                <SelectItem key={type.value} value={type.value}>
                   {type.label}
                 </SelectItem>
               ))}
@@ -110,13 +111,13 @@ export default function OrdersTable<TData, TValue>({
                 ?.setFilterValue(value === "all" ? "" : value)
             }
           >
-            <SelectTrigger id="status-select">
+            <SelectTrigger id="status-select" className="w-[100px] sm:w-full">
               <SelectValue placeholder="Select order status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">All Statuses</SelectItem>
               {orderStatuses.map((status) => (
-                <SelectItem key={status.value} value={status.label}>
+                <SelectItem key={status.value} value={status.value}>
                   {status.label}
                 </SelectItem>
               ))}
@@ -124,7 +125,7 @@ export default function OrdersTable<TData, TValue>({
           </Select>
 
           <CSVExport data={csvData} filename="orders.csv">
-            <File className="mr-2 h-4 w-4" />
+            <Download className="sm:mr-2 h-4 w-4" />
             <span className="hidden sm:block">Export</span>
           </CSVExport>
         </div>

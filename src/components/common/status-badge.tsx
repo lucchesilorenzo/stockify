@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { Order } from "@prisma/client";
+
 import { Button } from "../ui/button";
 
 import { updateOrderStatusAction } from "@/app/actions/order-actions";
@@ -12,10 +14,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { OrderStatus } from "@/lib/types";
 
 type StatusBadgeProps = {
-  initialStatus: string;
-  orderId: string;
+  initialStatus: OrderStatus["label"];
+  orderId: Order["id"];
 };
 
 export default function StatusBadge({
@@ -24,7 +27,7 @@ export default function StatusBadge({
 }: StatusBadgeProps) {
   const [status, setStatus] = useState(initialStatus);
 
-  async function handleStatusChange(newStatus: string) {
+  async function handleStatusChange(newStatus: OrderStatus["label"]) {
     setStatus(newStatus);
 
     const orderToUpdate = {

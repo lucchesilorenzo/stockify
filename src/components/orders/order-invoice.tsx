@@ -1,5 +1,10 @@
 "use client";
 
+import { X } from "lucide-react";
+
+import { Button } from "../ui/button";
+import OrderInvoiceItem from "./order-invoice-item";
+
 import {
   Card,
   CardContent,
@@ -8,73 +13,57 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { useInvoice } from "@/hooks/use-invoice";
-import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
+import { formatDate, formatOrderId } from "@/lib/utils";
 
 export default function OrderInvoice() {
-  const { isInvoiceOpen, order } = useInvoice();
+  const { isInvoiceOpen, handleCloseInvoice, order } = useInvoice();
 
   if (!isInvoiceOpen || !order) return null;
 
-  const {
-    createdAt,
-    totalPrice,
-    updatedAt,
-    quantity,
-    product,
-    subtotal,
-    tax,
-    shipping,
-  } = order;
+  const orderInvoiceData = [
+    {
+      id: 1,
+      label: `${order.product.name} x ${order.quantity}`,
+      amount: order.subtotal,
+    },
+    { id: 2, label: "Subtotal", amount: order.subtotal },
+    { id: 3, label: "Shipping", amount: order.shipping },
+    { id: 4, label: "Tax", amount: order.tax },
+    { id: 5, label: "Total", amount: order.totalPrice },
+  ];
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden relative">
+      <Button
+        className="absolute top-3 right-3 p-1 bg-transparent border-none"
+        onClick={handleCloseInvoice}
+        aria-label="Close invoice"
+        variant="link"
+      >
+        <X className="h-6 w-6 text-muted-foreground hover:text-foreground transition" />
+      </Button>
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-xl">
             Order # {formatOrderId(order)}
           </CardTitle>
-          <CardDescription>Date: {formatDate(createdAt)}</CardDescription>
+          <CardDescription>Date: {formatDate(order.createdAt)}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="p-6">
-        <div className="grid gap-3">
-          <div className="font-semibold">Order Details</div>
-          <ul className="grid gap-3">
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">
-                {product.name} <span>x {quantity}</span>
-              </span>
-              <span>{formatCurrency(subtotal)}</span>
-            </li>
-          </ul>
-          <Separator className="my-2" />
-          <ul className="grid gap-3">
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">Subtotal</span>
-              <span>{formatCurrency(subtotal)}</span>
-            </li>
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">Shipping</span>
-              <span>{formatCurrency(shipping)}</span>
-            </li>
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">Tax</span>
-              <span>{formatCurrency(tax)}</span>
-            </li>
-            <li className="flex items-center justify-between font-semibold">
-              <span className="text-muted-foreground">Total</span>
-              <span>{formatCurrency(totalPrice)}</span>
-            </li>
-          </ul>
-        </div>
+        <div className="font-semibold">Order Details</div>
+        <ul className="grid gap-3">
+          {orderInvoiceData.map((item) => (
+            <OrderInvoiceItem key={item.id} item={item} />
+          ))}
+        </ul>
       </CardContent>
       <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
         <div className="text-xs text-muted-foreground">
           Updated{" "}
-          <time dateTime={updatedAt.toISOString()}>
-            {formatDate(updatedAt)}
+          <time dateTime={order.updatedAt.toISOString()}>
+            {formatDate(order.updatedAt)}
           </time>
         </div>
       </CardFooter>

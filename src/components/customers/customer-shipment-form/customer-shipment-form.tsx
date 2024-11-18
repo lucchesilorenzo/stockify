@@ -71,7 +71,6 @@ export default function CustomerOrderForm({
   }
 
   async function onSubmit(data: TShippingFormSchema) {
-    console.log(data);
     const result = await createShipmentAction(data);
     if (result?.message) {
       toast.error(result?.message);

@@ -25,7 +25,7 @@ import {
 
 const chartConfig = {
   value: {
-    label: "Value",
+    label: "EUR",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;

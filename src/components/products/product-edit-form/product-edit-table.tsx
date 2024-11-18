@@ -30,7 +30,7 @@ export default function ProductEditTable({
       <TableHeader>
         <TableRow className="hover:bg-transparent">
           <TableHead className="w-[200px]">Product</TableHead>
-          <TableHead className="w-[150px]">Barcode</TableHead>
+          <TableHead className="w-[150px]">SKU</TableHead>
           <TableHead className="w-[200px]">Max Quantity</TableHead>
           <TableHead className="w-[200px]">Price</TableHead>
         </TableRow>
@@ -38,7 +38,7 @@ export default function ProductEditTable({
       <TableBody>
         <TableRow className="hover:bg-transparent">
           <TableCell className="font-semibold">{product.name}</TableCell>
-          <TableCell>{product.barcode || "N/A"}</TableCell>
+          <TableCell>{product.sku || "N/A"}</TableCell>
           <TableCell>
             <div className="space-y-1">
               <Input

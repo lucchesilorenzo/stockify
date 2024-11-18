@@ -7,7 +7,7 @@ export const orderFormSchema = z
       .trim()
       .min(1, "Name is required.")
       .max(20, "Name is too long."),
-    barcode: z.string().trim().max(15, "Barcode is too long."),
+    sku: z.string().trim().max(15, "SKU is too long."),
     categoryId: z.string({
       required_error: "Category is required.",
     }),
@@ -56,7 +56,7 @@ export const restockOrderFormSchema = z.object({
     .min(1, "Quantity is required."),
 });
 
-export const restockOrderStatusSchema = z.object({
+export const orderStatusSchema = z.object({
   id: z.string().cuid(),
   status: z.enum(["Pending", "Completed"]),
 });

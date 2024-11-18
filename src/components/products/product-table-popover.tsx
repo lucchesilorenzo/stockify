@@ -60,7 +60,6 @@ export default function ProductTablePopover<T>({
                 {productStatuses.map((status) => (
                   <CommandItem
                     key={status.value}
-                    value={status.label}
                     onSelect={(value) => {
                       setSelectedStatus(
                         productStatuses.find(

@@ -15,8 +15,8 @@ import { ActivityEssentials } from "@/lib/types";
 import { createSlug } from "@/lib/utils";
 import {
   orderFormSchema,
+  orderStatusSchema,
   restockOrderFormSchema,
-  restockOrderStatusSchema,
 } from "@/lib/validations/order-validations";
 
 export async function createOrderAction(order: unknown) {
@@ -165,16 +165,16 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   revalidatePath("/app/orders");
 }
 
-export async function updateOrderStatusAction(newOrderData: unknown) {
+export async function updateOrderStatusAction(order: unknown) {
   // Validation
-  const validatedOrderData = restockOrderStatusSchema.safeParse(newOrderData);
-  if (!validatedOrderData.success) {
+  const validatedOrder = orderStatusSchema.safeParse(order);
+  if (!validatedOrder.success) {
     return { message: "Invalid order data." };
   }
 
   // Update order status
   try {
-    await updateOrderStatus(validatedOrderData.data.id);
+    await updateOrderStatus(validatedOrder.data.id);
   } catch {
     return { message: "Failed to update order status." };
   }

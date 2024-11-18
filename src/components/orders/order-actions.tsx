@@ -1,8 +1,16 @@
 "use client";
 
-import { Paperclip } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 import { useInvoice } from "@/hooks/use-invoice";
 import { OrderWithProduct } from "@/lib/types";
@@ -15,12 +23,20 @@ export default function OrderActions({ order }: OrderActionsProps) {
   const { handleIsInvoiceOpenAndSetOrder } = useInvoice();
 
   return (
-    <Button
-      onClick={() => handleIsInvoiceOpenAndSetOrder(order)}
-      variant="ghost"
-      className="h-8 w-8 p-0"
-    >
-      <Paperclip className="h-4 w-4" />
-    </Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => handleIsInvoiceOpenAndSetOrder(order)}>
+          View details
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

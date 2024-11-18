@@ -47,7 +47,6 @@ export default function ProductActions({ product }: ProductActionsProps) {
           <DropdownMenuItem asChild>
             <Link href={`/app/products/${product.slug}/edit`}>Edit</Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setIsAlertOpen(!isAlertOpen)}>
             Delete
           </DropdownMenuItem>

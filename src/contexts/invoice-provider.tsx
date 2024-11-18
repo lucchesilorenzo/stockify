@@ -14,6 +14,7 @@ type TInvoiceContext = {
   isInvoiceOpen: boolean;
   order: OrderWithProduct | null;
   handleIsInvoiceOpenAndSetOrder: (order: OrderWithProduct) => void;
+  handleCloseInvoice: () => void;
 };
 
 export const InvoiceContext = createContext<TInvoiceContext | null>(null);
@@ -34,11 +35,18 @@ export default function InvoiceProvider({ children }: InvoiceProviderProps) {
     setSelectedOrderId(!isSameOrder ? newOrder.id : null); // Set new selected order id
   }
 
+  function handleCloseInvoice() {
+    setIsInvoiceOpen(false);
+    setOrder(null);
+    setSelectedOrderId(null);
+  }
+
   return (
     <InvoiceContext.Provider
       value={{
         isInvoiceOpen,
         handleIsInvoiceOpenAndSetOrder,
+        handleCloseInvoice,
         order,
       }}
     >

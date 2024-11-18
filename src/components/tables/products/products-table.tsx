@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { File, Search } from "lucide-react";
+import { Download, Search } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
 import ProductTablePopover from "@/components/products/product-table-popover";
@@ -96,7 +96,7 @@ export default function ProductsTable<TData, TValue>({
                 <SelectValue placeholder="Select categories" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="all">All Categories</SelectItem>
                 {categories.map((category) => (
                   <SelectItem key={category.id} value={category.name}>
                     {category.name}
@@ -107,7 +107,7 @@ export default function ProductsTable<TData, TValue>({
 
             <ProductTablePopover table={table} />
             <CSVExport data={csvData} filename="products.csv">
-              <File className="sm:mr-2 h-4 w-4" />
+              <Download className="sm:mr-2 h-4 w-4" />
               <span className="hidden sm:block">Export</span>
             </CSVExport>
           </div>

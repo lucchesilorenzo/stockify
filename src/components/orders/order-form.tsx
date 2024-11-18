@@ -61,16 +61,10 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="barcode">Barcode</Label>
-          <Input
-            id="barcode"
-            placeholder="Enter product barcode"
-            {...register("barcode")}
-          />
-          {errors.barcode && (
-            <p className="px-1 text-sm text-red-600">
-              {errors.barcode.message}
-            </p>
+          <Label htmlFor="sku">Stock Keeping Unit</Label>
+          <Input id="sku" placeholder="Enter SKU" {...register("sku")} />
+          {errors.sku && (
+            <p className="px-1 text-sm text-red-600">{errors.sku.message}</p>
           )}
         </div>
 

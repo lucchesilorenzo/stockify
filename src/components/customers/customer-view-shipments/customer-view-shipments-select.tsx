@@ -20,7 +20,8 @@ export default function CustomerViewShipmentsSelect({
   customerShipment,
 }: CustomerViewShipmentsSelectProps) {
   const { handleSelectShipment } = useCustomer();
-  console.log(customerShipment);
+
+  if (!customerShipment.length) return <p>No shipments found.</p>;
 
   return (
     <Select onValueChange={(value) => handleSelectShipment(value)}>

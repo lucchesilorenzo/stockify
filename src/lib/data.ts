@@ -62,8 +62,8 @@ export const productStatuses: ProductStatus[] = [
 ];
 
 export const orderTypes: OrderType[] = [
-  { value: "new", label: "New" },
-  { value: "restock", label: "Restock" },
+  { value: "new", label: "New Orders" },
+  { value: "restock", label: "Restock Orders" },
 ];
 
 export const orderStatuses: OrderStatus[] = [

@@ -44,7 +44,7 @@ export default async function OrdersPage() {
           <OrdersActionCard />
         </div>
 
-        <div className="my-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="my-6 grid gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           <div className="hidden lg:block">
             <OrdersActionCard />
           </div>

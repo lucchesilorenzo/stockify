@@ -5,7 +5,7 @@ export type ProductStatus = {
 
 export type OrderType = {
   value: "new" | "restock";
-  label: "New" | "Restock";
+  label: "New Orders" | "Restock Orders";
 };
 
 export type OrderStatus = {
