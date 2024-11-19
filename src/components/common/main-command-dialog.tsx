@@ -48,14 +48,14 @@ export function MainCommandDialog() {
         <Input
           id="command-dialog-search"
           placeholder="Search..."
-          className="border rounded p-2 w-[300px]"
+          className="w-[300px] rounded border p-2"
           onFocus={() => setOpen(true)}
           onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
         />
 
         <kbd
           className={cn(
-            "pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 absolute top-2",
+            "pointer-events-none absolute top-2 inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100",
             fontSize === "text-md"
               ? "left-[220px]"
               : fontSize === "text-lg"
@@ -86,7 +86,7 @@ export function MainCommandDialog() {
                   router.push(route.href);
                 }}
               >
-                <route.icon className="h-5 w-5 mr-3" />
+                <route.icon className="mr-3 h-5 w-5" />
                 {route.name}
               </CommandItem>
             ))}
@@ -101,7 +101,7 @@ export function MainCommandDialog() {
                   setTheme(theme.value);
                 }}
               >
-                <theme.icon className="h-5 w-5 mr-3" />
+                <theme.icon className="mr-3 h-5 w-5" />
                 {theme.name}
               </CommandItem>
             ))}
@@ -116,7 +116,7 @@ export function MainCommandDialog() {
                   handleFontSizeChange(fontSize.value);
                 }}
               >
-                <fontSize.icon className="h-5 w-5 mr-3" />
+                <fontSize.icon className="mr-3 h-5 w-5" />
                 {fontSize.name}
               </CommandItem>
             ))}

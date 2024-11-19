@@ -7,12 +7,14 @@ export const orderFormSchema = z
       .trim()
       .min(1, "Name is required.")
       .max(20, "Name is too long."),
-    sku: z.string().trim().max(15, "SKU is too long."),
     categoryId: z.string({
       required_error: "Category is required.",
     }),
     warehouseId: z.string({
       required_error: "Warehouse is required.",
+    }),
+    supplierId: z.string({
+      required_error: "Supplier is required.",
     }),
     price: z.coerce
       .number({
@@ -46,6 +48,9 @@ export const orderFormSchema = z
 export const restockOrderFormSchema = z.object({
   productId: z.string({
     required_error: "Product is required.",
+  }),
+  supplierId: z.string({
+    required_error: "Supplier is required.",
   }),
   quantity: z.coerce
     .number({

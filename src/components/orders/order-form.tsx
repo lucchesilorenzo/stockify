@@ -27,7 +27,7 @@ type OrderFormProps = {
 
 export default function OrderForm({ onFormSubmit }: OrderFormProps) {
   const { categories, warehouses } = useProduct();
-  const { handleCreateOrder } = useOrder();
+  const { suppliers, handleCreateOrder } = useOrder();
 
   const {
     register,
@@ -57,14 +57,6 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
           />
           {errors.name && (
             <p className="px-1 text-sm text-red-600">{errors.name.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-1">
-          <Label htmlFor="sku">Stock Keeping Unit</Label>
-          <Input id="sku" placeholder="Enter SKU" {...register("sku")} />
-          {errors.sku && (
-            <p className="px-1 text-sm text-red-600">{errors.sku.message}</p>
           )}
         </div>
 
@@ -110,6 +102,29 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
           {errors.warehouseId && (
             <p className="px-1 text-sm text-red-600">
               {errors.warehouseId.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="supplierId">
+            Supplier <span className="text-red-600">*</span>
+          </Label>
+          <Select onValueChange={(value) => setValue("supplierId", value)}>
+            <SelectTrigger id="supplierId">
+              <SelectValue placeholder="Select a supplier" />
+            </SelectTrigger>
+            <SelectContent>
+              {suppliers.map((supplier) => (
+                <SelectItem key={supplier.id} value={supplier.id}>
+                  {supplier.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.supplierId && (
+            <p className="px-1 text-sm text-red-600">
+              {errors.supplierId.message}
             </p>
           )}
         </div>

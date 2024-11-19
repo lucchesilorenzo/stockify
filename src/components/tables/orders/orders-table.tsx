@@ -68,7 +68,7 @@ export default function OrdersTable<TData, TValue>({
     <>
       {/* Filters and actions */}
       <div className="my-4">
-        <div className="flex items-center space-x-2 relative">
+        <div className="relative flex items-center space-x-2">
           <Search className="absolute left-5 h-5 w-5 text-gray-500" />
           <Input
             id="order-search"
@@ -81,7 +81,7 @@ export default function OrdersTable<TData, TValue>({
             onChange={(e) =>
               table.getColumn("product.name")?.setFilterValue(e.target.value)
             }
-            className="w-[180px] sm:w-full pl-10"
+            className="w-[180px] pl-10 sm:w-full"
           />
 
           <Select
@@ -125,7 +125,7 @@ export default function OrdersTable<TData, TValue>({
           </Select>
 
           <CSVExport data={csvData} filename="orders.csv">
-            <Download className="sm:mr-2 h-4 w-4" />
+            <Download className="h-4 w-4 sm:mr-2" />
             <span className="hidden sm:block">Export</span>
           </CSVExport>
         </div>

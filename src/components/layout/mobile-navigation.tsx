@@ -30,7 +30,7 @@ export default function MobileNavigation() {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex flex-col w-[300px]">
+      <SheetContent side="left" className="flex w-[300px] flex-col">
         <nav>
           <ul className="grid gap-2 text-lg font-medium">
             <SheetHeader>

@@ -7,9 +7,9 @@ export type CustomerEssentials = Omit<
 
 export type CustomerWithCustomerShipment = Prisma.CustomerGetPayload<{
   include: {
-    customerShipment: {
+    customerShipments: {
       include: {
-        shipmentItem: {
+        shipmentItems: {
           include: {
             product: {
               select: {
@@ -26,7 +26,7 @@ export type CustomerWithCustomerShipment = Prisma.CustomerGetPayload<{
 
 export type CustomerShipmentWithItems = Prisma.CustomerShipmentGetPayload<{
   include: {
-    shipmentItem: {
+    shipmentItems: {
       include: {
         product: {
           select: {

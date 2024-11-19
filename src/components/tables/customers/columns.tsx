@@ -1,6 +1,8 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { Mail, Phone } from "lucide-react";
+import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 import FormDialog from "@/components/common/form-dialog";
 import CustomerViewShipmentsDialog from "@/components/customers/customer-view-shipments/customer-view-shipments-dialog";
@@ -24,15 +26,32 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
   },
   {
     accessorKey: "email",
+    id: "email",
     header: "Email",
+    cell: ({ row }) => {
+      const email: string = row.getValue("email");
+
+      return (
+        <div className="flex items-center justify-center gap-2">
+          <Mail className="h-4 w-4 text-muted-foreground" />
+          <span>{email}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "phone",
+    id: "phone",
     header: "Phone",
     cell: ({ row }) => {
       const phone: string = row.getValue("phone");
 
-      return <div>{phone}</div>;
+      return (
+        <div className="flex items-center justify-center gap-2">
+          <Phone className="h-4 w-4 text-muted-foreground" />
+          <span>{formatPhoneNumberIntl(phone)}</span>
+        </div>
+      );
     },
   },
   {
@@ -50,7 +69,7 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
     id: "customerShipments",
     header: "Shipments",
     cell: ({ row }) => {
-      const customerShipments = row.original.customerShipment;
+      const customerShipments = row.original.customerShipments;
 
       return <div>{customerShipments.length || 0}</div>;
     },
@@ -59,7 +78,7 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
     id: "actions",
     cell: ({ row }) => {
       const customer = row.original;
-      const customerShipment = customer.customerShipment;
+      const customerShipment = customer.customerShipments;
 
       return (
         <div className="flex items-center gap-2">

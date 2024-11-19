@@ -27,7 +27,7 @@ export default async function DashboardSummary() {
   ];
 
   return (
-    <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
       {updatedDashboardData.map((card) => (
         <DashboardCard key={card.title} card={card} />
       ))}

@@ -35,7 +35,7 @@ export default function CustomerViewShipmentsTable({
   );
   if (!shipment) return null;
 
-  const totalPrice = shipment.shipmentItem.reduce(
+  const totalPrice = shipment.shipmentItems.reduce(
     (total, item) => total + item.quantity * item.product.price,
     0,
   );
@@ -62,7 +62,7 @@ export default function CustomerViewShipmentsTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {shipment.shipmentItem.map((item) => (
+            {shipment.shipmentItems.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.product.name}</TableCell>
                 <TableCell>{item.quantity}</TableCell>

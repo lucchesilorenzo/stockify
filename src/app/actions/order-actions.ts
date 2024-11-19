@@ -3,6 +3,7 @@
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+import { getCategory } from "@/lib/queries/category-queries";
 import { createActivity } from "@/lib/queries/dashboard-queries";
 import { createOrder, updateOrderStatus } from "@/lib/queries/order-queries";
 import {
@@ -12,7 +13,7 @@ import {
   updateProductQuantityAndStatus,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
-import { createSlug } from "@/lib/utils";
+import { createSlug, generateSKU } from "@/lib/utils";
 import {
   orderFormSchema,
   orderStatusSchema,
@@ -25,9 +26,19 @@ export async function createOrderAction(order: unknown) {
     return { message: "Invalid form data." };
   }
 
-  // Create a new product object with slug
+  // Get category name
+  const category = await getCategory(validatedOrder.data.categoryId);
+  if (!category) return { message: "Category not found." };
+
+  const { supplierId, ...productData } = validatedOrder.data;
+
+  // Create a new product object with slug and sku
   const newProduct = {
-    ...validatedOrder.data,
+    ...productData,
+    sku: generateSKU({
+      category: category.name,
+      name: validatedOrder.data.name,
+    }),
     slug: createSlug(validatedOrder.data.name),
   };
 
@@ -38,11 +49,12 @@ export async function createOrderAction(order: unknown) {
     // Calculate order details
     const subtotal = validatedOrder.data.quantity * product.price;
     const shipping = subtotal > 50 ? 0 : 10;
-    const tax = +(subtotal * 0.22).toFixed(2);
-    const totalPrice = +(subtotal + shipping + tax).toFixed(2);
+    const tax = Number((subtotal * 0.22).toFixed(2));
+    const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
 
     const orderDetails = {
       productId: product.id,
+      supplierId,
       type: "New",
       quantity: validatedOrder.data.quantity,
       subtotal,
@@ -114,11 +126,12 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   // Calculate order details
   const subtotal = orderedQuantity * options.price;
   const shipping = subtotal > 50 ? 0 : 10;
-  const tax = +(subtotal * 0.22).toFixed(2);
-  const totalPrice = +(subtotal + shipping + tax).toFixed(2);
+  const tax = Number((subtotal * 0.22).toFixed(2));
+  const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
 
   const orderDetails = {
     productId: validatedRestockOrder.data.productId,
+    supplierId: validatedRestockOrder.data.supplierId,
     type: "Restock",
     quantity: orderedQuantity,
     subtotal,

@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   flexRender,
   getCoreRowModel,
@@ -12,9 +13,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { PlusCircleIcon, Search } from "lucide-react";
 
-import { Button } from "../../ui/button";
-
+import FormDialog from "@/components/common/form-dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -24,23 +27,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export interface ActivitiesTableProps<TData, TValue> {
+export interface SuppliersTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export default function ActivitiesTable<TData, TValue>({
+export default function SuppliersTable<TData, TValue>({
   columns,
   data,
-}: ActivitiesTableProps<TData, TValue>) {
+}: SuppliersTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
+      columnFilters,
     },
+    onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -50,8 +56,32 @@ export default function ActivitiesTable<TData, TValue>({
 
   return (
     <>
+      {/* Filters and actions */}
+      <div>
+        <div className="flex items-center justify-between gap-x-4 py-4">
+          <div className="relative flex items-center space-x-2">
+            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
+            <Input
+              id="supplier-search"
+              type="search"
+              placeholder="Filter suppliers..."
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(e) =>
+                table.getColumn("name")?.setFilterValue(e.target.value)
+              }
+              className="max-w-sm pl-10"
+            />
+          </div>
+          <FormDialog actionType="addSupplier">
+            <PlusCircleIcon className="h-5 w-5 sm:mr-2" />
+            <span className="hidden sm:block">Add Supplier</span>
+          </FormDialog>
+        </div>
+      </div>
+
       {/* Table */}
-      <h2 className="my-6 text-lg font-semibold">Recent Activities</h2>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -80,7 +110,7 @@ export default function ActivitiesTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-center">
+                    <TableCell key={cell.id} className="h-12 text-center">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

@@ -54,7 +54,7 @@ export default function StatusBadge({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="p-0 bg-transparent border-none focus-visible:ring-0 hover:bg-transparent"
+          className="border-none bg-transparent p-0 hover:bg-transparent focus-visible:ring-0"
           tabIndex={-1}
         >
           <Badge

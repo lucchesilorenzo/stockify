@@ -29,13 +29,23 @@ export function formatDate(
 export function formatOrderId(order: Order) {
   const date = order.createdAt.toISOString().split("T")[0].replace(/-/g, "");
   const numberPart = order.id.slice(-4).toUpperCase();
+
   return `ORD-${date}-${numberPart}`;
 }
 
 export function formatShipmentId(shipment: CustomerShipmentWithItems) {
   const date = shipment.createdAt.toISOString().split("T")[0].replace(/-/g, "");
   const numberPart = shipment.id.slice(-4).toUpperCase();
+
   return `SHIP-${date}-${numberPart}`;
+}
+
+export function generateSKU({ category, name }: Record<string, string>) {
+  const categoryPart = category.slice(0, 3).toUpperCase();
+  const namePart = name.slice(0, 3).toUpperCase();
+  const idPart = crypto.randomUUID().slice(-4).toUpperCase();
+
+  return `${categoryPart}-${namePart}-${idPart}`;
 }
 
 export function createSlug(text: string) {

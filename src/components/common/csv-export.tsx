@@ -12,7 +12,7 @@ const CSVLink = dynamic(() => import("react-csv").then((mod) => mod.CSVLink), {
   ssr: false,
   loading: () => (
     <Button variant="outline" disabled>
-      <Loader2 className="h-5 w-5 animate-spin mr-2" />
+      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
       Loading...
     </Button>
   ),

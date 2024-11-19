@@ -46,7 +46,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col max-w-[500px]"
+      className="flex max-w-[500px] flex-col"
     >
       <div className="space-y-6">
         <div className="space-y-1">
@@ -88,7 +88,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
           />
         </div>
 
-        <div className="space-y-1 flex flex-col">
+        <div className="flex flex-col space-y-1">
           <Label htmlFor="dateOfBirth">Date of birth</Label>
           <DatePicker
             defaultValue={userSettings?.dateOfBirth ?? undefined}
@@ -118,25 +118,23 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="phoneNumber">Phone number</Label>
+          <Label htmlFor="phone">Phone number</Label>
           <Controller
-            defaultValue={userSettings?.phoneNumber ?? ""}
-            name="phoneNumber"
+            defaultValue={userSettings?.phone ?? ""}
+            name="phone"
             control={control}
             render={({ field }) => (
               <PhoneInput
                 {...field}
-                id="phoneNumber"
+                id="phone"
                 placeholder="Enter phone number"
                 autoComplete="tel"
                 defaultCountry="IT"
               />
             )}
           />
-          {errors.phoneNumber && (
-            <p className="px-1 text-sm text-red-600">
-              {errors.phoneNumber.message}
-            </p>
+          {errors.phone && (
+            <p className="px-1 text-sm text-red-600">{errors.phone.message}</p>
           )}
         </div>
 

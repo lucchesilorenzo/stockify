@@ -12,6 +12,11 @@ export async function getOrders() {
           name: true,
         },
       },
+      supplier: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
 

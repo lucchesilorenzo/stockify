@@ -151,7 +151,7 @@ export default function ProductSelectionCard({
                       {product.quantity <= 10 && (
                         <>
                           <span className="ml-1">(</span>
-                          <span className="text-red-600 font-semibold">
+                          <span className="font-semibold text-red-600">
                             {product.quantity} left
                           </span>
                           <span>)</span>

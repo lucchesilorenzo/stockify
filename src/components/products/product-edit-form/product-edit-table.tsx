@@ -38,7 +38,7 @@ export default function ProductEditTable({
       <TableBody>
         <TableRow className="hover:bg-transparent">
           <TableCell className="font-semibold">{product.name}</TableCell>
-          <TableCell>{product.sku || "N/A"}</TableCell>
+          <TableCell>{product.sku}</TableCell>
           <TableCell>
             <div className="space-y-1">
               <Input

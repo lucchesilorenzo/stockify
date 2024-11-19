@@ -6,6 +6,7 @@ import {
   Monitor,
   Package,
   ShoppingCart,
+  Star,
   TrendingUp,
   Truck,
   UserRound,
@@ -17,6 +18,7 @@ export const routes = [
   { name: "Dashboard", href: "/app/dashboard", icon: Home },
   { name: "Orders", href: "/app/orders", icon: ShoppingCart },
   { name: "Products", href: "/app/products", icon: Package },
+  { name: "Suppliers", href: "/app/suppliers", icon: Truck },
   { name: "Customers", href: "/app/customers", icon: UserRound },
   { name: "Analytics", href: "/app/analytics", icon: LineChart },
 ];
@@ -41,6 +43,19 @@ export const dashboardData = [
     title: "Total Units",
     description: "In stock",
     icon: Package,
+  },
+];
+
+export const suppliersData = [
+  {
+    title: "Total Suppliers",
+    description: "Number of suppliers",
+    icon: Truck,
+  },
+  {
+    title: "Average Rating",
+    description: "Average rating of suppliers",
+    icon: Star,
   },
 ];
 

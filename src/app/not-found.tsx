@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function NotFoundPage() {
   return (
-    <main className="flex flex-col min-h-screen justify-center items-center w-[500px] mx-auto space-y-4">
+    <main className="mx-auto flex min-h-screen w-[500px] flex-col items-center justify-center space-y-4">
       <h1 className="flex items-center">
-        <span className="font-bold text-xl">404</span>
-        <Separator orientation="vertical" className="h-8 bg-gray-400 mx-3" />
+        <span className="text-xl font-bold">404</span>
+        <Separator orientation="vertical" className="mx-3 h-8 bg-gray-400" />
         <span className="text-lg">This page could not be found.</span>
       </h1>
       <Button variant="link">

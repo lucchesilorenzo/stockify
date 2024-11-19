@@ -84,7 +84,7 @@ export default function CustomerOrderForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid lg:grid-cols-2 gap-6"
+      className="grid gap-6 lg:grid-cols-2"
     >
       <CustomerInfoCard
         customers={customers}

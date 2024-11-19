@@ -6,9 +6,9 @@ import { CustomerEssentials, CustomerShipmentEssentials } from "../types";
 export async function getCustomers() {
   const customers = await prisma.customer.findMany({
     include: {
-      customerShipment: {
+      customerShipments: {
         include: {
-          shipmentItem: {
+          shipmentItems: {
             include: {
               product: {
                 select: {
@@ -65,18 +65,18 @@ export async function createCustomerItems(
 }
 
 export async function updateCustomerShipmentStatus(
-  customerOrderId: CustomerShipment["id"],
+  customerShipmentId: CustomerShipment["id"],
 ) {
-  const updatedCustomerOrder = await prisma.customerShipment.update({
+  const updatedCustomerShipment = await prisma.customerShipment.update({
     where: {
-      id: customerOrderId,
+      id: customerShipmentId,
     },
     data: {
       status: "Completed",
     },
   });
 
-  return updatedCustomerOrder;
+  return updatedCustomerShipment;
 }
 
 export async function updateCustomerById(

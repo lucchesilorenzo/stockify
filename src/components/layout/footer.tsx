@@ -5,12 +5,12 @@ export default function Footer() {
   return (
     <footer className="border-t py-4">
       <div className="container mx-auto px-4">
-        <p className="flex items-center justify-center flex-wrap text-xs text-center">
+        <p className="flex flex-wrap items-center justify-center text-center text-xs">
           <span className="mr-1">&copy; {new Date().getFullYear()}.</span>
           <span className="flex items-center">
             Made with
             <Lightbulb
-              className="text-yellow-500 h-4 w-4 mx-1"
+              className="mx-1 h-4 w-4 text-yellow-500"
               aria-label="idea"
             />
             by

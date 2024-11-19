@@ -13,10 +13,10 @@ import {
 } from "../ui/dropdown-menu";
 
 import { useInvoice } from "@/hooks/use-invoice";
-import { OrderWithProduct } from "@/lib/types";
+import { OrderWithProductAndSupplier } from "@/lib/types";
 
 type OrderActionsProps = {
-  order: OrderWithProduct;
+  order: OrderWithProductAndSupplier;
 };
 
 export default function OrderActions({ order }: OrderActionsProps) {

@@ -41,14 +41,14 @@ export default function ProductEditFormImage({
             className="w-full rounded-md border object-cover"
             priority
           />
-          <div className="flex aspect-square w-full max-h-[80px]">
+          <div className="flex aspect-square max-h-[80px] w-full">
             <div className="relative flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
               <Input
                 type="file"
                 id="imageInput"
                 ref={imageInputRef}
                 accept="image/*"
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
               />
               <Upload className="h-4 w-4 text-muted-foreground" />
               <span className="sr-only">Upload</span>

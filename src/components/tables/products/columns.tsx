@@ -29,6 +29,20 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
     },
   },
   {
+    accessorKey: "sku",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          SKU
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: "category.name",
     id: "category.name",
     header: ({ column }) => {

@@ -34,14 +34,14 @@ export default function OrderInvoice() {
   ];
 
   return (
-    <Card className="overflow-hidden relative">
+    <Card className="relative overflow-hidden">
       <Button
-        className="absolute top-3 right-3 p-1 bg-transparent border-none"
+        className="absolute right-3 top-3 border-none bg-transparent p-1"
         onClick={handleCloseInvoice}
         aria-label="Close invoice"
         variant="link"
       >
-        <X className="h-6 w-6 text-muted-foreground hover:text-foreground transition" />
+        <X className="h-6 w-6 text-muted-foreground transition hover:text-foreground" />
       </Button>
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">

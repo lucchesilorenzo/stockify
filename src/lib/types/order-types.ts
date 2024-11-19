@@ -5,9 +5,14 @@ export type OrderEssentials = Omit<
   "id" | "createdAt" | "updatedAt" | "status"
 >;
 
-export type OrderWithProduct = Prisma.OrderGetPayload<{
+export type OrderWithProductAndSupplier = Prisma.OrderGetPayload<{
   include: {
     product: {
+      select: {
+        name: true;
+      };
+    };
+    supplier: {
       select: {
         name: true;
       };

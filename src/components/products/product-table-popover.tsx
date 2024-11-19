@@ -48,7 +48,7 @@ export default function ProductTablePopover<T>({
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="p-0 w-[200px] -ml-8"
+          className="-ml-8 w-[200px] p-0"
           side="bottom"
           align="start"
         >
@@ -76,7 +76,7 @@ export default function ProductTablePopover<T>({
                 <CommandSeparator />
                 <CommandItem
                   onSelect={handleResetStatus}
-                  className="flex justify-center text-red-500 hover:bg-red-50 font-semibold"
+                  className="flex justify-center font-semibold text-red-500 hover:bg-red-50"
                 >
                   Reset
                 </CommandItem>

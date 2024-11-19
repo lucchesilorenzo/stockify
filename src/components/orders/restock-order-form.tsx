@@ -6,6 +6,13 @@ import { useForm } from "react-hook-form";
 import { LoadingButton } from "../common/loading-button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import OrderCombobox from "./order-combobox";
 
 import { useOrder } from "@/hooks/use-order";
@@ -24,7 +31,7 @@ export default function RestockOrderForm({
   onFormSubmit,
   products,
 }: RestockOrderFormProps) {
-  const { handleCreateRestockOrder } = useOrder();
+  const { suppliers, handleCreateRestockOrder } = useOrder();
 
   const {
     register,
@@ -59,6 +66,29 @@ export default function RestockOrderForm({
           {errors.productId && (
             <p className="px-1 text-sm text-red-600">
               {errors.productId.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="supplierId">
+            Supplier <span className="text-red-600">*</span>
+          </Label>
+          <Select onValueChange={(value) => setValue("supplierId", value)}>
+            <SelectTrigger id="supplierId">
+              <SelectValue placeholder="Select a supplier" />
+            </SelectTrigger>
+            <SelectContent>
+              {suppliers.map((supplier) => (
+                <SelectItem key={supplier.id} value={supplier.id}>
+                  {supplier.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.supplierId && (
+            <p className="px-1 text-sm text-red-600">
+              {errors.supplierId.message}
             </p>
           )}
         </div>

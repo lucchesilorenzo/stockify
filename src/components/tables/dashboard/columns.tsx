@@ -45,7 +45,7 @@ export const columns: ColumnDef<Activity>[] = [
       return (
         <div
           className={cn(
-            "inline-flex items-center rounded-full px-2.5 py-0.5 font-medium text-xs",
+            "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
             activityColor,
           )}
         >

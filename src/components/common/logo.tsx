@@ -13,7 +13,7 @@ export default function Logo({ device, onOpenChange }: LogoProps) {
       className="flex items-center gap-2 font-semibold"
       onClick={onOpenChange}
     >
-      <Warehouse className="h-6 w-6 mr-1" />
+      <Warehouse className="mr-1 h-6 w-6" />
       {device === "desktop" && <span>Stockify</span>}
     </Link>
   );

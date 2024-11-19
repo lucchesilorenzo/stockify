@@ -70,8 +70,8 @@ export default function ProductsTable<TData, TValue>({
     <>
       {/* Filters and actions */}
       <div>
-        <div className="flex items-center justify-between py-4 gap-x-4">
-          <div className="flex items-center space-x-2 relative">
+        <div className="flex items-center justify-between gap-x-4 py-4">
+          <div className="relative flex items-center space-x-2">
             <Search className="absolute left-5 h-5 w-5 text-gray-500" />
             <Input
               id="product-search"
@@ -107,14 +107,10 @@ export default function ProductsTable<TData, TValue>({
 
             <ProductTablePopover table={table} />
             <CSVExport data={csvData} filename="products.csv">
-              <Download className="sm:mr-2 h-4 w-4" />
+              <Download className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:block">Export</span>
             </CSVExport>
           </div>
-          {/* <FormDialog actionType="addProduct">
-            <PlusCircleIcon className="sm:mr-2 h-5 w-5" />
-            <span className="hidden sm:block">Add Product</span>
-          </FormDialog> */}
         </div>
       </div>
 

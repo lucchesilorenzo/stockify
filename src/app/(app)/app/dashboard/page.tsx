@@ -17,7 +17,7 @@ export default async function DashboardPage() {
     <main>
       <H1>Dashboard</H1>
 
-      <div className="space-y-6 my-6">
+      <div className="my-6 space-y-6">
         <DashboardSummary />
 
         <div className="my-6 grid grid-cols-1">

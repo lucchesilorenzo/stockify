@@ -1,15 +1,15 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Truck } from "lucide-react";
 
 import StatusBadge from "@/components/common/status-badge";
 import OrderActions from "@/components/orders/order-actions";
 import { Button } from "@/components/ui/button";
-import { OrderStatus, OrderWithProduct } from "@/lib/types";
+import { OrderStatus, OrderWithProductAndSupplier } from "@/lib/types";
 import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
 
-export const columns: ColumnDef<OrderWithProduct>[] = [
+export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -37,7 +37,7 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Order Type
+          Type
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -74,6 +74,31 @@ export const columns: ColumnDef<OrderWithProduct>[] = [
           Quantity
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "supplier.name",
+    id: "supplier.name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Supplier
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const supplier: string = row.getValue("supplier.name");
+
+      return (
+        <div className="flex items-center justify-center gap-2">
+          <Truck className="h-4 w-4 text-muted-foreground" />{" "}
+          <span>{supplier}</span>
+        </div>
       );
     },
   },
