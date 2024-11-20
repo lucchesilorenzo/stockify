@@ -1,6 +1,7 @@
 import { FontSizeIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
   AlertTriangle,
+  ClipboardList,
   Home,
   LineChart,
   Monitor,
@@ -12,10 +13,18 @@ import {
   UserRound,
 } from "lucide-react";
 
-import { OrderStatus, OrderType, ProductStatus } from "./types";
+import {
+  OrderStatus,
+  OrderType,
+  ProductStatus,
+  TaskLabel,
+  TaskPriority,
+  TaskStatus,
+} from "./types";
 
 export const routes = [
   { name: "Dashboard", href: "/app/dashboard", icon: Home },
+  { name: "Tasks", href: "/app/tasks", icon: ClipboardList },
   { name: "Orders", href: "/app/orders", icon: ShoppingCart },
   { name: "Products", href: "/app/products", icon: Package },
   { name: "Suppliers", href: "/app/suppliers", icon: Truck },
@@ -84,4 +93,27 @@ export const orderTypes: OrderType[] = [
 export const orderStatuses: OrderStatus[] = [
   { value: "pending", label: "Pending" },
   { value: "completed", label: "Completed" },
+];
+
+export const taskStatuses: TaskStatus[] = [
+  { value: "backlog", label: "Backlog" },
+  { value: "to-do", label: "To-Do" },
+  { value: "in-progress", label: "In Progress" },
+  { value: "done", label: "Done" },
+  { value: "canceled", label: "Canceled" },
+];
+
+export const taskPriorities: TaskPriority[] = [
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
+];
+
+export const taskLabels: TaskLabel[] = [
+  { value: "inventory", label: "Inventory" },
+  { value: "order", label: "Order" },
+  { value: "shipping", label: "Shipping" },
+  { value: "quality", label: "Quality" },
+  { value: "customer", label: "Customer" },
+  { value: "maintenance", label: "Maintenance" },
 ];

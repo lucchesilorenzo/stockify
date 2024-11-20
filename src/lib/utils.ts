@@ -1,4 +1,4 @@
-import { Order } from "@prisma/client";
+import { Order, Task } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { redirect } from "next/navigation";
 import { twMerge } from "tailwind-merge";
@@ -38,6 +38,12 @@ export function formatShipmentId(shipment: CustomerShipmentWithItems) {
   const numberPart = shipment.id.slice(-4).toUpperCase();
 
   return `SHIP-${date}-${numberPart}`;
+}
+
+export function formatTaskId(task: Task) {
+  const numberPart = task.id.slice(-4).toUpperCase();
+
+  return `TASK-${numberPart}`;
 }
 
 export function generateSKU({ category, name }: Record<string, string>) {

@@ -83,6 +83,16 @@ model Warehouse {
   products Product[]
 }
 
+model Task {
+  id        String   @id @default(cuid())
+  title     String
+  status    String   @default("To-Do")
+  priority  String   @default("Low")
+  label     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Customer {
   id        String   @id @default(cuid())
   firstName String
