@@ -71,7 +71,6 @@ export default function ProductProvider({
       productId,
       maxQuantity,
     );
-
     if (result?.message) {
       toast.error(result.message);
       return false;

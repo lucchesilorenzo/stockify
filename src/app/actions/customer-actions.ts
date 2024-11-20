@@ -51,6 +51,20 @@ export async function createShipmentAction(shipment: unknown) {
     }
   }
 
+  // Create new activity if a new customer was created
+  if (newCustomer) {
+    const activity: ActivityEssentials = {
+      activity: "Created",
+      entity: "Customer",
+    };
+
+    try {
+      await createActivity(activity);
+    } catch {
+      return { message: "Failed to create activity." };
+    }
+  }
+
   // Take customer ID from new customer or existing customer
   const customerId = customer?.id || newCustomer?.id;
   if (!customerId) return;

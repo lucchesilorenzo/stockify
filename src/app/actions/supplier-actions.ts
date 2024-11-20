@@ -3,10 +3,12 @@
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+import { createActivity } from "@/lib/queries/dashboard-queries";
 import {
   createSupplier,
   updateSupplierRating,
 } from "@/lib/queries/supplier-queries";
+import { ActivityEssentials } from "@/lib/types";
 import {
   supplierFormSchema,
   supplierIdSchema,
@@ -32,6 +34,18 @@ export async function createSupplierAction(supplier: unknown) {
     return { message: "Failed to create supplier." };
   }
 
+  // Create a new activity
+  const activity: ActivityEssentials = {
+    activity: "Created",
+    entity: "Supplier",
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
+  }
+
   revalidatePath("/app/suppliers");
 }
 
@@ -55,6 +69,18 @@ export async function updateSupplierRatingAction(
     await updateSupplierRating(validatedSuppliedId.data, validatedRating.data);
   } catch {
     return { message: "Failed to update supplier rating." };
+  }
+
+  // Create a new activity
+  const activity: ActivityEssentials = {
+    activity: "Updated",
+    entity: "Supplier",
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
   }
 
   revalidatePath("/app/suppliers");

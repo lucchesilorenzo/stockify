@@ -13,7 +13,7 @@ export default async function SuppliersSummary({
   const suppliersLength = suppliers.length;
   const avgRating =
     suppliers.reduce((total, { rating }) => total + rating, 0) /
-    suppliersLength;
+      suppliersLength || 0;
 
   const updatedSuppliersData = [
     { ...suppliersData[0], amount: suppliersLength.toString() },
