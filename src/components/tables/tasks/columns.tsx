@@ -1,12 +1,15 @@
 "use client";
 
+import React from "react";
+
 import { Task } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowBigRight, ChevronsUpDown, Timer } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 import TaskActions from "@/components/tasks/task-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { taskPriorities, taskStatuses } from "@/lib/data";
 import { formatTaskId } from "@/lib/utils";
 
 export const columns: ColumnDef<Task>[] = [
@@ -30,6 +33,26 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
+    accessorKey: "label",
+    id: "label",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Type
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const type: Task["label"] = row.getValue("label");
+
+      return <Badge variant="outline">{type}</Badge>;
+    },
+  },
+  {
     accessorKey: "title",
     id: "title",
     header: ({ column }) => {
@@ -45,13 +68,8 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const title: Task["title"] = row.getValue("title");
-      const label: Task["label"] = row.original.label;
 
-      return (
-        <div className="font-medium">
-          <Badge>{label}</Badge> <span>{title}</span>
-        </div>
-      );
+      return <div className="font-medium">{title}</div>;
     },
   },
   {
@@ -71,9 +89,14 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       const status: Task["status"] = row.getValue("status");
 
+      const statusInfo = taskStatuses.find((item) => item.label === status);
+      const Icon = statusInfo?.icon ?? "";
+
       return (
         <div className="flex items-center justify-center gap-2">
-          <Timer className="h-4 w-4 text-muted-foreground" />
+          {React.createElement(Icon, {
+            className: "h-4 w-4 text-muted-foreground",
+          })}
           <span>{status}</span>
         </div>
       );
@@ -96,9 +119,16 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       const priority: Task["priority"] = row.getValue("priority");
 
+      const priorityInfo = taskPriorities.find(
+        (item) => item.label === priority,
+      );
+      const Icon = priorityInfo?.icon ?? "";
+
       return (
         <div className="flex items-center justify-center gap-2">
-          <ArrowBigRight className="h-4 w-4 text-muted-foreground" />
+          {React.createElement(Icon, {
+            className: "h-4 w-4 text-muted-foreground",
+          })}
           <span>{priority}</span>
         </div>
       );

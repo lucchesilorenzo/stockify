@@ -88,7 +88,8 @@ model Task {
   title     String
   status    String   @default("To-Do")
   priority  String   @default("Low")
-  label     String?
+  label     String
+  dueDate   DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

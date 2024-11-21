@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 
 export default async function TasksPage() {
   const tasks = await getTasks();
-  console.log(tasks);
 
   return (
     <main>

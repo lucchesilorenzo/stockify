@@ -1,6 +1,13 @@
 import { FontSizeIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
   AlertTriangle,
+  ArrowDown,
+  ArrowRight,
+  ArrowUp,
+  Circle,
+  CircleCheckBig,
+  CircleHelp,
+  CircleOff,
   ClipboardList,
   Home,
   LineChart,
@@ -8,6 +15,7 @@ import {
   Package,
   ShoppingCart,
   Star,
+  Timer,
   TrendingUp,
   Truck,
   UserRound,
@@ -96,17 +104,17 @@ export const orderStatuses: OrderStatus[] = [
 ];
 
 export const taskStatuses: TaskStatus[] = [
-  { value: "backlog", label: "Backlog" },
-  { value: "to-do", label: "To-Do" },
-  { value: "in-progress", label: "In Progress" },
-  { value: "done", label: "Done" },
-  { value: "canceled", label: "Canceled" },
+  { value: "backlog", label: "Backlog", icon: CircleHelp },
+  { value: "to-do", label: "To-Do", icon: Circle },
+  { value: "in-progress", label: "In Progress", icon: Timer },
+  { value: "done", label: "Done", icon: CircleCheckBig },
+  { value: "canceled", label: "Canceled", icon: CircleOff },
 ];
 
 export const taskPriorities: TaskPriority[] = [
-  { value: "low", label: "Low" },
-  { value: "medium", label: "Medium" },
-  { value: "high", label: "High" },
+  { value: "low", label: "Low", icon: ArrowDown },
+  { value: "medium", label: "Medium", icon: ArrowRight },
+  { value: "high", label: "High", icon: ArrowUp },
 ];
 
 export const taskLabels: TaskLabel[] = [

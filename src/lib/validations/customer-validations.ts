@@ -17,9 +17,10 @@ export const shippingFormSchema = z.object({
     .min(1, "Email is required.")
     .email("Invalid email address."),
   phone: z
-    .string()
+    .string({
+      required_error: "Phone number is required.",
+    })
     .trim()
-    .min(1, "Phone number is required.")
     .max(15, "Phone number is too long."),
   address: z
     .string()
@@ -36,16 +37,17 @@ export const shippingFormSchema = z.object({
     .trim()
     .min(1, "Zip Code is required.")
     .max(5, "Zip Code is too long."),
-  products: z
-    .array(
-      z.object({
-        productId: z.string(),
-        name: z.string(),
-        price: z.number(),
-        quantity: z.number(),
-      }),
-    )
-    .min(1, "At least one product is required."),
+  products: z.array(
+    z.object({
+      productId: z.string(),
+      name: z.string(),
+      price: z.number(),
+      quantity: z.number(),
+    }),
+    {
+      required_error: "At least one product is required.",
+    },
+  ),
 });
 
 export const customerEditFormSchema = z.object({

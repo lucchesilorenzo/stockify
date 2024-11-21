@@ -13,8 +13,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Search } from "lucide-react";
+import { PlusCircleIcon, Search } from "lucide-react";
 
+import FormDialog from "@/components/common/form-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,7 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { taskStatuses } from "@/lib/data";
+import { taskPriorities, taskStatuses } from "@/lib/data";
 
 export interface TasksTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -80,6 +81,7 @@ export default function TasksTable<TData, TValue>({
               }
               className="max-w-sm pl-10"
             />
+
             <Select
               onValueChange={(value) =>
                 table
@@ -91,15 +93,55 @@ export default function TasksTable<TData, TValue>({
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="all">
+                  <div className="flex items-center">
+                    <PlusCircleIcon className="mr-2 h-4 w-4" />
+                    <span>All Statuses</span>
+                  </div>
+                </SelectItem>
                 {taskStatuses.map((status) => (
                   <SelectItem key={status.value} value={status.value}>
-                    {status.label}
+                    <div className="flex items-center">
+                      <status.icon className="mr-2 h-4 w-4" />
+                      <span>{status.label}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select
+              onValueChange={(value) =>
+                table
+                  .getColumn("priority")
+                  ?.setFilterValue(value === "all" ? "" : value)
+              }
+            >
+              <SelectTrigger id="priority-select">
+                <SelectValue placeholder="Select priority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">
+                  <div className="flex items-center">
+                    <PlusCircleIcon className="mr-2 h-4 w-4" />
+                    <span>All Priorities</span>
+                  </div>
+                </SelectItem>
+                {taskPriorities.map((priority) => (
+                  <SelectItem key={priority.value} value={priority.value}>
+                    <div className="flex items-center">
+                      <priority.icon className="mr-2 h-4 w-4" />
+                      <span>{priority.label}</span>
+                    </div>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
+          <FormDialog actionType="addTask">
+            <PlusCircleIcon className="h-5 w-5 sm:mr-2" />
+            <span className="hidden sm:block">Add Task</span>
+          </FormDialog>
         </div>
       </div>
 
