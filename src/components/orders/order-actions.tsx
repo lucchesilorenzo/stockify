@@ -33,7 +33,9 @@ export default function OrderActions({ order }: OrderActionsProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => handleIsInvoiceOpenAndSetOrder(order)}>
+        <DropdownMenuItem
+          onSelect={() => handleIsInvoiceOpenAndSetOrder(order)}
+        >
           View details
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -1,13 +1,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { ChevronsUpDown, Truck } from "lucide-react";
 
 import StatusBadge from "@/components/common/status-badge";
 import OrderActions from "@/components/orders/order-actions";
 import { Button } from "@/components/ui/button";
 import { OrderStatus, OrderWithProductAndSupplier } from "@/lib/types";
-import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
+import { formatCurrency, formatOrderId } from "@/lib/utils";
 
 export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
   {
@@ -156,10 +157,10 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createdAt"));
-      const formattedDate = formatDate(date, "short");
+      const date: OrderWithProductAndSupplier["createdAt"] =
+        row.getValue("createdAt");
 
-      return <div>{formattedDate}</div>;
+      return <div>{format(date, "yyyy-MM-dd")}</div>;
     },
   },
   {

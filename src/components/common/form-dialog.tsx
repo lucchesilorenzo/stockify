@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 
+import { Task } from "@prisma/client";
+
 import CustomerEditForm from "../customers/customer-edit-form/customer-edit-form";
 import OrderForm from "../orders/order-form";
 import RestockOrderForm from "../orders/restock-order-form";
 import SupplierForm from "../suppliers/supplier-form";
+import TaskEditForm from "../tasks/task-edit-form/task-edit-form";
 import TaskForm from "../tasks/task-form/task-form";
 import { Button } from "../ui/button";
 
@@ -23,15 +26,19 @@ import {
 } from "@/lib/types";
 
 type FormDialogProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   actionType:
     | "createOrder"
     | "createRestockOrder"
     | "editCustomer"
     | "addSupplier"
-    | "addTask";
+    | "addTask"
+    | "editTask";
   products?: ProductWithCategoryAndWarehouse[];
   customer?: CustomerWithCustomerShipment;
+  task?: Task;
+  open?: boolean;
+  onOpenChange?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function FormDialog({
@@ -39,19 +46,34 @@ export default function FormDialog({
   actionType,
   products,
   customer,
+  task,
+  open,
+  onOpenChange,
 }: FormDialogProps) {
   const [closeDialog, setCloseDialog] = useState(false);
 
+  function handleFormSubmit() {
+    if (actionType === "editTask" && onOpenChange) {
+      onOpenChange(false);
+    }
+    setCloseDialog(!closeDialog);
+  }
+
   return (
-    <Dialog open={closeDialog} onOpenChange={setCloseDialog}>
-      <DialogTrigger asChild>
-        <Button
-          variant={customer ? "outline" : "default"}
-          size={customer ? "icon" : "default"}
-        >
-          {children}
-        </Button>
-      </DialogTrigger>
+    <Dialog
+      open={actionType === "editTask" ? open : closeDialog}
+      onOpenChange={actionType === "editTask" ? onOpenChange : setCloseDialog}
+    >
+      {actionType !== "editTask" && (
+        <DialogTrigger asChild>
+          <Button
+            variant={customer ? "outline" : "default"}
+            size={customer ? "icon" : "default"}
+          >
+            {children}
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -61,6 +83,7 @@ export default function FormDialog({
             {actionType === "editCustomer" && "Edit customer"}
             {actionType === "addSupplier" && "Add a new supplier"}
             {actionType === "addTask" && "Add a new task"}
+            {actionType === "editTask" && "Edit task"}
           </DialogTitle>
           <DialogDescription>
             Fill in the details below. Ensure that all required fields are
@@ -68,25 +91,28 @@ export default function FormDialog({
           </DialogDescription>
         </DialogHeader>
         {actionType === "createOrder" && (
-          <OrderForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
+          <OrderForm onFormSubmit={handleFormSubmit} />
         )}
         {actionType === "createRestockOrder" && (
           <RestockOrderForm
-            onFormSubmit={() => setCloseDialog(!closeDialog)}
+            onFormSubmit={handleFormSubmit}
             products={products!}
           />
         )}
         {actionType === "editCustomer" && (
           <CustomerEditForm
-            onFormSubmit={() => setCloseDialog(!closeDialog)}
+            onFormSubmit={handleFormSubmit}
             customer={customer!}
           />
         )}
         {actionType === "addSupplier" && (
-          <SupplierForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
+          <SupplierForm onFormSubmit={handleFormSubmit} />
         )}
         {actionType === "addTask" && (
-          <TaskForm onFormSubmit={() => setCloseDialog(!closeDialog)} />
+          <TaskForm onFormSubmit={handleFormSubmit} />
+        )}
+        {actionType === "editTask" && (
+          <TaskEditForm onFormSubmit={handleFormSubmit} task={task!} />
         )}
       </DialogContent>
     </Dialog>

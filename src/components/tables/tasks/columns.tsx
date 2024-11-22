@@ -4,12 +4,13 @@ import React from "react";
 
 import { Task } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { ChevronsUpDown } from "lucide-react";
 
 import TaskActions from "@/components/tasks/task-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { taskPriorities, taskStatuses } from "@/lib/data";
+import { taskLabels, taskPriorities, taskStatuses } from "@/lib/data";
 import { formatTaskId } from "@/lib/utils";
 
 export const columns: ColumnDef<Task>[] = [
@@ -41,15 +42,17 @@ export const columns: ColumnDef<Task>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Type
+          Label
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const type: Task["label"] = row.getValue("label");
+      const label: Task["label"] = row.getValue("label");
 
-      return <Badge variant="outline">{type}</Badge>;
+      const taskLabel = taskLabels.find((item) => item.value === label);
+
+      return <Badge variant="outline">{taskLabel?.label}</Badge>;
     },
   },
   {
@@ -69,7 +72,7 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       const title: Task["title"] = row.getValue("title");
 
-      return <div className="font-medium">{title}</div>;
+      return <div className="max-w-[500px] truncate font-medium">{title}</div>;
     },
   },
   {
@@ -89,7 +92,7 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       const status: Task["status"] = row.getValue("status");
 
-      const statusInfo = taskStatuses.find((item) => item.label === status);
+      const statusInfo = taskStatuses.find((item) => item.value === status);
       const Icon = statusInfo?.icon ?? "";
 
       return (
@@ -97,7 +100,7 @@ export const columns: ColumnDef<Task>[] = [
           {React.createElement(Icon, {
             className: "h-4 w-4 text-muted-foreground",
           })}
-          <span>{status}</span>
+          <span>{statusInfo?.label}</span>
         </div>
       );
     },
@@ -120,7 +123,7 @@ export const columns: ColumnDef<Task>[] = [
       const priority: Task["priority"] = row.getValue("priority");
 
       const priorityInfo = taskPriorities.find(
-        (item) => item.label === priority,
+        (item) => item.value === priority,
       );
       const Icon = priorityInfo?.icon ?? "";
 
@@ -129,9 +132,29 @@ export const columns: ColumnDef<Task>[] = [
           {React.createElement(Icon, {
             className: "h-4 w-4 text-muted-foreground",
           })}
-          <span>{priority}</span>
+          <span>{priorityInfo?.label}</span>
         </div>
       );
+    },
+  },
+  {
+    accessorKey: "dueDate",
+    id: "dueDate",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Due Date
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const dueDate: Task["dueDate"] = row.getValue("dueDate");
+
+      return <div>{format(dueDate, "yyyy-MM-dd")}</div>;
     },
   },
   {

@@ -76,6 +76,8 @@ Stockify is built using modern and efficient web technologies:
   - [Auth.js](https://authjs.dev/) for authentication and authorization.
 - **Database**:
   - [Prisma](https://www.prisma.io/) as the database ORM.
+- **Type Safety**:
+  - [TypeScript](https://www.typescriptlang.org/) for type safety and code quality.
 - **Form Management and Validation**:
   - [React Hook Form](https://react-hook-form.com/) for efficient form management.
   - [Zod](https://zod.dev/) for schema validation.
@@ -87,8 +89,8 @@ Stockify is built using modern and efficient web technologies:
   - [React Day Picker](https://react-day-picker.js.org/) for date selection in forms.
 - **CSV Export**:
   - [React CSV](https://github.com/react-csv/react-csv) for exporting data to CSV files.
-- **Type Safety**:
-  - [TypeScript](https://www.typescriptlang.org/) for type safety and code quality.
+- **Task Scheduling**:
+  - [Node Cron](https://github.com/merencia/node-cron) for scheduling tasks.
 
 ## Getting Started
 

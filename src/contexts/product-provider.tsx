@@ -48,7 +48,7 @@ export default function ProductProvider({
       toast.error(result.message);
       return;
     }
-    toast.success("Product deleted successfully.");
+    toast.success("Product archived successfully.");
   }
 
   async function handleUpdateProduct(

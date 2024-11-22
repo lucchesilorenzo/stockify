@@ -11,36 +11,39 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-type ProductAlertDialogProps = {
+type MainAlertDialogProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onDeleteProduct: () => void;
+  onDeleteItem: () => void;
+  type: "product" | "task";
 };
 
-export default function ProductAlertDialog({
+export default function MainAlertDialog({
   open,
   setOpen,
-  onDeleteProduct,
-}: ProductAlertDialogProps) {
+  onDeleteItem,
+  type,
+}: MainAlertDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to delete this product?
+            {type === "product" &&
+              "Are you sure you want to archive this product?"}
+            {type === "task" && "Are you sure you want to delete this task?"}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the
-            product in the database.
+            {type === "product" &&
+              "This product will be archived. To restore it, you will need to create a new order with the same product name."}
+            {type === "task" && "This action cannot be undone."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setOpen(false)}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onDeleteProduct}>
-            Continue
-          </AlertDialogAction>
+          <AlertDialogAction onClick={onDeleteItem}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

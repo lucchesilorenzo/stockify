@@ -2,11 +2,12 @@
 
 import { Activity } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { ChevronsUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ActivityEssentials } from "@/lib/types";
-import { cn, formatDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<Activity>[] = [
   {
@@ -101,10 +102,9 @@ export const columns: ColumnDef<Activity>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createdAt"));
-      const formattedDate = formatDate(date, "short");
+      const date: Activity["createdAt"] = row.getValue("createdAt");
 
-      return <div>{formattedDate}</div>;
+      return <div>{format(date, "yyyy-MM-dd")}</div>;
     },
   },
 ];

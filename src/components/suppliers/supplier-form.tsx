@@ -38,6 +38,7 @@ export default function SupplierForm({ onFormSubmit }: SupplierFormProps) {
     }
 
     onFormSubmit();
+    toast.success("Supplier created successfully.");
   }
 
   return (

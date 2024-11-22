@@ -17,15 +17,6 @@ export function formatCurrency(amount: number) {
   }).format(amount);
 }
 
-export function formatDate(
-  date: Date,
-  format: Intl.DateTimeFormatOptions["dateStyle"] = "long",
-) {
-  return new Intl.DateTimeFormat("en-CA", {
-    dateStyle: format,
-  }).format(date);
-}
-
 export function formatOrderId(order: Order) {
   const date = order.createdAt.toISOString().split("T")[0].replace(/-/g, "");
   const numberPart = order.id.slice(-4).toUpperCase();

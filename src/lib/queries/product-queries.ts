@@ -8,6 +8,9 @@ import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
 export async function getProducts() {
   const products = await prisma.product.findMany({
+    where: {
+      deletedAt: null,
+    },
     include: {
       category: {
         select: {
@@ -29,6 +32,7 @@ export async function getAvailableProducts() {
   const availableProducts = await prisma.product.findMany({
     where: {
       status: "In Stock",
+      deletedAt: null,
       quantity: {
         gt: 0,
       },
@@ -75,6 +79,19 @@ export async function getProductOptions(productId: Product["id"]) {
   return options;
 }
 
+export async function findDeletedProductByName(name: Product["name"]) {
+  const product = await prisma.product.findFirst({
+    where: {
+      name,
+      deletedAt: {
+        not: null,
+      },
+    },
+  });
+
+  return product;
+}
+
 export async function createProduct(product: ProductEssentials) {
   const newProduct = await prisma.product.create({
     data: product,
@@ -93,6 +110,19 @@ export async function updateProductById(
     },
     data: product,
   });
+}
+
+export async function restoreProductById(productId: Product["id"]) {
+  const restoredProduct = await prisma.product.update({
+    where: {
+      id: productId,
+    },
+    data: {
+      deletedAt: null,
+    },
+  });
+
+  return restoredProduct;
 }
 
 export async function updateProductQuantityAndStatus(
@@ -143,24 +173,28 @@ export async function updateProductQuantitiesAndStatus(
   return updatedProducts;
 }
 
-export async function deleteProductById(productId: Product["id"]) {
-  const deletedProduct = await prisma.product.delete({
+export async function softDeleteProductById(productId: Product["id"]) {
+  const deletedProduct = await prisma.product.update({
     where: {
       id: productId,
+    },
+    data: {
+      deletedAt: new Date(),
     },
   });
 
   return deletedProduct;
 }
 
-export async function checkIfProductHasOrder(productId: Product["id"]) {
-  const productHasOrder = await prisma.order.findFirst({
+export async function checkIfProductHasBeenRestocked(productId: Product["id"]) {
+  const hasProductBeenRestocked = await prisma.order.findFirst({
     where: {
       productId,
+      type: "Restock",
     },
   });
 
-  return productHasOrder;
+  return hasProductBeenRestocked;
 }
 
 export async function checkIfProductHasBeenShipped(productId: Product["id"]) {

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Metadata } from "next";
 
 import H1 from "@/components/common/h1";
@@ -12,7 +13,7 @@ import {
   getOrders,
   getWeeklyOrders,
 } from "@/lib/queries/order-queries";
-import { formatCurrency, formatDate, formatOrderId } from "@/lib/utils";
+import { formatCurrency, formatOrderId } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Orders",
@@ -32,7 +33,7 @@ export default async function OrdersPage() {
     Quantity: order.quantity,
     Status: order.status,
     Amount: formatCurrency(order.totalPrice),
-    Date: formatDate(order.createdAt, "short"),
+    Date: format(order.createdAt, "yyyy-MM-dd"),
   }));
 
   return (

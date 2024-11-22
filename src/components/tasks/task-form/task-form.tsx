@@ -2,9 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { LoadingButton } from "../../common/loading-button";
-import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import {
   Select,
@@ -16,6 +16,7 @@ import {
 import TaskFormDatePicker from "./task-form-date-picker";
 
 import { createTaskAction } from "@/app/actions/task-actions";
+import { Textarea } from "@/components/ui/textarea";
 import { taskLabels, taskPriorities, taskStatuses } from "@/lib/data";
 import {
   TTaskFormSchema,
@@ -38,14 +39,14 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
   });
 
   async function onSubmit(data: TTaskFormSchema) {
-    console.log(data);
     const result = await createTaskAction(data);
-    // if (result?.message) {
-    //   toast.error(result.message);
-    //   return;
-    // }
+    if (result?.message) {
+      toast.error(result.message);
+      return;
+    }
 
     onFormSubmit();
+    toast.success("Task created successfully.");
   }
 
   return (
@@ -55,7 +56,7 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
           <Label htmlFor="title">
             Title <span className="text-red-600">*</span>
           </Label>
-          <Input
+          <Textarea
             id="title"
             placeholder="Enter task title"
             {...register("title")}
@@ -136,7 +137,7 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
           )}
         </div>
 
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col space-y-2">
           <Label htmlFor="dueDate">
             Due Date <span className="text-red-600">*</span>
           </Label>

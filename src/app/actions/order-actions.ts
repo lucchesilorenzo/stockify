@@ -8,8 +8,10 @@ import { createActivity } from "@/lib/queries/dashboard-queries";
 import { createOrder, updateOrderStatus } from "@/lib/queries/order-queries";
 import {
   createProduct,
+  findDeletedProductByName,
   getProductById,
   getProductOptions,
+  restoreProductById,
   updateProductQuantityAndStatus,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
@@ -21,6 +23,7 @@ import {
 } from "@/lib/validations/order-validations";
 
 export async function createOrderAction(order: unknown) {
+  // Validation
   const validatedOrder = orderFormSchema.safeParse(order);
   if (!validatedOrder.success) {
     return { message: "Invalid form data." };
@@ -30,39 +33,53 @@ export async function createOrderAction(order: unknown) {
   const category = await getCategory(validatedOrder.data.categoryId);
   if (!category) return { message: "Category not found." };
 
+  // Destructure order data
   const { supplierId, ...productData } = validatedOrder.data;
 
-  // Create a new product object with slug and sku
-  const newProduct = {
-    ...productData,
-    sku: generateSKU({
-      category: category.name,
-      name: validatedOrder.data.name,
-    }),
-    slug: createSlug(validatedOrder.data.name),
-  };
+  // Generate sku and slug
+  const sku = generateSKU({
+    category: category.name,
+    name: validatedOrder.data.name,
+  });
+  const slug = createSlug(validatedOrder.data.name);
 
-  // Create a new product and order
-  try {
-    const product = await createProduct(newProduct);
+  // Check if product was archived
+  let product = await findDeletedProductByName(validatedOrder.data.name);
 
-    // Calculate order details
-    const subtotal = validatedOrder.data.quantity * product.price;
-    const shipping = subtotal > 50 ? 0 : 10;
-    const tax = Number((subtotal * 0.22).toFixed(2));
-    const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
-
-    const orderDetails = {
-      productId: product.id,
-      supplierId,
-      type: "New",
-      quantity: validatedOrder.data.quantity,
-      subtotal,
-      shipping,
-      tax,
-      totalPrice,
+  // Restore product
+  if (product) {
+    product = await restoreProductById(product.id);
+  } else {
+    // Create a new product
+    const newProduct = {
+      ...productData,
+      sku,
+      slug,
+      deletedAt: null,
     };
 
+    product = await createProduct(newProduct);
+  }
+
+  // Calculate order details
+  const subtotal = validatedOrder.data.quantity * product.price;
+  const shipping = subtotal > 50 ? 0 : 10;
+  const tax = Number((subtotal * 0.22).toFixed(2));
+  const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
+
+  const orderDetails = {
+    productId: product.id,
+    supplierId,
+    type: "New",
+    quantity: validatedOrder.data.quantity,
+    subtotal,
+    shipping,
+    tax,
+    totalPrice,
+  };
+
+  // Create a new order
+  try {
     await createOrder(orderDetails);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {

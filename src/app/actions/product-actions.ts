@@ -1,15 +1,15 @@
 "use server";
 
-import { Prisma, Product } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { createActivity } from "@/lib/queries/dashboard-queries";
 import {
+  checkIfProductHasBeenRestocked,
   checkIfProductHasBeenShipped,
-  checkIfProductHasOrder,
-  deleteProductById,
   getProductById,
   getProductOptions,
+  softDeleteProductById,
   updateProductById,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
@@ -19,6 +19,7 @@ import {
 } from "@/lib/validations/product-validations";
 
 export async function deleteProductAction(productId: unknown) {
+  // Validate product ID
   const validatedProductId = productIdSchema.safeParse(productId);
   if (!validatedProductId.success) {
     return { message: "Invalid product ID." };
@@ -28,28 +29,19 @@ export async function deleteProductAction(productId: unknown) {
   const product = await getProductById(validatedProductId.data);
   if (!product) return { message: "Product not found." };
 
-  // Check if product has an order
-  const productHasOrder = await checkIfProductHasOrder(validatedProductId.data);
-  if (productHasOrder) {
-    return { message: "You cannot delete a product that has an order!" };
+  // Check if product has been restocked
+  if (await checkIfProductHasBeenRestocked(validatedProductId.data)) {
+    return { message: "You cannot delete a product that has been restocked!" };
   }
 
   // Check if product has been shipped
-  const hasProductBeenShipped = await checkIfProductHasBeenShipped(
-    validatedProductId.data,
-  );
-  if (hasProductBeenShipped) {
+  if (await checkIfProductHasBeenShipped(validatedProductId.data)) {
     return { message: "You cannot delete a product that has been shipped!" };
   }
 
   try {
-    await deleteProductById(validatedProductId.data);
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return { message: "Product not found." };
-      }
-    }
+    await softDeleteProductById(validatedProductId.data);
+  } catch {
     return { message: "Failed to delete product." };
   }
 

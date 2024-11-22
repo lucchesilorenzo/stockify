@@ -8,6 +8,7 @@ export type ActivityEssentials = {
     | "Restock"
     | "Shipment"
     | "Customer"
-    | "Supplier";
+    | "Supplier"
+    | "Task";
   product?: ProductEssentials["name"];
 };

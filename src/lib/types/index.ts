@@ -5,3 +5,4 @@ export * from "./customer-types";
 export * from "./status-types";
 export * from "./activity-types";
 export * from "./supplier-types";
+export * from "./task-types";

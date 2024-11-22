@@ -5,8 +5,8 @@ import { useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 
+import MainAlertDialog from "../common/main-alert-dialog";
 import { Button } from "../ui/button";
-import ProductAlertDialog from "./product-alert-dialog";
 
 import {
   DropdownMenu,
@@ -47,16 +47,17 @@ export default function ProductActions({ product }: ProductActionsProps) {
           <DropdownMenuItem asChild>
             <Link href={`/app/products/${product.slug}/edit`}>Edit</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setIsAlertOpen(!isAlertOpen)}>
-            Delete
+          <DropdownMenuItem onSelect={() => setIsAlertOpen(!isAlertOpen)}>
+            Archive
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <ProductAlertDialog
+      <MainAlertDialog
         open={isAlertOpen}
         setOpen={setIsAlertOpen}
-        onDeleteProduct={onDeleteProduct}
+        onDeleteItem={onDeleteProduct}
+        type="product"
       />
     </>
   );

@@ -2,7 +2,7 @@
 
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -12,17 +12,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { TTaskFormSchema } from "@/lib/validations/task-validations";
 
-type TaskFormDatePickerProps = {
-  control: Control<TTaskFormSchema>;
-  name: "dueDate";
+type TaskFormDatePickerProps<T extends FieldValues> = {
+  control: Control<T>;
+  name: Path<T>;
 };
 
-export default function TaskFormDatePicker({
+export default function TaskFormDatePicker<T extends FieldValues>({
   control,
   name,
-}: TaskFormDatePickerProps) {
+}: TaskFormDatePickerProps<T>) {
   return (
     <Controller
       control={control}

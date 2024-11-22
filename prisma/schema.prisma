@@ -34,20 +34,21 @@ model Supplier {
 }
 
 model Product {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   categoryId  String
   warehouseId String
-  name        String   @unique
-  slug        String   @unique
-  sku         String   @unique
+  name        String    @unique
+  slug        String    @unique
+  sku         String    @unique
   price       Float
   quantity    Int
   maxQuantity Int
   description String?
-  status      String   @default("In Stock")
+  status      String    @default("In Stock")
   image       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   category      Category       @relation(fields: [categoryId], references: [id])
   warehouse     Warehouse      @relation(fields: [warehouseId], references: [id])

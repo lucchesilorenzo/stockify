@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import { X } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -14,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useInvoice } from "@/hooks/use-invoice";
-import { formatDate, formatOrderId } from "@/lib/utils";
+import { formatOrderId } from "@/lib/utils";
 
 export default function OrderInvoice() {
   const { isInvoiceOpen, handleCloseInvoice, order } = useInvoice();
@@ -48,7 +49,9 @@ export default function OrderInvoice() {
           <CardTitle className="group flex items-center gap-2 text-xl">
             Order # {formatOrderId(order)}
           </CardTitle>
-          <CardDescription>Date: {formatDate(order.createdAt)}</CardDescription>
+          <CardDescription>
+            Date: {format(order.createdAt, "PPP")} <br />
+          </CardDescription>
         </div>
       </CardHeader>
       <CardContent className="p-6">
@@ -63,7 +66,7 @@ export default function OrderInvoice() {
         <div className="text-xs text-muted-foreground">
           Updated{" "}
           <time dateTime={order.updatedAt.toISOString()}>
-            {formatDate(order.updatedAt)}
+            {format(order.updatedAt, "PPP")} <br />
           </time>
         </div>
       </CardFooter>

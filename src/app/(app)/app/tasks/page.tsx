@@ -16,7 +16,7 @@ export default async function TasksPage() {
     <main>
       <H1>Tasks</H1>
       <p className="mt-1 text-muted-foreground">
-        Manage and track tasks related to inventory, orders, and suppliers.
+        Manage and track tasks related to your warehouse.
       </p>
 
       <div className="my-6 grid grid-cols-1">
