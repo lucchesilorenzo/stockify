@@ -134,6 +134,7 @@ model ShipmentItem {
 model Category {
   id        String   @id @default(cuid())
   name      String   @unique
+  taxRate   Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

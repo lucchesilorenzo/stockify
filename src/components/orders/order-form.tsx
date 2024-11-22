@@ -71,7 +71,7 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
             <SelectContent>
               {categories.map((category) => (
                 <SelectItem key={category.id} value={category.id}>
-                  {category.name}
+                  {category.name} - Tax: {category.taxRate}%
                 </SelectItem>
               ))}
             </SelectContent>

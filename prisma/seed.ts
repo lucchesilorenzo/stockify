@@ -3,156 +3,121 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Crea alcune categorie
-  const category1 = await prisma.category.create({
+  await prisma.user.create({
     data: {
-      name: "Electronics",
+      email: "user1@example.com",
+      hashedPassword: "hashedPassword1",
+      firstName: "John",
+      lastName: "Doe",
+      dateOfBirth: new Date("1990-01-01"),
+      phone: "1234567890",
+      bio: "Lorem ipsum dolor sit amet.",
+      address: "123 Street",
+      city: "Cityville",
+      zipCode: "12345",
     },
   });
 
-  const category2 = await prisma.category.create({
-    data: {
-      name: "Furniture",
-    },
-  });
-
-  // Crea un magazzino
-  const warehouse = await prisma.warehouse.create({
-    data: {
-      name: "Main Warehouse",
-      location: "Milan",
-    },
-  });
-
-  // Crea alcuni fornitori
   const supplier1 = await prisma.supplier.create({
     data: {
-      name: "Tech Supplier",
-      email: "techsupplier@example.com",
-      phone: "123456789",
-      rating: 4,
-    },
-  });
-
-  const supplier2 = await prisma.supplier.create({
-    data: {
-      name: "Furniture Supplier",
-      email: "furnituresupplier@example.com",
-      phone: "987654321",
+      name: "Supplier One",
+      email: "supplier1@example.com",
+      phone: "9876543210",
       rating: 5,
     },
   });
 
-  // Crea alcuni prodotti
+  const category1 = await prisma.category.create({
+    data: {
+      name: "Electronics",
+      taxRate: 15.0,
+    },
+  });
+
+  const warehouse1 = await prisma.warehouse.create({
+    data: {
+      name: "Warehouse One",
+      location: "Location 1",
+    },
+  });
+
   const product1 = await prisma.product.create({
     data: {
       name: "Laptop",
       slug: "laptop",
-      sku: "LPT123",
-      price: 1200.0,
+      sku: "LAP123",
+      price: 999.99,
       quantity: 100,
-      maxQuantity: 150,
+      maxQuantity: 200,
       description: "High-performance laptop",
+      warehouseId: warehouse1.id,
       categoryId: category1.id,
-      warehouseId: warehouse.id,
     },
   });
 
-  const product2 = await prisma.product.create({
-    data: {
-      name: "Desk",
-      slug: "desk",
-      sku: "DSK456",
-      price: 300.0,
-      quantity: 50,
-      maxQuantity: 100,
-      description: "Office desk",
-      categoryId: category2.id,
-      warehouseId: warehouse.id,
-    },
-  });
-
-  // Crea alcuni ordini
   await prisma.order.create({
     data: {
       supplierId: supplier1.id,
       productId: product1.id,
       type: "Restock",
-      quantity: 20,
-      subtotal: 24000,
-      shipping: 50,
-      tax: 100,
-      totalPrice: 24150,
-      status: "Completed",
+      quantity: 50,
+      subtotal: 49999.5,
+      shipping: 10.0,
+      tax: 7.5,
+      totalPrice: 50017.5,
     },
   });
 
-  await prisma.order.create({
+  const customer1 = await prisma.customer.create({
     data: {
-      supplierId: supplier2.id,
-      productId: product2.id,
-      type: "Purchase",
-      quantity: 10,
-      subtotal: 3000,
-      shipping: 30,
-      tax: 15,
-      totalPrice: 3045,
-      status: "Pending",
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "jane.smith@example.com",
+      phone: "1122334455",
+      address: "456 Another Street",
+      city: "Townsville",
+      zipCode: "67890",
     },
   });
 
-  // Crea un cliente
-  const customer = await prisma.customer.create({
+  const shipment1 = await prisma.customerShipment.create({
     data: {
-      firstName: "John",
-      lastName: "Doe",
-      email: "johndoe@example.com",
-      phone: "111222333",
-      address: "123 Main St",
-      city: "Milan",
-      zipCode: "20100",
-    },
-  });
-
-  // Crea una spedizione per il cliente
-  const customerShipment = await prisma.customerShipment.create({
-    data: {
-      customerId: customer.id,
+      customerId: customer1.id,
       status: "Shipped",
     },
   });
 
-  // Crea un'attività
+  await prisma.shipmentItem.create({
+    data: {
+      productId: product1.id,
+      customerShipmentId: shipment1.id,
+      quantity: 1,
+    },
+  });
+
   await prisma.activity.create({
     data: {
-      activity: "Created new supplier",
-      entity: "Supplier",
-      product: null,
-    },
-  });
-
-  // Crea valori di inventario mensili
-  await prisma.monthlyInventoryValue.create({
-    data: {
-      month: new Date("2023-09-01"),
-      totalValue: 50000,
+      activity: "Product Added",
+      entity: "Product",
+      product: product1.name,
     },
   });
 
   await prisma.monthlyInventoryValue.create({
     data: {
-      month: new Date("2023-10-01"),
-      totalValue: 52000,
+      month: new Date("2024-11-01"),
+      totalValue: 99999.99,
     },
   });
+
+  console.log("Database seeded successfully");
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
+  .catch((e) => {
     console.error(e);
-    await prisma.$disconnect();
     process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });

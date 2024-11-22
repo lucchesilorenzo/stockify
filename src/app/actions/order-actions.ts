@@ -29,7 +29,7 @@ export async function createOrderAction(order: unknown) {
     return { message: "Invalid form data." };
   }
 
-  // Get category name
+  // Get category
   const category = await getCategory(validatedOrder.data.categoryId);
   if (!category) return { message: "Category not found." };
 
@@ -64,7 +64,7 @@ export async function createOrderAction(order: unknown) {
   // Calculate order details
   const subtotal = validatedOrder.data.quantity * product.price;
   const shipping = subtotal > 50 ? 0 : 10;
-  const tax = Number((subtotal * 0.22).toFixed(2));
+  const tax = Number((subtotal * (category.taxRate / 100)).toFixed(2));
   const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
 
   const orderDetails = {
@@ -107,6 +107,7 @@ export async function createOrderAction(order: unknown) {
 }
 
 export async function createRestockOrderAction(restockOrder: unknown) {
+  // Validation
   const validatedRestockOrder = restockOrderFormSchema.safeParse(restockOrder);
   if (!validatedRestockOrder.success) {
     return { message: "Invalid form data." };
@@ -119,6 +120,10 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   // Check if quantity is present
   const options = await getProductOptions(validatedRestockOrder.data.productId);
   if (!options) return { message: "Options not found." };
+
+  // Get category
+  const category = await getCategory(product.categoryId);
+  if (!category) return { message: "Category not found." };
 
   // Check if quantity is valid
   const orderedQuantity = validatedRestockOrder.data.quantity;
@@ -143,7 +148,7 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   // Calculate order details
   const subtotal = orderedQuantity * options.price;
   const shipping = subtotal > 50 ? 0 : 10;
-  const tax = Number((subtotal * 0.22).toFixed(2));
+  const tax = Number((subtotal * (category.taxRate / 100)).toFixed(2));
   const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
 
   const orderDetails = {
