@@ -1,7 +1,7 @@
 import { ProductEssentials } from "./product-types";
 
 export type ActivityEssentials = {
-  activity: "Created" | "Updated" | "Deleted";
+  activity: "Created" | "Updated" | "Deleted" | "Archived" | "Restored";
   entity:
     | "Product"
     | "Order"

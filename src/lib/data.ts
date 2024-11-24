@@ -91,6 +91,7 @@ export const fontSizeData = [
 export const productStatuses: ProductStatus[] = [
   { value: "in-stock", label: "In Stock" },
   { value: "out-of-stock", label: "Out of Stock" },
+  { value: "archived", label: "Archived" },
 ];
 
 export const orderTypes: OrderType[] = [

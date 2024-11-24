@@ -23,7 +23,7 @@ export default function ProductEditFormImage({
   imageInputRef,
 }: ProductEditFormImageProps) {
   return (
-    <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
+    <Card className="overflow-hidden">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ImageIcon className="h-5 w-5" />
@@ -34,7 +34,7 @@ export default function ProductEditFormImage({
       <CardContent>
         <div className="space-y-2">
           <Image
-            src={product.image ?? "/placeholder.svg"}
+            src={product.image}
             alt="Product image"
             width="300"
             height="300"

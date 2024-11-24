@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown } from "lucide-react";
 
 import ProductActions from "@/components/products/product-actions";
-import { Badge } from "@/components/ui/badge";
+import { Badge, BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
@@ -93,11 +93,13 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
     cell: ({ row }) => {
       const status: string = row.getValue("status");
 
-      return (
-        <Badge variant={status === "In Stock" ? "default" : "destructive"}>
-          {status}
-        </Badge>
-      );
+      let statusColor: BadgeProps["variant"];
+
+      if (status === "In Stock") statusColor = "default";
+      if (status === "Out of Stock") statusColor = "destructive";
+      if (status === "Archived") statusColor = "archived";
+
+      return <Badge variant={statusColor}>{status}</Badge>;
     },
   },
   {
@@ -134,12 +136,15 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
 
       let quantityColor;
 
-      if (quantity <= 10) {
-        quantityColor = "bg-red-100 text-red-800";
-      } else if (quantity >= maxQuantity / 2) {
-        quantityColor = "bg-green-100 text-green-800";
-      } else {
-        quantityColor = "bg-yellow-100 text-yellow-800";
+      switch (true) {
+        case quantity <= 10:
+          quantityColor = "bg-red-100 text-red-800";
+          break;
+        case quantity >= maxQuantity / 2:
+          quantityColor = "bg-green-100 text-green-800";
+          break;
+        default:
+          quantityColor = "bg-yellow-100 text-yellow-800";
       }
 
       return (

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Brain } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 
@@ -17,6 +18,7 @@ import {
 } from "../ui/command";
 import { DialogDescription, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
+import FormDialog from "./form-dialog";
 
 import { useFontSize } from "@/hooks/use-font-size";
 import { fontSizeData, routes, themeData } from "@/lib/data";
@@ -24,6 +26,7 @@ import { cn } from "@/lib/utils";
 
 export function MainCommandDialog() {
   const [open, setOpen] = useState(false);
+  const [generateTaskOpen, setGenerateTaskOpen] = useState(false);
   const { setTheme } = useTheme();
   const { fontSize, handleFontSizeChange } = useFontSize();
 
@@ -121,8 +124,20 @@ export function MainCommandDialog() {
               </CommandItem>
             ))}
           </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Generate">
+            <CommandItem onSelect={() => setGenerateTaskOpen(true)}>
+              <Brain className="mr-3 h-5 w-5" /> Generate Task
+            </CommandItem>
+          </CommandGroup>
         </CommandList>
       </CommandDialog>
+
+      <FormDialog
+        actionType="generateTask"
+        open={generateTaskOpen}
+        onOpenChange={setGenerateTaskOpen}
+      />
     </>
   );
 }

@@ -6,9 +6,9 @@ import { Category, Product, Warehouse } from "@prisma/client";
 import { toast } from "sonner";
 
 import {
-  deleteProductAction,
   isMaxProductQuantityReachedAction,
   updateProductAction,
+  updateProductStatusAction,
 } from "@/app/actions/product-actions";
 import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
@@ -21,7 +21,10 @@ type ProductProviderProps = {
 type TProductContext = {
   categories: Category[];
   warehouses: Warehouse[];
-  handleDeleteProduct: (productId: Product["id"]) => Promise<void>;
+  handleUpdateProductStatus: (
+    productId: Product["id"],
+    status: Product["status"],
+  ) => Promise<void>;
   handleUpdateProduct: (
     productId: Product["id"],
     product: TProductEditFormSchema,
@@ -42,13 +45,16 @@ export default function ProductProvider({
   const [categories] = useState(categoriesData);
   const [warehouses] = useState(warehousesData);
 
-  async function handleDeleteProduct(productId: Product["id"]) {
-    const result = await deleteProductAction(productId);
+  async function handleUpdateProductStatus(
+    productId: Product["id"],
+    status: Product["status"],
+  ) {
+    const result = await updateProductStatusAction(productId, status);
     if (result?.message) {
       toast.error(result.message);
       return;
     }
-    toast.success("Product archived successfully.");
+    toast.success("Product status updated successfully.");
   }
 
   async function handleUpdateProduct(
@@ -84,7 +90,7 @@ export default function ProductProvider({
       value={{
         categories,
         warehouses,
-        handleDeleteProduct,
+        handleUpdateProductStatus,
         handleUpdateProduct,
         handleCheckProductMaxQuantity,
       }}

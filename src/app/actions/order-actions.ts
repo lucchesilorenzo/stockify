@@ -8,14 +8,12 @@ import { createActivity } from "@/lib/queries/dashboard-queries";
 import { createOrder, updateOrderStatus } from "@/lib/queries/order-queries";
 import {
   createProduct,
-  findDeletedProductByName,
   getProductById,
   getProductOptions,
-  restoreProductById,
   updateProductQuantityAndStatus,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
-import { createSlug, generateSKU } from "@/lib/utils";
+import { generateSKU, generateSlug } from "@/lib/utils";
 import {
   orderFormSchema,
   orderStatusSchema,
@@ -36,29 +34,31 @@ export async function createOrderAction(order: unknown) {
   // Destructure order data
   const { supplierId, ...productData } = validatedOrder.data;
 
-  // Generate sku and slug
+  // Generate SKU and slug
   const sku = generateSKU({
     category: category.name,
     name: validatedOrder.data.name,
   });
-  const slug = createSlug(validatedOrder.data.name);
+  const slug = generateSlug(validatedOrder.data.name);
 
-  // Check if product was archived
-  let product = await findDeletedProductByName(validatedOrder.data.name);
+  // Create a new product
+  const newProduct = {
+    ...productData,
+    sku,
+    slug,
+  };
 
-  // Restore product
-  if (product) {
-    product = await restoreProductById(product.id);
-  } else {
-    // Create a new product
-    const newProduct = {
-      ...productData,
-      sku,
-      slug,
-      deletedAt: null,
-    };
+  let product;
 
+  try {
     product = await createProduct(newProduct);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return { message: "A product with this name or SKU already exists." };
+      }
+    }
+    return { message: "Failed to create product." };
   }
 
   // Calculate order details
@@ -84,10 +84,10 @@ export async function createOrderAction(order: unknown) {
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        return { message: "Product or order already exists." };
+        return { message: "Order already exists." };
       }
     }
-    return { message: "Failed to create product or order." };
+    return { message: "Failed to create order." };
   }
 
   // Create a new activity

@@ -2,7 +2,9 @@
 
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { Ollama } from "ollama";
 
+import { exampleOutput, taskStructure } from "@/lib/prompts";
 import { createActivity } from "@/lib/queries/dashboard-queries";
 import {
   createTask,
@@ -15,6 +17,7 @@ import {
   taskEditFormSchema,
   taskFieldSchema,
   taskFormSchema,
+  taskGeneratorFormSchema,
   taskIdSchema,
   taskLabelSchema,
   taskPrioritySchema,
@@ -92,13 +95,13 @@ export async function updateTaskFieldAction(
   taskValue: unknown,
   taskId: unknown,
 ) {
-  // Validation for task taskField
+  // Validation for taskField
   const validatedTaskField = taskFieldSchema.safeParse(taskField);
   if (!validatedTaskField.success) {
     return { message: "Invalid data." };
   }
 
-  // Validation for task taskValue
+  // Validation for taskValue
   let validatedTaskValue;
 
   switch (taskField) {
@@ -194,4 +197,39 @@ export async function updateTaskAction(task: unknown, taskId: unknown) {
   }
 
   revalidatePath("/app/tasks");
+}
+
+export async function generateTasks(prompt: unknown) {
+  const validatedPrompt = taskGeneratorFormSchema.safeParse(prompt);
+  if (!validatedPrompt.success) {
+    return { message: "Invalid form data." };
+  }
+
+  const numTasks = validatedPrompt.data.numTasks || 5;
+  const description = validatedPrompt.data.prompt;
+
+  const finalPrompt = `${description}. Generate ${numTasks} tasks. ${taskStructure} ${exampleOutput} Return only a pure JSON array of tasks, without extra formatting.`;
+
+  const ollama = new Ollama();
+
+  try {
+    const res = await ollama.chat({
+      model: "qwen2.5-coder:1.5b",
+      messages: [
+        {
+          role: "user",
+          content: finalPrompt,
+        },
+      ],
+      format: "json",
+    });
+
+    const { tasks } = JSON.parse(res.message.content);
+
+    for (const task of tasks) {
+      await createTaskAction(task);
+    }
+  } catch {
+    return { message: "Failed to generate tasks." };
+  }
 }

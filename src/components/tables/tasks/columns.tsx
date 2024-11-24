@@ -72,7 +72,11 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       const title: Task["title"] = row.getValue("title");
 
-      return <div className="max-w-[500px] truncate font-medium">{title}</div>;
+      return (
+        <div className="max-w-[500px] truncate text-left font-medium">
+          {title}
+        </div>
+      );
     },
   },
   {

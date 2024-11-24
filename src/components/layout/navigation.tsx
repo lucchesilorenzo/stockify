@@ -11,7 +11,7 @@ export default function Navigation() {
 
   return (
     <nav>
-      <ul className="grid items-start px-2 text-sm font-medium lg:px-4">
+      <ul className="flex flex-col px-2 text-sm font-medium lg:px-4">
         {routes.map((route) => (
           <li key={route.name}>
             <Link

@@ -27,7 +27,7 @@ export default function ProductEditFormStockAndPrice({
   errors,
 }: ProductEditFormStockDetailsProps) {
   return (
-    <Card x-chunk="dashboard-07-chunk-1">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <QrCode className="h-5 w-5" />

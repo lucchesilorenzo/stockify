@@ -34,21 +34,20 @@ model Supplier {
 }
 
 model Product {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   categoryId  String
   warehouseId String
-  name        String    @unique
-  slug        String    @unique
-  sku         String    @unique
+  name        String   @unique
+  slug        String   @unique
+  sku         String   @unique
   price       Float
   quantity    Int
   maxQuantity Int
   description String?
-  status      String    @default("In Stock")
-  image       String?
-  deletedAt   DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  status      String   @default("In Stock")
+  image       String   @default("/placeholder.svg")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   category      Category       @relation(fields: [categoryId], references: [id])
   warehouse     Warehouse      @relation(fields: [warehouseId], references: [id])
@@ -87,8 +86,8 @@ model Warehouse {
 model Task {
   id        String   @id @default(cuid())
   title     String
-  status    String   @default("To-Do")
-  priority  String   @default("Low")
+  status    String
+  priority  String
   label     String
   dueDate   DateTime
   createdAt DateTime @default(now())

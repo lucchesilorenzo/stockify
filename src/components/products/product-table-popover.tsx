@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 
 import { Table } from "@tanstack/react-table";
 
@@ -29,9 +29,10 @@ type ProductTablePopoverProps<T> = {
 export default function ProductTablePopover<T>({
   table,
 }: ProductTablePopoverProps<T>) {
-  const [open, setOpen] = React.useState(false);
-  const [selectedStatus, setSelectedStatus] =
-    React.useState<ProductStatus | null>(null);
+  const [open, setOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState<ProductStatus | null>(
+    null,
+  );
 
   function handleResetStatus() {
     setSelectedStatus(null);

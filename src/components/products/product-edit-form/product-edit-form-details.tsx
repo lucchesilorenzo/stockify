@@ -28,7 +28,7 @@ export default function ProductEditFormDetails({
   errors,
 }: ProductEditFormDetailsProps) {
   return (
-    <Card x-chunk="dashboard-07-chunk-0">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Package className="h-5 w-5" />

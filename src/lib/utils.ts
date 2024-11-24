@@ -1,5 +1,6 @@
-import { Order, Task } from "@prisma/client";
+import { Category, Order, Product, Task } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
+import { randomUUID } from "crypto";
 import { redirect } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
@@ -37,15 +38,18 @@ export function formatTaskId(task: Task) {
   return `TASK-${numberPart}`;
 }
 
-export function generateSKU({ category, name }: Record<string, string>) {
+export function generateSKU({
+  category,
+  name,
+}: Record<Category["name"], Product["name"]>) {
   const categoryPart = category.slice(0, 3).toUpperCase();
   const namePart = name.slice(0, 3).toUpperCase();
-  const idPart = crypto.randomUUID().slice(-4).toUpperCase();
+  const idPart = randomUUID().slice(-4).toUpperCase();
 
   return `${categoryPart}-${namePart}-${idPart}`;
 }
 
-export function createSlug(text: string) {
+export function generateSlug(text: string) {
   return text
     .toLowerCase()
     .trim()

@@ -14,7 +14,6 @@ import ProductEditFormImage from "./product-edit-form-image";
 import ProductEditFormSelection from "./product-edit-form-selection";
 import ProductEditFormStockDetails from "./product-edit-form-stock-details";
 
-// import ProductEditFormSupplier from "./product-edit-form-supplier";
 import H1 from "@/components/common/h1";
 import { LoadingButton } from "@/components/common/loading-button";
 import { Badge } from "@/components/ui/badge";
@@ -65,6 +64,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
       if (file.type.startsWith("image")) {
         const formData = new FormData();
         formData.append("image", file);
+        formData.append("productId", product.id);
 
         const uploadResponse = await uploadImage(formData);
 
@@ -106,6 +106,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         >
           {product.status === "In Stock" ? "In Stock" : "Out of Stock"}
         </Badge>
+
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
           <Button type="button" variant="outline" onClick={() => reset()}>
             <X className="mr-2 h-4 w-4" />
@@ -146,9 +147,6 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
             product={product}
             imageInputRef={imageInputRef}
           />
-
-          {/* TODO: Add Supplier */}
-          {/* <ProductEditFormSupplier /> */}
         </div>
       </div>
 

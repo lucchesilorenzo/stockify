@@ -26,7 +26,7 @@ export default function ProductEditFormSelection({
   errors,
 }: ProductEditFormSelectionProps) {
   return (
-    <Card x-chunk="dashboard-07-chunk-2">
+    <Card>
       <CardHeader>
         <CardTitle className="text-xl">Category & Warehouse</CardTitle>
       </CardHeader>

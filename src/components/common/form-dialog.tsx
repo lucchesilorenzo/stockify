@@ -10,6 +10,7 @@ import RestockOrderForm from "../orders/restock-order-form";
 import SupplierForm from "../suppliers/supplier-form";
 import TaskEditForm from "../tasks/task-edit-form/task-edit-form";
 import TaskForm from "../tasks/task-form/task-form";
+import TaskGenerationForm from "../tasks/task-generation-form";
 import { Button } from "../ui/button";
 
 import {
@@ -22,18 +23,13 @@ import {
 } from "@/components/ui/dialog";
 import {
   CustomerWithCustomerShipment,
+  FormDialogActionType,
   ProductWithCategoryAndWarehouse,
 } from "@/lib/types";
 
 type FormDialogProps = {
   children?: React.ReactNode;
-  actionType:
-    | "createOrder"
-    | "createRestockOrder"
-    | "editCustomer"
-    | "addSupplier"
-    | "addTask"
-    | "editTask";
+  actionType: FormDialogActionType;
   products?: ProductWithCategoryAndWarehouse[];
   customer?: CustomerWithCustomerShipment;
   task?: Task;
@@ -50,21 +46,18 @@ export default function FormDialog({
   open,
   onOpenChange,
 }: FormDialogProps) {
-  const [closeDialog, setCloseDialog] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isOpen = open ?? internalOpen;
+  const setOpen = onOpenChange ?? setInternalOpen;
 
   function handleFormSubmit() {
-    if (actionType === "editTask" && onOpenChange) {
-      onOpenChange(false);
-    }
-    setCloseDialog(!closeDialog);
+    setOpen(false);
   }
 
   return (
-    <Dialog
-      open={actionType === "editTask" ? open : closeDialog}
-      onOpenChange={actionType === "editTask" ? onOpenChange : setCloseDialog}
-    >
-      {actionType !== "editTask" && (
+    <Dialog open={isOpen} onOpenChange={setOpen}>
+      {actionType !== "editTask" && actionType !== "generateTask" && (
         <DialogTrigger asChild>
           <Button
             variant={customer ? "outline" : "default"}
@@ -84,6 +77,7 @@ export default function FormDialog({
             {actionType === "addSupplier" && "Add a new supplier"}
             {actionType === "addTask" && "Add a new task"}
             {actionType === "editTask" && "Edit task"}
+            {actionType === "generateTask" && "Generate task"}
           </DialogTitle>
           <DialogDescription>
             Fill in the details below. Ensure that all required fields are
@@ -113,6 +107,9 @@ export default function FormDialog({
         )}
         {actionType === "editTask" && (
           <TaskEditForm onFormSubmit={handleFormSubmit} task={task!} />
+        )}
+        {actionType === "generateTask" && (
+          <TaskGenerationForm onFormSubmit={handleFormSubmit} />
         )}
       </DialogContent>
     </Dialog>

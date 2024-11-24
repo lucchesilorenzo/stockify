@@ -84,7 +84,7 @@ export default function CustomerOrderForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid gap-6 lg:grid-cols-2"
+      className="grid grid-cols-1 gap-6 lg:grid-cols-2"
     >
       <CustomerInfoCard
         customers={customers}
@@ -100,7 +100,11 @@ export default function CustomerOrderForm({
         errors={errors}
       />
 
-      <LoadingButton type="submit" isLoading={isSubmitting} className="ml-auto">
+      <LoadingButton
+        type="submit"
+        isLoading={isSubmitting}
+        className="lg:ml-auto"
+      >
         Confirm Shipment
       </LoadingButton>
     </form>

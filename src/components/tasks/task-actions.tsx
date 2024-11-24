@@ -74,12 +74,10 @@ export default function TaskActions({ task }: TaskActionsProps) {
             itemGroup={taskPriorities}
           />
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onSelect={() => setIsEditDialogOpen(!isEditDialogOpen)}
-          >
+          <DropdownMenuItem onSelect={() => setIsEditDialogOpen(true)}>
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => setIsAlertOpen(!isAlertOpen)}>
+          <DropdownMenuItem onSelect={() => setIsAlertOpen(true)}>
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

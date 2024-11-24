@@ -15,7 +15,7 @@ export const taskFormSchema = z.object({
   label: z.string({
     required_error: "Label is required.",
   }),
-  dueDate: z.date({
+  dueDate: z.coerce.date({
     required_error: "Due date is required.",
   }),
 });
@@ -47,6 +47,12 @@ export const taskStatusSchema = z.enum([
 export const taskPrioritySchema = z.enum(["low", "medium", "high"]);
 export const taskFieldSchema = z.enum(["label", "status", "priority"]);
 
+export const taskGeneratorFormSchema = z.object({
+  prompt: z.string().trim().min(1, "Prompt is required.").max(1000),
+  numTasks: z.coerce.number().min(1, "Number of tasks is required."),
+});
+
 export type TTaskFieldSchema = z.infer<typeof taskFieldSchema>;
 export type TTaskFormSchema = z.infer<typeof taskFormSchema>;
 export type TTaskEditFormSchema = z.infer<typeof taskEditFormSchema>;
+export type TTaskGeneratorFormSchema = z.infer<typeof taskGeneratorFormSchema>;

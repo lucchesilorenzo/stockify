@@ -22,4 +22,15 @@ export const productEditFormSchema = z.object({
   warehouseId: z.string().optional(),
 });
 
+export const productUploadImageSchema = z.object({
+  image: z.instanceof(File),
+  productId: z.string().cuid(),
+});
+
+export const productUpdateStatusSchema = z.enum([
+  "In Stock",
+  "Out of Stock",
+  "Archived",
+]);
+
 export type TProductEditFormSchema = z.infer<typeof productEditFormSchema>;

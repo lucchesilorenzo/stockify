@@ -14,7 +14,9 @@ import {
 type MainAlertDialogProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onDeleteItem: () => void;
+  onDeleteItem?: () => void;
+  onUpdateItemStatus?: () => void;
+  status?: string;
   type: "product" | "task";
 };
 
@@ -22,28 +24,35 @@ export default function MainAlertDialog({
   open,
   setOpen,
   onDeleteItem,
+  onUpdateItemStatus,
+  status,
   type,
 }: MainAlertDialogProps) {
+  const handleAction = type === "product" ? onUpdateItemStatus : onDeleteItem;
+  const statusTitleInfo = status === "Archived" ? "restore" : "archive";
+  const statusDescriptionInfo = status === "Archived" ? "restored" : "archived";
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
             {type === "product" &&
-              "Are you sure you want to archive this product?"}
+              `Are you sure you want to ${statusTitleInfo} this product?`}
             {type === "task" && "Are you sure you want to delete this task?"}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {type === "product" &&
-              "This product will be archived. To restore it, you will need to create a new order with the same product name."}
-            {type === "task" && "This action cannot be undone."}
+              `This product will be ${statusDescriptionInfo}.`}
+            {type === "task" &&
+              "This task will be deleted. This action cannot be undone."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setOpen(false)}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onDeleteItem}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleAction}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

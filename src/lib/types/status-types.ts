@@ -1,6 +1,6 @@
 export type ProductStatus = {
-  value: "in-stock" | "out-of-stock";
-  label: "In Stock" | "Out of Stock";
+  value: "in-stock" | "out-of-stock" | "archived";
+  label: "In Stock" | "Out of Stock" | "Archived";
 };
 
 export type OrderType = {
@@ -41,3 +41,12 @@ export type TaskLabel = {
     | "Customer"
     | "Maintenance";
 };
+
+export type FormDialogActionType =
+  | "createOrder"
+  | "createRestockOrder"
+  | "editCustomer"
+  | "addSupplier"
+  | "addTask"
+  | "editTask"
+  | "generateTask";

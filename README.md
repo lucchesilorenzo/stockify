@@ -91,13 +91,17 @@ Stockify is built using modern and efficient web technologies:
   - [React CSV](https://github.com/react-csv/react-csv) for exporting data to CSV files.
 - **Task Scheduling**:
   - [Node Cron](https://github.com/merencia/node-cron) for scheduling tasks.
+- **AI Integration**:
+  - [Ollama](https://github.com/ollama/ollama-js) for AI integration.
 
 ## Getting Started
 
-### Prerequisites
+### Requisites
 
-- [Node.js](https://nodejs.org/en/) (v16 or higher)
 - [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en/)
+- [Ollama](https://ollama.com/download)
+- [qwen2.5-coder:1.5b](https://ollama.com/library/qwen2.5-coder:1.5b)
 
 ### Installation
 

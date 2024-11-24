@@ -24,11 +24,11 @@ type ProductActionsProps = {
 };
 
 export default function ProductActions({ product }: ProductActionsProps) {
-  const { handleDeleteProduct } = useProduct();
+  const { handleUpdateProductStatus } = useProduct();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  async function onDeleteProduct() {
-    await handleDeleteProduct(product.id);
+  async function onUpdateProductStatus() {
+    await handleUpdateProductStatus(product.id, product.status);
     setIsAlertOpen(false);
   }
 
@@ -48,7 +48,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
             <Link href={`/app/products/${product.slug}/edit`}>Edit</Link>
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setIsAlertOpen(!isAlertOpen)}>
-            Archive
+            {product.status !== "Archived" ? "Archive" : "Restore"}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -56,7 +56,8 @@ export default function ProductActions({ product }: ProductActionsProps) {
       <MainAlertDialog
         open={isAlertOpen}
         setOpen={setIsAlertOpen}
-        onDeleteItem={onDeleteProduct}
+        onUpdateItemStatus={onUpdateProductStatus}
+        status={product.status}
         type="product"
       />
     </>
