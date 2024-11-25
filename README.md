@@ -101,7 +101,7 @@ Stockify is built using modern and efficient web technologies:
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en/)
 - [Ollama](https://ollama.com/download)
-- [qwen2.5-coder:1.5b](https://ollama.com/library/qwen2.5-coder:1.5b)
+- [qwen2.5-coder:1.5b model](https://ollama.com/library/qwen2.5-coder:1.5b)
 
 ### Installation
 

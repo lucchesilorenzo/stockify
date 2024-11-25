@@ -33,4 +33,5 @@ export const productUpdateStatusSchema = z.enum([
   "Archived",
 ]);
 
+// Types
 export type TProductEditFormSchema = z.infer<typeof productEditFormSchema>;

@@ -7,8 +7,10 @@ import { getCustomers } from "@/lib/queries/customer-queries";
 import { getAvailableProducts } from "@/lib/queries/product-queries";
 
 export default async function CustomerTabs() {
-  const availableProducts = await getAvailableProducts();
-  const customers = await getCustomers();
+  const [availableProducts, customers] = await Promise.all([
+    getAvailableProducts(),
+    getCustomers(),
+  ]);
 
   return (
     <Tabs defaultValue="prepare-shipment" className="space-y-4">

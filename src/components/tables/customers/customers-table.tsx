@@ -13,10 +13,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -25,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TableSearchInput from "@/components/ui/table-ui/table-search-input";
 
 export interface CustomersTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -59,16 +58,11 @@ export default function CustomersTable<TData, TValue>({
       <div>
         <div className="flex items-center justify-between gap-x-4 py-4">
           <div className="relative flex items-center space-x-2">
-            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
-            <Input
-              type="search"
+            <TableSearchInput
+              table={table}
+              column="fullName"
+              id="customer-search"
               placeholder="Filter customers..."
-              value={
-                (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(e) =>
-                table.getColumn("fullName")?.setFilterValue(e.target.value)
-              }
               className="max-w-sm pl-10 sm:block"
             />
           </div>

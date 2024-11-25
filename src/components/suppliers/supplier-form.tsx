@@ -74,7 +74,9 @@ export default function SupplierForm({ onFormSubmit }: SupplierFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="phone">Phone</Label>
+          <Label htmlFor="phone">
+            Phone <span className="text-red-600">*</span>
+          </Label>
           <Controller
             control={control}
             name="phone"
@@ -90,6 +92,68 @@ export default function SupplierForm({ onFormSubmit }: SupplierFormProps) {
           />
           {errors.phone && (
             <p className="px-1 text-sm text-red-600">{errors.phone.message}</p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="address">
+            Address <span className="text-red-600">*</span>
+          </Label>
+          <Input
+            id="address"
+            placeholder="Enter supplier address"
+            {...register("address")}
+          />
+          {errors.address && (
+            <p className="px-1 text-sm text-red-600">
+              {errors.address.message}
+            </p>
+          )}
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Label htmlFor="city">
+              City <span className="text-red-600">*</span>
+            </Label>
+            <Input
+              id="city"
+              placeholder="Enter supplier city"
+              {...register("city")}
+            />
+            {errors.city && (
+              <p className="px-1 text-sm text-red-600">{errors.city.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="zipCode">
+              Zip Code <span className="text-red-600">*</span>
+            </Label>
+            <Input
+              id="zipCode"
+              placeholder="Enter supplier zip code"
+              {...register("zipCode")}
+            />
+            {errors.zipCode && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.zipCode.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="website">Website</Label>
+          <Input
+            id="website"
+            placeholder="Enter supplier website"
+            {...register("website")}
+          />
+          {errors.website && (
+            <p className="px-1 text-sm text-red-600">
+              {errors.website.message}
+            </p>
           )}
         </div>
 

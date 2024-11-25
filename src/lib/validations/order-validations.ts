@@ -66,5 +66,6 @@ export const orderStatusSchema = z.object({
   status: z.enum(["Pending", "Completed"]),
 });
 
+// Types
 export type TOrderFormSchema = z.infer<typeof orderFormSchema>;
 export type TRestockOrderFormSchema = z.infer<typeof restockOrderFormSchema>;

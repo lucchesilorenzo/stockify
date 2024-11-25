@@ -19,4 +19,5 @@ export const settingsFormSchema = z.object({
   zipCode: z.string().trim().max(5, "Zipcode is too long."),
 });
 
+// Types
 export type TSettingsFormSchema = z.infer<typeof settingsFormSchema>;

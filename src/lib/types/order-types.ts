@@ -19,3 +19,13 @@ export type OrderWithProductAndSupplier = Prisma.OrderGetPayload<{
     };
   };
 }>;
+
+export type OrderType = {
+  value: "new" | "restock";
+  label: "New Orders" | "Restock Orders";
+};
+
+export type OrderStatus = {
+  value: "pending" | "completed";
+  label: "Pending" | "Completed";
+};

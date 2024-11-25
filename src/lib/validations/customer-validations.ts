@@ -89,5 +89,6 @@ export const customerEditFormSchema = z.object({
     .max(5, "Zip Code is too long."),
 });
 
+// Types
 export type TShippingFormSchema = z.infer<typeof shippingFormSchema>;
 export type TCustomerEditFormSchema = z.infer<typeof customerEditFormSchema>;

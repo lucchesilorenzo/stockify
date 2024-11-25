@@ -24,6 +24,9 @@ async function main() {
       email: "supplier1@example.com",
       phone: "9876543210",
       rating: 5,
+      address: "456 Supplier Ave",
+      city: "Supplier City",
+      zipCode: "11111",
     },
   });
 
@@ -115,7 +118,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("Error seeding database:", e);
     process.exit(1);
   })
   .finally(async () => {

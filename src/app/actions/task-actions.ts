@@ -13,6 +13,7 @@ import {
   updateTaskField,
 } from "@/lib/queries/task-queries";
 import { ActivityEssentials } from "@/lib/types";
+import { checkAuth } from "@/lib/utils";
 import {
   taskEditFormSchema,
   taskFieldSchema,
@@ -25,15 +26,24 @@ import {
 } from "@/lib/validations/task-validations";
 
 export async function createTaskAction(task: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation
   const validatedTask = taskFormSchema.safeParse(task);
   if (!validatedTask.success) {
     return { message: "Invalid form data." };
   }
 
+  // Add user ID
+  const taskWithUser = {
+    ...validatedTask.data,
+    userId: session.user.id,
+  };
+
   // Create task
   try {
-    await createTask(validatedTask.data);
+    await createTask(taskWithUser);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {

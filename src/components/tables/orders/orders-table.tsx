@@ -13,18 +13,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Download, Search } from "lucide-react";
+import { Download } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -33,6 +25,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TableSearchInput from "@/components/ui/table-ui/table-search-input";
+import TableSelect from "@/components/ui/table-ui/table-select";
 import { orderStatuses, orderTypes } from "@/lib/data";
 
 interface OrdersTableProps<TData, TValue> {
@@ -69,60 +63,35 @@ export default function OrdersTable<TData, TValue>({
       {/* Filters and actions */}
       <div className="my-4">
         <div className="relative flex items-center space-x-2">
-          <Search className="absolute left-5 h-5 w-5 text-gray-500" />
-          <Input
+          <TableSearchInput
+            table={table}
+            column="product.name"
             id="order-search"
-            type="search"
             placeholder="Filter orders..."
-            value={
-              (table.getColumn("product.name")?.getFilterValue() as string) ??
-              ""
-            }
-            onChange={(e) =>
-              table.getColumn("product.name")?.setFilterValue(e.target.value)
-            }
             className="w-[180px] pl-10 sm:w-full"
           />
 
-          <Select
-            onValueChange={(value) =>
-              table
-                .getColumn("type")
-                ?.setFilterValue(value === "all" ? "" : value)
-            }
-          >
-            <SelectTrigger id="order-select" className="w-[100px] sm:w-full">
-              <SelectValue placeholder="Select order type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              {orderTypes.map((type) => (
-                <SelectItem key={type.value} value={type.value}>
-                  {type.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <TableSelect
+            table={table}
+            column="type"
+            id="order-select"
+            placeholder="Select order type"
+            defaultOptionLabel="All Types"
+            orderItems={orderTypes}
+            className="w-[100px] sm:w-full"
+            type="order"
+          />
 
-          <Select
-            onValueChange={(value) =>
-              table
-                .getColumn("status")
-                ?.setFilterValue(value === "all" ? "" : value)
-            }
-          >
-            <SelectTrigger id="status-select" className="w-[100px] sm:w-full">
-              <SelectValue placeholder="Select order status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              {orderStatuses.map((status) => (
-                <SelectItem key={status.value} value={status.value}>
-                  {status.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <TableSelect
+            table={table}
+            column="status"
+            id="status-order-select"
+            placeholder="Select order status"
+            defaultOptionLabel="All Statuses"
+            orderItems={orderStatuses}
+            className="w-[100px] sm:w-full"
+            type="order"
+          />
 
           <CSVExport data={csvData} filename="orders.csv">
             <Download className="h-4 w-4 sm:mr-2" />

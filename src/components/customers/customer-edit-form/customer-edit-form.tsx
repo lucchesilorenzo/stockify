@@ -50,38 +50,40 @@ export default function CustomerEditForm({
       <div className="space-y-6">
         <input type="hidden" value={customer.id} {...register("id")} />
 
-        <div className="space-y-1">
-          <Label htmlFor="firstName">
-            First name <span className="text-red-600">*</span>
-          </Label>
-          <Input
-            defaultValue={customer?.firstName ?? ""}
-            id="firstName"
-            placeholder="Enter customer first name"
-            {...register("firstName")}
-          />
-          {errors.firstName && (
-            <p className="px-1 text-sm text-red-600">
-              {errors.firstName.message}
-            </p>
-          )}
-        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Label htmlFor="firstName">
+              First name <span className="text-red-600">*</span>
+            </Label>
+            <Input
+              defaultValue={customer?.firstName ?? ""}
+              id="firstName"
+              placeholder="Enter customer first name"
+              {...register("firstName")}
+            />
+            {errors.firstName && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.firstName.message}
+              </p>
+            )}
+          </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="lastName">
-            Last name <span className="text-red-600">*</span>
-          </Label>
-          <Input
-            defaultValue={customer?.lastName ?? ""}
-            id="lastName"
-            placeholder="Enter customer last name"
-            {...register("lastName")}
-          />
-          {errors.lastName && (
-            <p className="px-1 text-sm text-red-600">
-              {errors.lastName.message}
-            </p>
-          )}
+          <div className="space-y-1">
+            <Label htmlFor="lastName">
+              Last name <span className="text-red-600">*</span>
+            </Label>
+            <Input
+              defaultValue={customer?.lastName ?? ""}
+              id="lastName"
+              placeholder="Enter customer last name"
+              {...register("lastName")}
+            />
+            {errors.lastName && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.lastName.message}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="space-y-1">
@@ -141,36 +143,38 @@ export default function CustomerEditForm({
           )}
         </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="city">
-            City <span className="text-red-600">*</span>
-          </Label>
-          <Input
-            defaultValue={customer?.city ?? ""}
-            id="city"
-            placeholder="Enter customer city"
-            {...register("city")}
-          />
-          {errors.city && (
-            <p className="px-1 text-sm text-red-600">{errors.city.message}</p>
-          )}
-        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Label htmlFor="city">
+              City <span className="text-red-600">*</span>
+            </Label>
+            <Input
+              defaultValue={customer?.city ?? ""}
+              id="city"
+              placeholder="Enter customer city"
+              {...register("city")}
+            />
+            {errors.city && (
+              <p className="px-1 text-sm text-red-600">{errors.city.message}</p>
+            )}
+          </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="zipCode">
-            Zip Code <span className="text-red-600">*</span>
-          </Label>
-          <Input
-            defaultValue={customer?.zipCode ?? ""}
-            id="zipCode"
-            placeholder="Enter customer zip code"
-            {...register("zipCode")}
-          />
-          {errors.zipCode && (
-            <p className="px-1 text-sm text-red-600">
-              {errors.zipCode.message}
-            </p>
-          )}
+          <div className="space-y-1">
+            <Label htmlFor="zipCode">
+              Zip Code <span className="text-red-600">*</span>
+            </Label>
+            <Input
+              defaultValue={customer?.zipCode ?? ""}
+              id="zipCode"
+              placeholder="Enter customer zip code"
+              {...register("zipCode")}
+            />
+            {errors.zipCode && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.zipCode.message}
+              </p>
+            )}
+          </div>
         </div>
 
         <LoadingButton isLoading={isSubmitting} className="w-full">

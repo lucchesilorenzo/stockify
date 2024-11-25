@@ -56,6 +56,7 @@ export default function TaskEditForm({
             id="title"
             placeholder="Enter task title"
             defaultValue={task.title}
+            rows={3}
             {...register("title")}
           />
           {errors.title && (

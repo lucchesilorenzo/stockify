@@ -25,10 +25,10 @@ import { fontSizeData, routes, themeData } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export function MainCommandDialog() {
-  const [open, setOpen] = useState(false);
-  const [generateTaskOpen, setGenerateTaskOpen] = useState(false);
   const { setTheme } = useTheme();
   const { fontSize, handleFontSizeChange } = useFontSize();
+  const [open, setOpen] = useState(false);
+  const [generateTaskOpen, setGenerateTaskOpen] = useState(false);
 
   const router = useRouter();
 
@@ -39,9 +39,7 @@ export function MainCommandDialog() {
         setOpen((open) => !open);
       }
     }
-
     document.addEventListener("keydown", down);
-
     return () => document.removeEventListener("keydown", down);
   }, []);
 
@@ -126,7 +124,12 @@ export function MainCommandDialog() {
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Generate">
-            <CommandItem onSelect={() => setGenerateTaskOpen(true)}>
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+                setGenerateTaskOpen(true);
+              }}
+            >
               <Brain className="mr-3 h-5 w-5" /> Generate Task
             </CommandItem>
           </CommandGroup>

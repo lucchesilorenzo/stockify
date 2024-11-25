@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ChevronsUpDown, Mail, Phone, ShoppingCart } from "lucide-react";
+import { ChevronsUpDown, Globe, Mail, Phone, ShoppingCart } from "lucide-react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { toast } from "sonner";
 
@@ -109,14 +109,60 @@ export const columns: ColumnDef<SupplierWithOrderCount>[] = [
       );
     },
     cell: ({ row }) => {
-      const phone: string = row.getValue("phone");
-
-      if (!phone) return <p className="text-center">N/A</p>;
+      const phone: SupplierWithOrderCount["phone"] = row.getValue("phone");
 
       return (
         <div className="flex items-center justify-center gap-2">
           <Phone className="h-4 w-4 text-muted-foreground" />
           <span>{formatPhoneNumberIntl(phone)}</span>
+        </div>
+      );
+    },
+  },
+  {
+    id: "fullAddress",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Address
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const address = row.original.address;
+      const city = row.original.city;
+      const zipCode = row.original.zipCode;
+
+      return <div>{`${address}, ${city}, ${zipCode}`}</div>;
+    },
+  },
+  {
+    accessorKey: "website",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Website
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const website: SupplierWithOrderCount["website"] =
+        row.getValue("website");
+
+      if (!website) return <div>N/A</div>;
+
+      return (
+        <div className="flex items-center justify-center gap-2">
+          <Globe className="h-4 w-4 text-muted-foreground" />
+          <span>{website}</span>
         </div>
       );
     },

@@ -13,18 +13,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { PlusCircleIcon, Search } from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 
 import FormDialog from "@/components/common/form-dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -33,6 +25,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TableSearchInput from "@/components/ui/table-ui/table-search-input";
+import TableSelect from "@/components/ui/table-ui/table-select";
 import { taskPriorities, taskStatuses } from "@/lib/data";
 
 export interface TasksTableProps<TData, TValue> {
@@ -68,75 +62,32 @@ export default function TasksTable<TData, TValue>({
       <div>
         <div className="flex items-center justify-between gap-x-4 py-4">
           <div className="relative flex items-center space-x-2">
-            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
-            <Input
+            <TableSearchInput
+              table={table}
+              column="title"
               id="task-search"
-              type="search"
               placeholder="Filter tasks..."
-              value={
-                (table.getColumn("title")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(e) =>
-                table.getColumn("title")?.setFilterValue(e.target.value)
-              }
-              className="max-w-sm pl-10"
             />
 
-            <Select
-              onValueChange={(value) =>
-                table
-                  .getColumn("status")
-                  ?.setFilterValue(value === "all" ? "" : value)
-              }
-            >
-              <SelectTrigger id="status-select">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">
-                  <div className="flex items-center">
-                    <PlusCircleIcon className="mr-2 h-4 w-4" />
-                    <span>All Statuses</span>
-                  </div>
-                </SelectItem>
-                {taskStatuses.map((status) => (
-                  <SelectItem key={status.value} value={status.value}>
-                    <div className="flex items-center">
-                      <status.icon className="mr-2 h-4 w-4" />
-                      <span>{status.label}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <TableSelect
+              table={table}
+              column="status"
+              id="status-task-select"
+              placeholder="Select status"
+              defaultOptionLabel="All Statuses"
+              type="task"
+              taskItems={taskStatuses}
+            />
 
-            <Select
-              onValueChange={(value) =>
-                table
-                  .getColumn("priority")
-                  ?.setFilterValue(value === "all" ? "" : value)
-              }
-            >
-              <SelectTrigger id="priority-select">
-                <SelectValue placeholder="Select priority" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">
-                  <div className="flex items-center">
-                    <PlusCircleIcon className="mr-2 h-4 w-4" />
-                    <span>All Priorities</span>
-                  </div>
-                </SelectItem>
-                {taskPriorities.map((priority) => (
-                  <SelectItem key={priority.value} value={priority.value}>
-                    <div className="flex items-center">
-                      <priority.icon className="mr-2 h-4 w-4" />
-                      <span>{priority.label}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <TableSelect
+              table={table}
+              column="priority"
+              id="priority-task-select"
+              placeholder="Select priority"
+              defaultOptionLabel="All Priorities"
+              type="task"
+              taskItems={taskPriorities}
+            />
           </div>
           <FormDialog actionType="addTask">
             <PlusCircleIcon className="h-5 w-5 sm:mr-2" />

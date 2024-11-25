@@ -38,5 +38,6 @@ export const logInSchema = z.object({
     .max(20, "Password is too long."),
 });
 
+// Types
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
 export type TLogInSchema = z.infer<typeof logInSchema>;

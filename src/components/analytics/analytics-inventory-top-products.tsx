@@ -45,7 +45,7 @@ export default function AnalyticsInventoryTopProducts({
       <CardHeader>
         <CardTitle>Top Value Product Units</CardTitle>
         <CardDescription>
-          Product units with the highest total value in inventory
+          Product units with the highest total value in inventory.
         </CardDescription>
       </CardHeader>
       <CardContent>

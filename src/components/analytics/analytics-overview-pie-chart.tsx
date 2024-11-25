@@ -40,7 +40,7 @@ export default function AnalyticsOverviewPieChart({
       <CardHeader>
         <CardTitle>Product Categories</CardTitle>
         <CardDescription>
-          Distribution of product units by category
+          Distribution of product units by category.
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -13,11 +13,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { PlusCircleIcon, Search } from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 
 import FormDialog from "@/components/common/form-dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -26,6 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TableSearchInput from "@/components/ui/table-ui/table-search-input";
 
 export interface SuppliersTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -60,20 +60,14 @@ export default function SuppliersTable<TData, TValue>({
       <div>
         <div className="flex items-center justify-between gap-x-4 py-4">
           <div className="relative flex items-center space-x-2">
-            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
-            <Input
+            <TableSearchInput
+              table={table}
+              column="name"
               id="supplier-search"
-              type="search"
               placeholder="Filter suppliers..."
-              value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(e) =>
-                table.getColumn("name")?.setFilterValue(e.target.value)
-              }
-              className="max-w-sm pl-10"
             />
           </div>
+
           <FormDialog actionType="addSupplier">
             <PlusCircleIcon className="h-5 w-5 sm:mr-2" />
             <span className="hidden sm:block">Add Supplier</span>

@@ -15,7 +15,7 @@ export default async function ProductsPage() {
 
   const csvData = products.map((product) => ({
     Name: product.name,
-    Category: product.category?.name,
+    Category: product.category.name,
     Price: formatCurrency(product.price),
     Status: product.status,
     Quantity: product.quantity,

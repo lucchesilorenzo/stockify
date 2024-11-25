@@ -21,14 +21,20 @@ model User {
   zipCode        String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+
+  tasks Task[]
 }
 
 model Supplier {
-  id     String  @id @default(cuid())
-  name   String  @unique
-  email  String  @unique
-  phone  String? @unique
-  rating Int     @default(0)
+  id      String  @id @default(cuid())
+  name    String  @unique
+  email   String  @unique
+  phone   String  @unique
+  address String
+  city    String
+  zipCode String
+  website String? @unique
+  rating  Int     @default(0)
 
   orders Order[]
 }
@@ -85,6 +91,7 @@ model Warehouse {
 
 model Task {
   id        String   @id @default(cuid())
+  userId    String
   title     String
   status    String
   priority  String
@@ -92,6 +99,8 @@ model Task {
   dueDate   DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Customer {

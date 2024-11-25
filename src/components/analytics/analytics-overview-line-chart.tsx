@@ -45,7 +45,7 @@ export default function AnalyticsOverviewLineChart({
       <CardHeader>
         <CardTitle>Monthly Inventory Value</CardTitle>
         <CardDescription>
-          Monthly breakdown of your inventory value
+          Monthly breakdown of your inventory value.
         </CardDescription>
       </CardHeader>
       <CardContent>

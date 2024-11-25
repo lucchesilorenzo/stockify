@@ -13,19 +13,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Download, Search } from "lucide-react";
+import { Download } from "lucide-react";
 
 import CSVExport from "@/components/common/csv-export";
 import ProductTablePopover from "@/components/products/product-table-popover";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -34,6 +26,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TableSearchInput from "@/components/ui/table-ui/table-search-input";
+import TableSelect from "@/components/ui/table-ui/table-select";
 import { useProduct } from "@/hooks/use-product";
 
 export interface ProductsTableProps<TData, TValue> {
@@ -72,38 +66,21 @@ export default function ProductsTable<TData, TValue>({
       <div>
         <div className="flex items-center justify-between gap-x-4 py-4">
           <div className="relative flex items-center space-x-2">
-            <Search className="absolute left-5 h-5 w-5 text-gray-500" />
-            <Input
+            <TableSearchInput
+              table={table}
+              column="name"
               id="product-search"
-              type="search"
               placeholder="Filter products..."
-              value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(e) =>
-                table.getColumn("name")?.setFilterValue(e.target.value)
-              }
-              className="max-w-sm pl-10"
             />
-            <Select
-              onValueChange={(value) =>
-                table
-                  .getColumn("category.name")
-                  ?.setFilterValue(value === "all" ? "" : value)
-              }
-            >
-              <SelectTrigger id="category-select">
-                <SelectValue placeholder="Select categories" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                {categories.map((category) => (
-                  <SelectItem key={category.id} value={category.name}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+
+            <TableSelect
+              table={table}
+              column="category.name"
+              id="category-select"
+              placeholder="Select categories"
+              defaultOptionLabel="All Categories"
+              categoryItems={categories}
+            />
 
             <ProductTablePopover table={table} />
             <CSVExport data={csvData} filename="products.csv">

@@ -52,6 +52,7 @@ export const taskGeneratorFormSchema = z.object({
   numTasks: z.coerce.number().min(1, "Number of tasks is required."),
 });
 
+// Types
 export type TTaskFieldSchema = z.infer<typeof taskFieldSchema>;
 export type TTaskFormSchema = z.infer<typeof taskFormSchema>;
 export type TTaskEditFormSchema = z.infer<typeof taskEditFormSchema>;

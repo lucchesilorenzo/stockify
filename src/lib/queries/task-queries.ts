@@ -9,7 +9,16 @@ import {
 } from "../validations/task-validations";
 
 export async function getTasks() {
-  const tasks = await prisma.task.findMany();
+  const tasks = await prisma.task.findMany({
+    include: {
+      user: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
 
   return tasks;
 }

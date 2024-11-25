@@ -19,3 +19,8 @@ export type ProductEssentials = Omit<
   Product,
   "id" | "createdAt" | "updatedAt" | "status" | "description" | "image"
 >;
+
+export type ProductStatus = {
+  value: "in-stock" | "out-of-stock" | "archived";
+  label: "In Stock" | "Out of Stock" | "Archived";
+};

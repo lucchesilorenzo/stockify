@@ -21,7 +21,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
   ]);
 
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[200px_1fr]">
+    <div className="grid min-h-screen w-full lg:grid-cols-[220px_1fr]">
       <Sidebar />
       <div className="flex flex-col">
         <Header />

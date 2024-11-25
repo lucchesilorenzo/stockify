@@ -9,9 +9,15 @@ import {
 } from "@/lib/queries/analytics-queries";
 
 export default async function AnalyticsTabs() {
-  const { pieChartData, pieChartConfig } = await getProductsByCategory();
-  const monthlyInventoryValues = await getMonthlyInventoryValues();
-  const topProducts = await getTopProducts();
+  const [
+    { pieChartData, pieChartConfig },
+    monthlyInventoryValues,
+    topProducts,
+  ] = await Promise.all([
+    getProductsByCategory(),
+    getMonthlyInventoryValues(),
+    getTopProducts(),
+  ]);
 
   return (
     <Tabs defaultValue="overview" className="space-y-4">

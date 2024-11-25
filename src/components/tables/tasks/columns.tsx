@@ -11,9 +11,10 @@ import TaskActions from "@/components/tasks/task-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { taskLabels, taskPriorities, taskStatuses } from "@/lib/data";
+import { TaskWithUser } from "@/lib/types";
 import { formatTaskId } from "@/lib/utils";
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<TaskWithUser>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -159,6 +160,27 @@ export const columns: ColumnDef<Task>[] = [
       const dueDate: Task["dueDate"] = row.getValue("dueDate");
 
       return <div>{format(dueDate, "yyyy-MM-dd")}</div>;
+    },
+  },
+  {
+    accessorKey: "user",
+    id: "user",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Operator
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const firstName = row.original.user.firstName;
+      const lastName = row.original.user.lastName;
+
+      return <div className="font-medium">{`${firstName} ${lastName}`}</div>;
     },
   },
   {

@@ -51,6 +51,7 @@ export default function GenerateTaskForm({
           <Textarea
             id="prompt"
             placeholder="Generate a task..."
+            rows={3}
             {...register("prompt")}
           />
           {errors.prompt && (

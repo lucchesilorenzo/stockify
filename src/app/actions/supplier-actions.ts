@@ -53,12 +53,13 @@ export async function updateSupplierRatingAction(
   supplierId: unknown,
   rating: unknown,
 ) {
-  // Validation
+  // Validation for supplier ID
   const validatedSuppliedId = supplierIdSchema.safeParse(supplierId);
   if (!validatedSuppliedId.success) {
     return { message: "Invalid supplier ID." };
   }
 
+  // Validation for rating
   const validatedRating = supplierRatingSchema.safeParse(rating);
   if (!validatedRating.success) {
     return { message: "Invalid rating." };
