@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
 import { Category, Product, Warehouse } from "@prisma/client";
 import { toast } from "sonner";
@@ -14,8 +14,8 @@ import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
 type ProductProviderProps = {
   children: React.ReactNode;
-  categoriesData: Category[];
-  warehousesData: Warehouse[];
+  categories: Category[];
+  warehouses: Warehouse[];
 };
 
 type TProductContext = {
@@ -39,12 +39,9 @@ export const ProductContext = createContext<TProductContext | null>(null);
 
 export default function ProductProvider({
   children,
-  categoriesData,
-  warehousesData,
+  categories,
+  warehouses,
 }: ProductProviderProps) {
-  const [categories] = useState(categoriesData);
-  const [warehouses] = useState(warehousesData);
-
   async function handleUpdateProductStatus(
     productId: Product["id"],
     status: Product["status"],

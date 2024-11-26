@@ -120,6 +120,7 @@ export const columns: ColumnDef<SupplierWithOrderCount>[] = [
     },
   },
   {
+    accessorFn: (row) => `${row.address}, ${row.city}, ${row.zipCode}`,
     id: "fullAddress",
     header: ({ column }) => {
       return (

@@ -1,3 +1,5 @@
+"use client";
+
 import { format } from "date-fns";
 
 import { ScrollArea } from "@/components/ui/scroll-area";

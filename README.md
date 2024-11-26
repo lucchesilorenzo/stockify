@@ -13,16 +13,16 @@ _Note: The application supports both light and dark modes, enhancing user experi
 ### 1. **Dashboard**
 
 - Real-time updates on key warehouse metrics.
-- Track the total inventory value, low-stock products, pending orders, and total products in stock.
+- Track the total inventory value, low-stock products, shipped orders, and total products in stock.
 - Activity logs displaying recent actions, such as order creation and stock updates.
 
 ![Stockify 1 Screenshot](screenshots/stockify-1.png)
 
 ### 2. **Orders**
 
-- Place orders for products already in inventory.
+- Place new orders for new products.
+- Place restock orders for products already in inventory.
 - View order status, receipts, and the total number of orders placed in the current month and week.
-- See the total value of each order.
 
 ![Stockify 2 Screenshot - Dark Mode](screenshots/stockify-2.png)
 
@@ -30,9 +30,9 @@ _Note: The application supports both light and dark modes, enhancing user experi
 
 ### 3. **Products**
 
-- Add new products with associated categories, prices, and quantities (min/max).
-- Filter and sort products by category or status (Available/Archived).
-- Edit existing product information or remove products from the inventory.
+- Filter and sort products by category or status (In Stock / Out of Stock / Archived).
+- Edit existing product information or archive products from the inventory.
+- Export products to a CSV file for easy storage and analysis.
 
 ![Stockify 4 Screenshot](screenshots/stockify-4.png)
 
@@ -100,8 +100,7 @@ Stockify is built using modern and efficient web technologies:
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en/)
-- [Ollama](https://ollama.com/download)
-- [qwen2.5-coder:1.5b model](https://ollama.com/library/qwen2.5-coder:1.5b)
+- [Ollama](https://ollama.com/download) with the following model: [qwen2.5-coder:1.5b](https://ollama.com/library/qwen2.5-coder:1.5b)
 
 ### Installation
 

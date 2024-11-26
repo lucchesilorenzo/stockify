@@ -17,6 +17,12 @@ export type OrderWithProductAndSupplier = Prisma.OrderGetPayload<{
         name: true;
       };
     };
+    user: {
+      select: {
+        firstName: true;
+        lastName: true;
+      };
+    };
   };
 }>;
 
@@ -26,6 +32,6 @@ export type OrderType = {
 };
 
 export type OrderStatus = {
-  value: "pending" | "completed";
-  label: "Pending" | "Completed";
+  value: "shipped" | "delivered";
+  label: "Shipped" | "Delivered";
 };

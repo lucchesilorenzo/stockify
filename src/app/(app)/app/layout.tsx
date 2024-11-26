@@ -28,10 +28,10 @@ export default async function AppLayout({ children }: AppLayoutProps) {
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-8">
           <CustomerProvider>
             <TaskProvider>
-              <OrderProvider suppliersData={suppliers}>
+              <OrderProvider suppliers={suppliers}>
                 <ProductProvider
-                  categoriesData={categories}
-                  warehousesData={warehouses}
+                  categories={categories}
+                  warehouses={warehouses}
                 >
                   {children}
                 </ProductProvider>

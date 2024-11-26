@@ -164,6 +164,27 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
     },
   },
   {
+    accessorKey: "user",
+    id: "user",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Operator
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const firstName = row.original.user.firstName;
+      const lastName = row.original.user.lastName;
+
+      return <div className="font-medium">{`${firstName} ${lastName}`}</div>;
+    },
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const order = row.original;

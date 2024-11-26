@@ -53,7 +53,7 @@ export default function CustomerEditForm({
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <Label htmlFor="firstName">
-              First name <span className="text-red-600">*</span>
+              First Name <span className="text-red-600">*</span>
             </Label>
             <Input
               defaultValue={customer?.firstName ?? ""}
@@ -70,7 +70,7 @@ export default function CustomerEditForm({
 
           <div className="space-y-1">
             <Label htmlFor="lastName">
-              Last name <span className="text-red-600">*</span>
+              Last Name <span className="text-red-600">*</span>
             </Label>
             <Input
               defaultValue={customer?.lastName ?? ""}

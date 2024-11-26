@@ -29,19 +29,13 @@ export default function StatusBadge({
 
   async function handleStatusChange(newStatus: OrderStatus["label"]) {
     setStatus(newStatus);
-
-    const orderToUpdate = {
-      id: orderId,
-      status,
-    };
-
-    await updateOrderStatusAction(orderToUpdate);
+    await updateOrderStatusAction(orderId);
   }
 
-  if (initialStatus === "Completed") {
+  if (initialStatus === "Delivered") {
     return (
       <Badge
-        variant={status === "Pending" ? "secondary" : "default"}
+        variant={status === "Shipped" ? "secondary" : "default"}
         className="cursor-pointer"
       >
         {status}
@@ -58,7 +52,7 @@ export default function StatusBadge({
           tabIndex={-1}
         >
           <Badge
-            variant={status === "Pending" ? "secondary" : "default"}
+            variant={status === "Shipped" ? "secondary" : "default"}
             className="cursor-pointer"
           >
             {status}
@@ -66,8 +60,8 @@ export default function StatusBadge({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => handleStatusChange("Completed")}>
-          <Badge variant="default">Completed</Badge>
+        <DropdownMenuItem onClick={() => handleStatusChange("Delivered")}>
+          <Badge variant="default">Delivered</Badge>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

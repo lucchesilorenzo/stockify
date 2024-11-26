@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
 import { Supplier } from "@prisma/client";
 import { toast } from "sonner";
@@ -16,7 +16,7 @@ import {
 
 type OrderProviderProps = {
   children: React.ReactNode;
-  suppliersData: Supplier[];
+  suppliers: Supplier[];
 };
 
 type TOrderContext = {
@@ -29,10 +29,8 @@ export const OrderContext = createContext<TOrderContext | null>(null);
 
 export default function OrderProvider({
   children,
-  suppliersData,
+  suppliers,
 }: OrderProviderProps) {
-  const [suppliers] = useState(suppliersData);
-
   async function handleCreateOrder(order: TOrderFormSchema) {
     const result = await createOrderAction(order);
     if (result?.message) {

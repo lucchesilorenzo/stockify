@@ -8,6 +8,13 @@ import { TProductEditFormSchema } from "@/lib/validations/product-validations";
 
 export async function getProducts() {
   const products = await prisma.product.findMany({
+    where: {
+      orders: {
+        some: {
+          status: "Delivered",
+        },
+      },
+    },
     include: {
       category: {
         select: {
@@ -29,6 +36,11 @@ export async function getAvailableProducts() {
   const availableProducts = await prisma.product.findMany({
     where: {
       status: "In Stock",
+      orders: {
+        some: {
+          status: "Delivered",
+        },
+      },
       quantity: {
         gt: 0,
       },

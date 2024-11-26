@@ -133,7 +133,7 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
 
         <div className="space-y-1">
           <Label htmlFor="price">
-            Base Price (€) <span className="text-red-600">*</span>
+            Base price (€) <span className="text-red-600">*</span>
           </Label>
           <Input id="price" placeholder="0.00" {...register("price")} />
           {errors.price && (
@@ -156,7 +156,7 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
 
           <div className="space-y-1">
             <Label htmlFor="maxQuantity">
-              Max Stock Level <span className="text-red-600">*</span>
+              Max quantity <span className="text-red-600">*</span>
             </Label>
             <Input
               id="maxQuantity"

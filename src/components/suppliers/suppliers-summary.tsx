@@ -10,13 +10,16 @@ type SuppliersSummaryProps = {
 export default async function SuppliersSummary({
   suppliers,
 }: SuppliersSummaryProps) {
-  const suppliersLength = suppliers.length;
+  const suppliersLength = suppliers.filter(({ rating }) => rating > 0).length;
   const avgRating =
-    suppliers.reduce((total, { rating }) => total + rating, 0) /
-      suppliersLength || 0;
+    suppliersLength > 0
+      ? suppliers
+          .filter(({ rating }) => rating > 0)
+          .reduce((total, { rating }) => total + rating, 0) / suppliersLength
+      : 0;
 
   const updatedSuppliersData = [
-    { ...suppliersData[0], amount: suppliersLength.toString() },
+    { ...suppliersData[0], amount: suppliers.length.toLocaleString() },
     { ...suppliersData[1], amount: avgRating.toFixed(2) },
   ];
 

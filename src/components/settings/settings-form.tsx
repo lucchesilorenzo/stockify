@@ -88,7 +88,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
           />
         </div>
 
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col space-y-2">
           <Label htmlFor="dateOfBirth">Date of birth</Label>
           <DatePicker
             defaultValue={userSettings?.dateOfBirth ?? undefined}
@@ -118,7 +118,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
         </div>
 
         <div className="space-y-1">
-          <Label htmlFor="phone">Phone number</Label>
+          <Label htmlFor="phone">Phone</Label>
           <Controller
             defaultValue={userSettings?.phone ?? ""}
             name="phone"

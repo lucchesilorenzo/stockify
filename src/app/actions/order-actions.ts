@@ -13,14 +13,17 @@ import {
   updateProductQuantityAndStatus,
 } from "@/lib/queries/product-queries";
 import { ActivityEssentials } from "@/lib/types";
-import { generateSKU, generateSlug } from "@/lib/utils";
+import { checkAuth, generateSKU, generateSlug } from "@/lib/utils";
 import {
   orderFormSchema,
-  orderStatusSchema,
+  orderIdSchema,
   restockOrderFormSchema,
 } from "@/lib/validations/order-validations";
 
 export async function createOrderAction(order: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation
   const validatedOrder = orderFormSchema.safeParse(order);
   if (!validatedOrder.success) {
@@ -70,6 +73,7 @@ export async function createOrderAction(order: unknown) {
   const orderDetails = {
     productId: product.id,
     supplierId,
+    userId: session.user.id,
     type: "New",
     quantity: validatedOrder.data.quantity,
     subtotal,
@@ -87,6 +91,7 @@ export async function createOrderAction(order: unknown) {
         return { message: "Order already exists." };
       }
     }
+    console.error(error);
     return { message: "Failed to create order." };
   }
 
@@ -107,6 +112,9 @@ export async function createOrderAction(order: unknown) {
 }
 
 export async function createRestockOrderAction(restockOrder: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation
   const validatedRestockOrder = restockOrderFormSchema.safeParse(restockOrder);
   if (!validatedRestockOrder.success) {
@@ -154,6 +162,7 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   const orderDetails = {
     productId: validatedRestockOrder.data.productId,
     supplierId: validatedRestockOrder.data.supplierId,
+    userId: session.user.id,
     type: "Restock",
     quantity: orderedQuantity,
     subtotal,
@@ -200,16 +209,16 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   revalidatePath("/app/orders");
 }
 
-export async function updateOrderStatusAction(order: unknown) {
+export async function updateOrderStatusAction(orderId: unknown) {
   // Validation
-  const validatedOrder = orderStatusSchema.safeParse(order);
-  if (!validatedOrder.success) {
-    return { message: "Invalid order data." };
+  const validatedOrderId = orderIdSchema.safeParse(orderId);
+  if (!validatedOrderId.success) {
+    return { message: "Invalid order ID." };
   }
 
   // Update order status
   try {
-    await updateOrderStatus(validatedOrder.data.id);
+    await updateOrderStatus(validatedOrderId.data);
   } catch {
     return { message: "Failed to update order status." };
   }

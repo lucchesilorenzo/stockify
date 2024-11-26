@@ -28,10 +28,10 @@ type CustomerViewShipmentsTableProps = {
 export default function CustomerViewShipmentsTable({
   customerShipment,
 }: CustomerViewShipmentsTableProps) {
-  const { selectedShipment } = useCustomer();
+  const { selectedShipmentId } = useCustomer();
 
   const shipment = customerShipment.find(
-    (shipment) => shipment.id === selectedShipment,
+    (shipment) => shipment.id === selectedShipmentId,
   );
   if (!shipment) return null;
 

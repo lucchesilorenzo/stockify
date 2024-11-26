@@ -5,6 +5,11 @@ export async function getInventoryValue() {
   const products = await prisma.product.findMany({
     where: {
       status: "In Stock",
+      orders: {
+        some: {
+          status: "Delivered",
+        },
+      },
     },
     select: {
       quantity: true,
@@ -24,6 +29,11 @@ export async function getLowStockProducts() {
   const products = await prisma.product.findMany({
     where: {
       status: "In Stock",
+      orders: {
+        some: {
+          status: "Delivered",
+        },
+      },
     },
     select: {
       quantity: true,
@@ -37,18 +47,25 @@ export async function getLowStockProducts() {
   return lowStockProducts;
 }
 
-export async function getPendingOrders() {
-  const pendingOrders = await prisma.order.count({
+export async function getShippedOrders() {
+  const shippedOrders = await prisma.order.count({
     where: {
-      status: "Pending",
+      status: "Shipped",
     },
   });
 
-  return pendingOrders;
+  return shippedOrders;
 }
 
 export async function getUnitsInStock() {
   const unitsInStock = await prisma.product.findMany({
+    where: {
+      orders: {
+        some: {
+          status: "Delivered",
+        },
+      },
+    },
     select: {
       quantity: true,
     },

@@ -4,17 +4,17 @@ import { dashboardData } from "@/lib/data";
 import {
   getInventoryValue,
   getLowStockProducts,
-  getPendingOrders,
+  getShippedOrders,
   getUnitsInStock,
 } from "@/lib/queries/dashboard-queries";
 import { formatCurrency } from "@/lib/utils";
 
 export default async function DashboardSummary() {
-  const [inventoryValue, lowStockProducts, pendingOrders, totalUnits] =
+  const [inventoryValue, lowStockProducts, shippedOrders, totalUnits] =
     await Promise.all([
       getInventoryValue(),
       getLowStockProducts(),
-      getPendingOrders(),
+      getShippedOrders(),
       getUnitsInStock(),
     ]);
 
@@ -22,7 +22,7 @@ export default async function DashboardSummary() {
   const updatedDashboardData = [
     { ...dashboardData[0], amount: formatCurrency(inventoryValue) },
     { ...dashboardData[1], amount: lowStockProducts.toLocaleString() },
-    { ...dashboardData[2], amount: pendingOrders.toLocaleString() },
+    { ...dashboardData[2], amount: shippedOrders.toLocaleString() },
     { ...dashboardData[3], amount: totalUnits.toLocaleString() },
   ];
 

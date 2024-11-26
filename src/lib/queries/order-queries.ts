@@ -17,6 +17,12 @@ export async function getOrders() {
           name: true,
         },
       },
+      user: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
     },
   });
 
@@ -69,7 +75,7 @@ export async function updateOrderStatus(orderId: Order["id"]) {
       id: orderId,
     },
     data: {
-      status: "Completed",
+      status: "Delivered",
     },
   });
 

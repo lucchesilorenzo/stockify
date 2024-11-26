@@ -36,7 +36,7 @@ export const shippingFormSchema = z.object({
     .string()
     .trim()
     .min(1, "Zip Code is required.")
-    .max(5, "Zip Code is too long."),
+    .max(10, "Zip Code is too long."),
   products: z.array(
     z.object({
       productId: z.string(),
@@ -86,7 +86,7 @@ export const customerEditFormSchema = z.object({
     .string()
     .trim()
     .min(1, "Zip Code is required.")
-    .max(5, "Zip Code is too long."),
+    .max(10, "Zip Code is too long."),
 });
 
 // Types

@@ -29,8 +29,8 @@ export const supplierFormSchema = z.object({
   zipCode: z
     .string()
     .trim()
-    .min(1, "Zipcode is required.")
-    .max(5, "Zipcode is too long."),
+    .min(1, "Zip Code is required.")
+    .max(10, "Zip Code is too long."),
   website: z.string().trim().max(100, "Website is too long.").optional(),
 });
 

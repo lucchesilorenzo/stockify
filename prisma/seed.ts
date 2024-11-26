@@ -3,22 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.create({
-    data: {
-      email: "user1@example.com",
-      hashedPassword: "hashedPassword1",
-      firstName: "John",
-      lastName: "Doe",
-      dateOfBirth: new Date("1990-01-01"),
-      phone: "1234567890",
-      bio: "Lorem ipsum dolor sit amet.",
-      address: "123 Street",
-      city: "Cityville",
-      zipCode: "12345",
-    },
-  });
-
-  const supplier1 = await prisma.supplier.create({
+  await prisma.supplier.create({
     data: {
       name: "Supplier One",
       email: "supplier1@example.com",
@@ -58,19 +43,6 @@ async function main() {
     },
   });
 
-  await prisma.order.create({
-    data: {
-      supplierId: supplier1.id,
-      productId: product1.id,
-      type: "Restock",
-      quantity: 50,
-      subtotal: 49999.5,
-      shipping: 10.0,
-      tax: 7.5,
-      totalPrice: 50017.5,
-    },
-  });
-
   const customer1 = await prisma.customer.create({
     data: {
       firstName: "Jane",
@@ -103,13 +75,6 @@ async function main() {
       activity: "Product Added",
       entity: "Product",
       product: product1.name,
-    },
-  });
-
-  await prisma.monthlyInventoryValue.create({
-    data: {
-      month: new Date("2024-11-01"),
-      totalValue: 99999.99,
     },
   });
 

@@ -52,8 +52,8 @@ export const dashboardData = [
     icon: AlertTriangle,
   },
   {
-    title: "Pending Orders",
-    description: "Orders to process",
+    title: "Shipped Orders",
+    description: "Orders to deliver",
     icon: Truck,
   },
   {
@@ -100,8 +100,8 @@ export const orderTypes: OrderType[] = [
 ];
 
 export const orderStatuses: OrderStatus[] = [
-  { value: "pending", label: "Pending" },
-  { value: "completed", label: "Completed" },
+  { value: "shipped", label: "Shipped" },
+  { value: "delivered", label: "Delivered" },
 ];
 
 export const taskStatuses: TaskStatus[] = [

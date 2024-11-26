@@ -1,17 +1,29 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Mail, Phone } from "lucide-react";
+import { ChevronsUpDown, Mail, Phone } from "lucide-react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 import FormDialog from "@/components/common/form-dialog";
 import CustomerViewShipmentsDialog from "@/components/customers/customer-view-shipments/customer-view-shipments-dialog";
+import { Button } from "@/components/ui/button";
 import { CustomerWithCustomerShipment } from "@/lib/types";
 
 export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
   {
+    accessorFn: (row) => `${row.firstName} ${row.lastName}`,
     id: "fullName",
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const firstName = row.original.firstName;
       const lastName = row.original.lastName;
@@ -27,7 +39,17 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
   {
     accessorKey: "email",
     id: "email",
-    header: "Email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const email: string = row.getValue("email");
 
@@ -42,7 +64,17 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
   {
     accessorKey: "phone",
     id: "phone",
-    header: "Phone",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Phone
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const phone: string = row.getValue("phone");
 
@@ -55,8 +87,19 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
     },
   },
   {
+    accessorFn: (row) => `${row.address}, ${row.city}, ${row.zipCode}`,
     id: "fullAddress",
-    header: "Address",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Address
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const address = row.original.address;
       const city = row.original.city;
@@ -67,7 +110,17 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
   },
   {
     id: "customerShipments",
-    header: "Shipments",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Shipments
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const customerShipments = row.original.customerShipments;
 

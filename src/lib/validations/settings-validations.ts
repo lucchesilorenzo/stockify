@@ -16,7 +16,11 @@ export const settingsFormSchema = z.object({
   phone: z.string().trim().max(30, "Phone number is too long.").optional(),
   address: z.string().trim().max(20, "Address is too long."),
   city: z.string().trim().max(20, "City is too long."),
-  zipCode: z.string().trim().max(5, "Zipcode is too long."),
+  zipCode: z
+    .string()
+    .trim()
+    .min(1, "Zip Code is required.")
+    .max(10, "Zip Code is too long."),
 });
 
 // Types
