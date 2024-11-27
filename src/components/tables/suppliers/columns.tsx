@@ -28,7 +28,7 @@ export const columns: ColumnDef<SupplierWithOrderCount>[] = [
     cell: ({ row }) => {
       const name: string = row.getValue("name");
 
-      return <div className="font-medium">{name}</div>;
+      return <div className="min-w-[200px] font-medium">{name}</div>;
     },
   },
   {
@@ -60,7 +60,7 @@ export const columns: ColumnDef<SupplierWithOrderCount>[] = [
       }
 
       return (
-        <div className="flex items-center justify-center">
+        <div className="flex min-w-[200px] items-center justify-center">
           <StarRating
             initialRating={rating}
             onChange={handleRatingChange}
@@ -112,7 +112,7 @@ export const columns: ColumnDef<SupplierWithOrderCount>[] = [
       const phone: SupplierWithOrderCount["phone"] = row.getValue("phone");
 
       return (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex min-w-[200px] items-center justify-center gap-2">
           <Phone className="h-4 w-4 text-muted-foreground" />
           <span>{formatPhoneNumberIntl(phone)}</span>
         </div>
@@ -138,7 +138,9 @@ export const columns: ColumnDef<SupplierWithOrderCount>[] = [
       const city = row.original.city;
       const zipCode = row.original.zipCode;
 
-      return <div>{`${address}, ${city}, ${zipCode}`}</div>;
+      return (
+        <div className="min-w-[400px]">{`${address}, ${city}, ${zipCode}`}</div>
+      );
     },
   },
   {

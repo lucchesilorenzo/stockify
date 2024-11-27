@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Product } from "@prisma/client";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { UseFormSetValue } from "react-hook-form";
 
@@ -19,12 +20,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { TRestockOrderFormSchema } from "@/lib/validations/order-validations";
 
 type OrderComboboxProps = {
-  products: ProductWithCategoryAndWarehouse[];
+  products: Product[];
   setValue: UseFormSetValue<TRestockOrderFormSchema>;
   fieldName: "productId";
 };

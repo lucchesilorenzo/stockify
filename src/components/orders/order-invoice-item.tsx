@@ -19,8 +19,8 @@ export default function OrderInvoiceItem({ item }: OrderInvoiceItemProps) {
           item.label === "Total" && "font-semibold",
         )}
       >
-        <span className="text-muted-foreground">{item.label}</span>
-        <span>{formatCurrency(item.amount)}</span>
+        <span className="text-sm text-muted-foreground">{item.label}</span>
+        <span className="text-sm">{formatCurrency(item.amount)}</span>
       </li>
 
       {item.id === 1 && <Separator className="my-2" />}

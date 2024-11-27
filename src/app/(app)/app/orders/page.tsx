@@ -53,11 +53,11 @@ export default async function OrdersPage() {
           <OrderSummaryCard type="week" orders={weeklyOrders} />
         </div>
 
-        <section className="grid grid-cols-1 gap-6 xl:grid-cols-[1150px_1fr]">
+        <section className="relative grid grid-cols-1 gap-6 xl:grid-cols-[1250px_1fr]">
           <div>
             <OrdersTable columns={columns} data={orders} csvData={csvData} />
           </div>
-          <div>
+          <div className="my-[70px]">
             <OrderInvoice />
           </div>
         </section>

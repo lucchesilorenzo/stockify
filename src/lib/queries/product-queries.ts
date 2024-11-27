@@ -10,7 +10,7 @@ export async function getProducts() {
   const products = await prisma.product.findMany({
     where: {
       orders: {
-        some: {
+        every: {
           status: "Delivered",
         },
       },
@@ -37,7 +37,7 @@ export async function getAvailableProducts() {
     where: {
       status: "In Stock",
       orders: {
-        some: {
+        every: {
           status: "Delivered",
         },
       },

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Product } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
 import { LoadingButton } from "../common/loading-button";
@@ -16,7 +17,6 @@ import {
 import OrderCombobox from "./order-combobox";
 
 import { useOrder } from "@/hooks/use-order";
-import { ProductWithCategoryAndWarehouse } from "@/lib/types";
 import {
   TRestockOrderFormSchema,
   restockOrderFormSchema,
@@ -24,7 +24,7 @@ import {
 
 type RestockOrderFormProps = {
   onFormSubmit: () => void;
-  products: ProductWithCategoryAndWarehouse[];
+  products: Product[];
 };
 
 export default function RestockOrderForm({

@@ -18,7 +18,7 @@ import { useInvoice } from "@/hooks/use-invoice";
 import { formatOrderId } from "@/lib/utils";
 
 export default function OrderInvoice() {
-  const { isInvoiceOpen, handleCloseInvoice, order } = useInvoice();
+  const { isInvoiceOpen, order, handleCloseInvoice } = useInvoice();
 
   if (!isInvoiceOpen || !order) return null;
 
@@ -37,7 +37,7 @@ export default function OrderInvoice() {
   return (
     <Card className="relative overflow-hidden">
       <Button
-        className="absolute right-3 top-3 border-none bg-transparent p-1"
+        className="absolute right-2 top-2 border-none bg-transparent p-1"
         onClick={handleCloseInvoice}
         aria-label="Close invoice"
         variant="link"
@@ -46,7 +46,7 @@ export default function OrderInvoice() {
       </Button>
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
-          <CardTitle className="group flex items-center gap-2 text-xl">
+          <CardTitle className="group flex items-center gap-2 text-lg">
             Order # {formatOrderId(order)}
           </CardTitle>
           <CardDescription>
@@ -55,7 +55,7 @@ export default function OrderInvoice() {
         </div>
       </CardHeader>
       <CardContent className="p-6">
-        <div className="font-semibold">Order Details</div>
+        <div className="mb-1 font-semibold">Order Details</div>
         <ul className="grid gap-3">
           {orderInvoiceData.map((item) => (
             <OrderInvoiceItem key={item.id} item={item} />

@@ -101,7 +101,7 @@ export const columns: ColumnDef<TaskWithUser>[] = [
       const Icon = statusInfo?.icon ?? "";
 
       return (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex min-w-[100px] items-center justify-center gap-2">
           {React.createElement(Icon, {
             className: "h-4 w-4 text-muted-foreground",
           })}
@@ -159,7 +159,7 @@ export const columns: ColumnDef<TaskWithUser>[] = [
     cell: ({ row }) => {
       const dueDate: Task["dueDate"] = row.getValue("dueDate");
 
-      return <div>{format(dueDate, "yyyy-MM-dd")}</div>;
+      return <div className="text-center">{format(dueDate, "yyyy-MM-dd")}</div>;
     },
   },
   {
@@ -180,7 +180,9 @@ export const columns: ColumnDef<TaskWithUser>[] = [
       const firstName = row.original.user.firstName;
       const lastName = row.original.user.lastName;
 
-      return <div className="font-medium">{`${firstName} ${lastName}`}</div>;
+      return (
+        <div className="text-center font-medium">{`${firstName} ${lastName}`}</div>
+      );
     },
   },
   {

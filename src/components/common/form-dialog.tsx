@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Task } from "@prisma/client";
+import { Product, Task } from "@prisma/client";
 
 import CustomerEditForm from "../customers/customer-edit-form/customer-edit-form";
 import OrderForm from "../orders/order-form";
@@ -24,13 +24,12 @@ import {
 import {
   CustomerWithCustomerShipment,
   FormDialogActionType,
-  ProductWithCategoryAndWarehouse,
 } from "@/lib/types";
 
 type FormDialogProps = {
   children?: React.ReactNode;
   actionType: FormDialogActionType;
-  products?: ProductWithCategoryAndWarehouse[];
+  products?: Product[];
   customer?: CustomerWithCustomerShipment;
   task?: Task;
   open?: boolean;

@@ -13,7 +13,7 @@ export async function getProductsByCategory() {
         where: {
           status: "In Stock",
           orders: {
-            some: {
+            every: {
               status: "Delivered",
             },
           },
@@ -53,7 +53,7 @@ export async function updateCurrentMonthInventoryValue() {
     where: {
       status: "In Stock",
       orders: {
-        some: {
+        every: {
           status: "Delivered",
         },
       },
@@ -104,7 +104,7 @@ export async function getTopProducts() {
   const products = await prisma.product.findMany({
     where: {
       orders: {
-        some: {
+        every: {
           status: "Delivered",
         },
       },

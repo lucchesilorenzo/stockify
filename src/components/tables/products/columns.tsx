@@ -25,7 +25,7 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
     },
     cell: ({ row }) => {
       const name: string = row.getValue("name");
-      return <div className="font-medium">{name}</div>;
+      return <div className="min-w-[150px] font-medium">{name}</div>;
     },
   },
   {
@@ -40,6 +40,11 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const sku: string = row.getValue("sku");
+
+      return <div className="min-w-[150px]">{sku}</div>;
     },
   },
   {

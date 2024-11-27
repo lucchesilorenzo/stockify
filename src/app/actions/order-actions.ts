@@ -91,7 +91,6 @@ export async function createOrderAction(order: unknown) {
         return { message: "Order already exists." };
       }
     }
-    console.error(error);
     return { message: "Failed to create order." };
   }
 

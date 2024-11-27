@@ -27,7 +27,7 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
     cell: ({ row }) => {
       const order = row.original;
 
-      return <div>{formatOrderId(order)}</div>;
+      return <div className="min-w-[150px]">{formatOrderId(order)}</div>;
     },
   },
   {
@@ -61,7 +61,7 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
     cell: ({ row }) => {
       const name: string = row.getValue("product.name");
 
-      return <div className="font-medium">{name}</div>;
+      return <div className="min-w-[150px] font-medium">{name}</div>;
     },
   },
   {
@@ -121,6 +121,9 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
       const id: string = row.getValue("id");
 
       return <StatusBadge initialStatus={status} orderId={id} />;
+      // <Badge variant={status === "Shipped" ? "secondary" : "default"}>
+      //   {status}
+      // </Badge>;
     },
   },
   {

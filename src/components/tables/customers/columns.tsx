@@ -28,7 +28,9 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
       const firstName = row.original.firstName;
       const lastName = row.original.lastName;
 
-      return <div className="font-medium">{`${firstName} ${lastName}`}</div>;
+      return (
+        <div className="min-w-[200px] font-medium">{`${firstName} ${lastName}`}</div>
+      );
     },
     filterFn: (row, columnId, filterValue) => {
       const fullName = `${row.original.firstName} ${row.original.lastName}`;
@@ -79,7 +81,7 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
       const phone: string = row.getValue("phone");
 
       return (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex min-w-[200px] items-center justify-center gap-2">
           <Phone className="h-4 w-4 text-muted-foreground" />
           <span>{formatPhoneNumberIntl(phone)}</span>
         </div>
@@ -105,7 +107,9 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
       const city = row.original.city;
       const zipCode = row.original.zipCode;
 
-      return <div>{`${address}, ${city}, ${zipCode}`}</div>;
+      return (
+        <div className="min-w-[300px]">{`${address}, ${city}, ${zipCode}`}</div>
+      );
     },
   },
   {

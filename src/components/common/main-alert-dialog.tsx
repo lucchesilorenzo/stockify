@@ -17,7 +17,7 @@ type MainAlertDialogProps = {
   onDeleteItem?: () => void;
   onUpdateItemStatus?: () => void;
   status?: string;
-  type: "product" | "task";
+  type: "product" | "order" | "task";
 };
 
 export default function MainAlertDialog({
@@ -28,7 +28,8 @@ export default function MainAlertDialog({
   status,
   type,
 }: MainAlertDialogProps) {
-  const handleAction = type === "product" ? onUpdateItemStatus : onDeleteItem;
+  const handleAction =
+    type === "product" || type === "order" ? onUpdateItemStatus : onDeleteItem;
   const statusTitleInfo = status === "Archived" ? "restore" : "archive";
   const statusDescriptionInfo = status === "Archived" ? "restored" : "archived";
 
@@ -39,11 +40,13 @@ export default function MainAlertDialog({
           <AlertDialogTitle>
             {type === "product" &&
               `Are you sure you want to ${statusTitleInfo} this product?`}
+            {type === "order" && "Are you sure you want to ship this order?"}
             {type === "task" && "Are you sure you want to delete this task?"}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {type === "product" &&
               `This product will be ${statusDescriptionInfo}.`}
+            {type === "order" && "This order will be shipped."}
             {type === "task" &&
               "This task will be deleted. This action cannot be undone."}
           </AlertDialogDescription>
