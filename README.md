@@ -4,7 +4,7 @@
 
 ## Overview
 
-Stockify is a warehouse management system designed to simplify inventory management for warehouse workers. It provides an intuitive interface for adding new products, reordering stock, creating orders, monitoring inventory statistics, and much more.
+**Stockify** is a warehouse management system designed to simplify inventory management for warehouse workers. It provides an intuitive interface for adding new products, reordering stock, creating orders, managing tasks, tracking suppliers, monitoring inventory statistics, and much more.
 
 _Note: The application supports both light and dark modes, enhancing user experience._
 
@@ -18,7 +18,16 @@ _Note: The application supports both light and dark modes, enhancing user experi
 
 ![Stockify 1 Screenshot](screenshots/stockify-1.png)
 
-### 2. **Orders**
+### 2. **Tasks**
+
+- Manage and track warehouse operations with unique task IDs.
+- Categorize tasks with labels (Shipping, Quality, Inventory, Customer).
+- Set priority levels and track task status.
+- Filter, sort, and search tasks.
+- AI-powered task generation using Ollama integration.
+- Create, edit, and delete tasks as needed.
+
+### 3. **Orders**
 
 - Place new orders for new products.
 - Place restock orders for products already in inventory.
@@ -28,15 +37,22 @@ _Note: The application supports both light and dark modes, enhancing user experi
 
 ![Stockify 3 Screenshot - Light Mode](screenshots/stockify-3.png)
 
-### 3. **Products**
+### 4. **Products**
 
-- Filter and sort products by category or status (In Stock / Out of Stock / Archived).
+- Filter and sort products by category or status (In Stock, Out of Stock, Archived).
 - Edit existing product information or archive products from the inventory.
 - Export products to a CSV file for easy storage and analysis.
 
 ![Stockify 4 Screenshot](screenshots/stockify-4.png)
 
-### 4. **Analytics**
+### 5. **Suppliers**
+
+- Manage supplier information and track performance.
+- Add, filter, search, and rate suppliers.
+- View supplier profiles with contact details and order history.
+- Monitor overall supplier metrics and individual ratings.
+
+### 6. **Analytics**
 
 - Visual charts and graphs provide insightful inventory data:
 
@@ -48,13 +64,13 @@ _Note: The application supports both light and dark modes, enhancing user experi
 
 ![Stockify 6 Screenshot](screenshots/stockify-6.png)
 
-### 5. **Settings**
+### 7. **Settings**
 
 - Manage account settings, including adding or updating account information.
 
 ![Stockify 7 Screenshot](screenshots/stockify-7.png)
 
-### 6. **Sign Up / Log In**
+### 8. **Sign Up / Log In**
 
 - **User Authentication:** Users can easily create an account or log in to access the dashboard. The signup and login forms are designed to be user-friendly, ensuring a smooth onboarding experience.
 - **Secure Access:** The application utilizes secure authentication methods to protect user data, ensuring that sensitive information remains private.
