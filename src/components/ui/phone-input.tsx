@@ -116,7 +116,7 @@ const CountrySelect = ({
       <PopoverContent className="w-[300px] p-0">
         <Command>
           <CommandList>
-            <ScrollArea className="h-72">
+            <ScrollArea className="h-72" onWheel={(e) => e.stopPropagation()}>
               <CommandInput placeholder="Search country..." />
               <CommandEmpty>No country found.</CommandEmpty>
               <CommandGroup>

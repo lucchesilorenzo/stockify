@@ -82,11 +82,11 @@ export default function SupplierForm({ onFormSubmit }: SupplierFormProps) {
             name="phone"
             render={({ field }) => (
               <PhoneInput
+                {...field}
                 id="phone"
                 placeholder="Enter supplier phone"
                 autoComplete="tel"
                 defaultCountry="IT"
-                {...field}
               />
             )}
           />

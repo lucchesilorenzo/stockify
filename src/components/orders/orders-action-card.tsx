@@ -9,10 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getAvailableProducts } from "@/lib/queries/product-queries";
+import { getProductsToRestock } from "@/lib/queries/product-queries";
 
 export default async function OrdersActionCard() {
-  const products = await getAvailableProducts();
+  const products = await getProductsToRestock();
 
   return (
     <Card className="sm:col-span-2">

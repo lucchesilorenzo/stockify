@@ -32,6 +32,23 @@ export async function getProducts() {
   return products;
 }
 
+export async function getProductsToRestock() {
+  const productsToRestock = await prisma.product.findMany({
+    where: {
+      status: {
+        not: "Archived",
+      },
+      orders: {
+        every: {
+          status: "Delivered",
+        },
+      },
+    },
+  });
+
+  return productsToRestock;
+}
+
 export async function getAvailableProducts() {
   const availableProducts = await prisma.product.findMany({
     where: {

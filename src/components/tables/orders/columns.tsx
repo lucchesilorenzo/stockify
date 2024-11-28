@@ -6,6 +6,7 @@ import { ChevronsUpDown, Truck } from "lucide-react";
 
 import StatusBadge from "@/components/common/status-badge";
 import OrderActions from "@/components/orders/order-actions";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { OrderStatus, OrderWithProductAndSupplier } from "@/lib/types";
 import { formatCurrency, formatOrderId } from "@/lib/utils";
@@ -118,12 +119,14 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
     },
     cell: ({ row }) => {
       const status: OrderStatus["label"] = row.getValue("status");
-      const id: string = row.getValue("id");
+      // const id: string = row.getValue("id");
 
-      return <StatusBadge initialStatus={status} orderId={id} />;
-      // <Badge variant={status === "Shipped" ? "secondary" : "default"}>
-      //   {status}
-      // </Badge>;
+      // return <StatusBadge initialStatus={status} orderId={id} />;
+      return (
+        <Badge variant={status === "Shipped" ? "secondary" : "default"}>
+          {status}
+        </Badge>
+      );
     },
   },
   {
