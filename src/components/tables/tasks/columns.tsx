@@ -181,7 +181,7 @@ export const columns: ColumnDef<TaskWithUser>[] = [
       const lastName = row.original.user.lastName;
 
       return (
-        <div className="text-center font-medium">{`${firstName} ${lastName}`}</div>
+        <div className="min-w-[150px] text-center font-medium">{`${firstName} ${lastName}`}</div>
       );
     },
   },

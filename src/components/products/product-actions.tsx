@@ -48,7 +48,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
             <Link href={`/app/products/${product.slug}/edit`}>Edit</Link>
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setIsAlertOpen(true)}>
-            {product.status === "Archived" ? "Restore" : "Archive"}
+            {product.status === "ARCHIVED" ? "Restore" : "Archive"}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

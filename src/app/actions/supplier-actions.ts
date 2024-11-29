@@ -9,6 +9,7 @@ import {
   updateSupplierRating,
 } from "@/lib/queries/supplier-queries";
 import { ActivityEssentials } from "@/lib/types";
+import { checkAuth } from "@/lib/utils";
 import {
   supplierFormSchema,
   supplierIdSchema,
@@ -16,6 +17,9 @@ import {
 } from "@/lib/validations/supplier-validations";
 
 export async function createSupplierAction(supplier: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation
   const validatedSupplier = supplierFormSchema.safeParse(supplier);
   if (!validatedSupplier.success) {
@@ -38,6 +42,7 @@ export async function createSupplierAction(supplier: unknown) {
   const activity: ActivityEssentials = {
     activity: "Created",
     entity: "Supplier",
+    userId: session.user.id,
   };
 
   try {
@@ -53,6 +58,9 @@ export async function updateSupplierRatingAction(
   supplierId: unknown,
   rating: unknown,
 ) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation for supplier ID
   const validatedSuppliedId = supplierIdSchema.safeParse(supplierId);
   if (!validatedSuppliedId.success) {
@@ -76,6 +84,7 @@ export async function updateSupplierRatingAction(
   const activity: ActivityEssentials = {
     activity: "Updated",
     entity: "Supplier",
+    userId: session.user.id,
   };
 
   try {

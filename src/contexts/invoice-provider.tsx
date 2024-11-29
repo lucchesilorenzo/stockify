@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 
 import { Order } from "@prisma/client";
 
-import { OrderWithProductAndSupplier } from "@/lib/types";
+import { DetailedOrder } from "@/lib/types";
 
 type InvoiceProviderProps = {
   children: React.ReactNode;
@@ -12,8 +12,8 @@ type InvoiceProviderProps = {
 
 type TInvoiceContext = {
   isInvoiceOpen: boolean;
-  order: OrderWithProductAndSupplier | null;
-  handleIsInvoiceOpenAndSetOrder: (order: OrderWithProductAndSupplier) => void;
+  order: DetailedOrder | null;
+  handleIsInvoiceOpenAndSetOrder: (order: DetailedOrder) => void;
   handleCloseInvoice: () => void;
 };
 
@@ -21,14 +21,12 @@ export const InvoiceContext = createContext<TInvoiceContext | null>(null);
 
 export default function InvoiceProvider({ children }: InvoiceProviderProps) {
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
-  const [order, setOrder] = useState<OrderWithProductAndSupplier | null>(null);
+  const [order, setOrder] = useState<DetailedOrder | null>(null);
   const [selectedOrderId, setSelectedOrderId] = useState<Order["id"] | null>(
     null,
   );
 
-  function handleIsInvoiceOpenAndSetOrder(
-    newOrder: OrderWithProductAndSupplier,
-  ) {
+  function handleIsInvoiceOpenAndSetOrder(newOrder: DetailedOrder) {
     // Check if new order is the same as selected order
     const isSameOrder = newOrder.id === selectedOrderId;
 
@@ -47,9 +45,9 @@ export default function InvoiceProvider({ children }: InvoiceProviderProps) {
     <InvoiceContext.Provider
       value={{
         isInvoiceOpen,
+        order,
         handleIsInvoiceOpenAndSetOrder,
         handleCloseInvoice,
-        order,
       }}
     >
       {children}

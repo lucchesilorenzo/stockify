@@ -61,13 +61,9 @@ export default function ProductTablePopover<T>({
                 {productStatuses.map((status) => (
                   <CommandItem
                     key={status.value}
-                    onSelect={(value) => {
-                      setSelectedStatus(
-                        productStatuses.find(
-                          (priority) => priority.value === value,
-                        ) || null,
-                      );
-                      table.getColumn("status")?.setFilterValue(value);
+                    onSelect={() => {
+                      setSelectedStatus(status);
+                      table.getColumn("status")?.setFilterValue(status.value);
                       setOpen(false);
                     }}
                   >

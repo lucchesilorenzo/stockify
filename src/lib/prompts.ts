@@ -3,9 +3,9 @@ Each task should have the following structure:
 [
   {
     "title": "Task Title",
-    "status": "backlog" | "to-do" | "in-progress" | "done" | "canceled",
-    "priority": "low" | "medium" | "high",
-    "label": "inventory" | "order" | "shipping" | "quality" | "customer" | "maintenance",
+    "status": "BACKLOG" | "TO_DO" | "IN_PROGRESS" | "DONE" | "CANCELED",
+    "priority": "LOW" | "MEDIUM" | "HIGH",
+    "label": "INVENTORY" | "ORDER" | "SHIPPING" | "QUALITY" | "CUSTOMER" | "MAINTENANCE",
     "dueDate": "2024-11-23T12:00:00",
     "userId": session.user.id
   }
@@ -17,17 +17,17 @@ Here is an example of the expected output:
 [
   {
     "title": "Restock inventory",
-    "status": "to-do",
-    "priority": "high",
-    "label": "inventory",
+    "status": "TO_DO",
+    "priority": "HIGH",
+    "label": "INVENTORY",
     "dueDate": "2024-11-30T09:00:00",
     "userId": session.user.id
   },
   {
     "title": "Ship order #1234",
-    "status": "in-progress",
-    "priority": "medium",
-    "label": "shipping",
+    "status": "IN_PROGRESS",
+    "priority": "MEDIUM",
+    "label": "SHIPPING",
     "dueDate": "2024-11-25T12:00:00",
     "userId": session.user.id
   },

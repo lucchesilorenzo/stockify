@@ -21,6 +21,6 @@ export type ProductEssentials = Omit<
 >;
 
 export type ProductStatus = {
-  value: "in-stock" | "out-of-stock" | "archived";
+  value: "IN_STOCK" | "OUT_OF_STOCK" | "ARCHIVED";
   label: "In Stock" | "Out of Stock" | "Archived";
 };

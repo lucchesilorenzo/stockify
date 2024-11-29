@@ -1,12 +1,14 @@
 "use client";
 
+import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown } from "lucide-react";
 
 import ProductActions from "@/components/products/product-actions";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ProductWithCategoryAndWarehouse } from "@/lib/types";
+import { productStatuses } from "@/lib/data";
+import { ProductStatus, ProductWithCategoryAndWarehouse } from "@/lib/types";
 import { cn, formatCurrency } from "@/lib/utils";
 
 export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
@@ -24,7 +26,7 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
       );
     },
     cell: ({ row }) => {
-      const name: string = row.getValue("name");
+      const name: Product["name"] = row.getValue("name");
       return <div className="min-w-[150px] font-medium">{name}</div>;
     },
   },
@@ -42,7 +44,7 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
       );
     },
     cell: ({ row }) => {
-      const sku: string = row.getValue("sku");
+      const sku: Product["sku"] = row.getValue("sku");
 
       return <div className="min-w-[150px]">{sku}</div>;
     },
@@ -70,7 +72,7 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Base Price
+          Price
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -96,15 +98,17 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
       );
     },
     cell: ({ row }) => {
-      const status: string = row.getValue("status");
+      const status: ProductStatus["value"] = row.getValue("status");
+      const statusInfo =
+        productStatuses.find((p) => p.value === status)?.label || status;
 
       let statusColor: BadgeProps["variant"];
 
-      if (status === "In Stock") statusColor = "default";
-      if (status === "Out of Stock") statusColor = "destructive";
-      if (status === "Archived") statusColor = "archived";
+      if (status === "IN_STOCK") statusColor = "default";
+      if (status === "OUT_OF_STOCK") statusColor = "destructive";
+      if (status === "ARCHIVED") statusColor = "archived";
 
-      return <Badge variant={statusColor}>{status}</Badge>;
+      return <Badge variant={statusColor}>{statusInfo}</Badge>;
     },
   },
   {

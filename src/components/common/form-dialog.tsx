@@ -46,37 +46,88 @@ export default function FormDialog({
   onOpenChange,
 }: FormDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-
   const isOpen = open ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
+
+  const orderBtnVariants =
+    actionType === "createOrder"
+      ? "default"
+      : actionType === "createRestockOrder"
+        ? "accent"
+        : "default";
 
   function handleFormSubmit() {
     setOpen(false);
   }
 
-  return (
-    <Dialog open={isOpen} onOpenChange={setOpen}>
-      {actionType !== "editTask" && actionType !== "generateTask" && (
+  if (actionType === "editTask" || actionType === "generateTask") {
+    return (
+      <Dialog open={isOpen} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {actionType === "editTask" && "Edit task"}
+              {actionType === "generateTask" && "Generate task"}
+            </DialogTitle>
+            <DialogDescription>
+              Fill in the details below. Ensure that all required fields are
+              completed correctly before submitting.
+            </DialogDescription>
+          </DialogHeader>
+          {actionType === "editTask" && (
+            <TaskEditForm onFormSubmit={handleFormSubmit} task={task!} />
+          )}
+          {actionType === "generateTask" && (
+            <TaskGenerationForm onFormSubmit={handleFormSubmit} />
+          )}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  if (actionType === "editCustomer") {
+    return (
+      <Dialog open={isOpen} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button
-            variant={customer ? "outline" : "default"}
-            size={customer ? "icon" : "default"}
-          >
+          <Button variant="outline" size="icon">
             {children}
           </Button>
         </DialogTrigger>
-      )}
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit customer</DialogTitle>
+            <DialogDescription>
+              Fill in the details below. Ensure that all required fields are
+              completed correctly before submitting.
+            </DialogDescription>
+          </DialogHeader>
+          {actionType === "editCustomer" && (
+            <CustomerEditForm
+              onFormSubmit={handleFormSubmit}
+              customer={customer!}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant={orderBtnVariants} size="default">
+          {children}
+        </Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {actionType === "createOrder" && "Create a new order"}
             {actionType === "createRestockOrder" &&
               "Create a new restock order"}
-            {actionType === "editCustomer" && "Edit customer"}
             {actionType === "addSupplier" && "Add a new supplier"}
             {actionType === "addTask" && "Add a new task"}
-            {actionType === "editTask" && "Edit task"}
-            {actionType === "generateTask" && "Generate task"}
           </DialogTitle>
           <DialogDescription>
             Fill in the details below. Ensure that all required fields are
@@ -92,23 +143,11 @@ export default function FormDialog({
             products={products!}
           />
         )}
-        {actionType === "editCustomer" && (
-          <CustomerEditForm
-            onFormSubmit={handleFormSubmit}
-            customer={customer!}
-          />
-        )}
         {actionType === "addSupplier" && (
           <SupplierForm onFormSubmit={handleFormSubmit} />
         )}
         {actionType === "addTask" && (
           <TaskForm onFormSubmit={handleFormSubmit} />
-        )}
-        {actionType === "editTask" && (
-          <TaskEditForm onFormSubmit={handleFormSubmit} task={task!} />
-        )}
-        {actionType === "generateTask" && (
-          <TaskGenerationForm onFormSubmit={handleFormSubmit} />
         )}
       </DialogContent>
     </Dialog>

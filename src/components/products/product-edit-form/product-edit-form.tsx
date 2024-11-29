@@ -100,11 +100,19 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         <H1>{product.name}</H1>
         <Badge
           variant={
-            product.status === "Out of Stock" ? "destructive" : "default"
+            product.status === "IN_STOCK"
+              ? "default"
+              : product.status === "OUT_OF_STOCK"
+                ? "destructive"
+                : "archived"
           }
           className="ml-auto sm:ml-0"
         >
-          {product.status === "In Stock" ? "In Stock" : "Out of Stock"}
+          {product.status === "IN_STOCK"
+            ? "In Stock"
+            : product.status === "OUT_OF_STOCK"
+              ? "Out of Stock"
+              : "Archived"}
         </Badge>
 
         <div className="hidden items-center gap-2 md:ml-auto md:flex">

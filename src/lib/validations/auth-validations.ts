@@ -2,8 +2,16 @@ import { z } from "zod";
 
 export const signUpSchema = z
   .object({
-    firstName: z.string().trim().max(20, "Name is too long."),
-    lastName: z.string().trim().max(20, "Last name is too long."),
+    firstName: z
+      .string()
+      .trim()
+      .min(1, "First name is required.")
+      .max(20, "Name is too long."),
+    lastName: z
+      .string()
+      .trim()
+      .min(1, "Last name is required.")
+      .max(20, "Last name is too long."),
     email: z
       .string()
       .trim()

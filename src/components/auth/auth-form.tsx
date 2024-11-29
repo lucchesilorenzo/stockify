@@ -55,10 +55,21 @@ export default function AuthForm({ authType }: AuthFormProps) {
               placeholder="John"
               {...register("firstName")}
             />
+            {errors.firstName && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.firstName.message}
+              </p>
+            )}
           </div>
+
           <div className="grid gap-2">
             <Label htmlFor="lastName">Last name</Label>
             <Input id="lastName" placeholder="Doe" {...register("lastName")} />
+            {errors.lastName && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.lastName.message}
+              </p>
+            )}
           </div>
         </div>
       )}

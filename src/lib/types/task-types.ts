@@ -10,25 +10,25 @@ export type TaskWithUser = Task & {
 export type TaskEssentials = Omit<Task, "id" | "createdAt" | "updatedAt">;
 
 export type TaskStatus = {
-  value: "backlog" | "to-do" | "in-progress" | "done" | "canceled";
+  value: "BACKLOG" | "TO_DO" | "IN_PROGRESS" | "DONE" | "CANCELED";
   label: "Backlog" | "To-Do" | "In Progress" | "Done" | "Canceled";
   icon: React.ElementType;
 };
 
 export type TaskPriority = {
-  value: "low" | "medium" | "high";
+  value: "LOW" | "MEDIUM" | "HIGH";
   label: "Low" | "Medium" | "High";
   icon: React.ElementType;
 };
 
 export type TaskLabel = {
   value:
-    | "inventory"
-    | "order"
-    | "shipping"
-    | "quality"
-    | "customer"
-    | "maintenance";
+    | "INVENTORY"
+    | "ORDER"
+    | "SHIPPING"
+    | "QUALITY"
+    | "CUSTOMER"
+    | "MAINTENANCE";
   label:
     | "Inventory"
     | "Order"

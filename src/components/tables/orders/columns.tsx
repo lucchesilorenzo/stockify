@@ -1,17 +1,18 @@
 "use client";
 
+import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ChevronsUpDown, Truck } from "lucide-react";
 
-import StatusBadge from "@/components/common/status-badge";
 import OrderActions from "@/components/orders/order-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { OrderStatus, OrderWithProductAndSupplier } from "@/lib/types";
+import { orderStatuses } from "@/lib/data";
+import { DetailedOrder, OrderStatus, OrderType } from "@/lib/types";
 import { formatCurrency, formatOrderId } from "@/lib/utils";
 
-export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
+export const columns: ColumnDef<DetailedOrder>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -44,6 +45,12 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const type: OrderType["value"] = row.getValue("type");
+      const formattedType = type[0].toUpperCase() + type.slice(1).toLowerCase();
+
+      return <Badge variant="outline">{formattedType}</Badge>;
+    },
   },
   {
     accessorKey: "product.name",
@@ -60,7 +67,7 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
       );
     },
     cell: ({ row }) => {
-      const name: string = row.getValue("product.name");
+      const name: Product["name"] = row.getValue("product.name");
 
       return <div className="min-w-[150px] font-medium">{name}</div>;
     },
@@ -118,13 +125,13 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
       );
     },
     cell: ({ row }) => {
-      const status: OrderStatus["label"] = row.getValue("status");
-      // const id: string = row.getValue("id");
+      const status: OrderStatus["value"] = row.getValue("status");
+      const statusInfo =
+        orderStatuses.find((o) => o.value === status)?.label || status;
 
-      // return <StatusBadge initialStatus={status} orderId={id} />;
       return (
-        <Badge variant={status === "Shipped" ? "secondary" : "default"}>
-          {status}
+        <Badge variant={status === "SHIPPED" ? "secondary" : "default"}>
+          {statusInfo}
         </Badge>
       );
     },
@@ -163,8 +170,7 @@ export const columns: ColumnDef<OrderWithProductAndSupplier>[] = [
       );
     },
     cell: ({ row }) => {
-      const date: OrderWithProductAndSupplier["createdAt"] =
-        row.getValue("createdAt");
+      const date: DetailedOrder["createdAt"] = row.getValue("createdAt");
 
       return <div>{format(date, "yyyy-MM-dd")}</div>;
     },

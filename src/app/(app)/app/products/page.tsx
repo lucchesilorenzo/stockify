@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import H1 from "@/components/common/h1";
 import { columns } from "@/components/tables/products/columns";
 import ProductsTable from "@/components/tables/products/products-table";
+import { productStatuses } from "@/lib/data";
 import { getProducts } from "@/lib/queries/product-queries";
 import { formatCurrency } from "@/lib/utils";
 
@@ -15,11 +16,14 @@ export default async function ProductsPage() {
 
   const csvData = products.map((product) => ({
     Name: product.name,
+    SKU: product.sku,
     Category: product.category.name,
     Price: formatCurrency(product.price),
-    Status: product.status,
+    Status:
+      productStatuses.find((p) => p.value === product.status)?.label ||
+      product.status,
+    Warehouse: product.warehouse.name,
     Quantity: product.quantity,
-    MaxQuantity: product.maxQuantity,
   }));
 
   return (

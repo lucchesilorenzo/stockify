@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useCustomer } from "@/hooks/use-customer";
+import { orderStatuses } from "@/lib/data";
 import { CustomerShipmentWithItems } from "@/lib/types";
 import { formatCurrency, formatShipmentId } from "@/lib/utils";
 
@@ -35,6 +36,10 @@ export default function CustomerViewShipmentsTable({
   );
   if (!shipment) return null;
 
+  const statusInfo =
+    orderStatuses.find((s) => s.value === shipment.status)?.label ||
+    shipment.status;
+
   const totalPrice = shipment.shipmentItems.reduce(
     (total, item) => total + item.quantity * item.product.price,
     0,
@@ -48,7 +53,7 @@ export default function CustomerViewShipmentsTable({
         </CardTitle>
         <CardDescription>
           Date: {format(shipment.createdAt, "dd/MM/yyyy")}
-          <span className="ml-4">Status: {shipment.status}</span>
+          <span className="ml-4">Status: {statusInfo}</span>
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -53,7 +53,8 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
       );
     },
     cell: ({ row }) => {
-      const email: string = row.getValue("email");
+      const email: CustomerWithCustomerShipment["email"] =
+        row.getValue("email");
 
       return (
         <div className="flex items-center justify-center gap-2">
@@ -78,7 +79,8 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
       );
     },
     cell: ({ row }) => {
-      const phone: string = row.getValue("phone");
+      const phone: CustomerWithCustomerShipment["phone"] =
+        row.getValue("phone");
 
       return (
         <div className="flex min-w-[200px] items-center justify-center gap-2">
@@ -108,7 +110,7 @@ export const columns: ColumnDef<CustomerWithCustomerShipment>[] = [
       const zipCode = row.original.zipCode;
 
       return (
-        <div className="min-w-[300px]">{`${address}, ${city}, ${zipCode}`}</div>
+        <div className="min-w-[400px]">{`${address}, ${city}, ${zipCode}`}</div>
       );
     },
   },

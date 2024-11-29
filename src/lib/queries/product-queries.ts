@@ -11,7 +11,7 @@ export async function getProducts() {
     where: {
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
     },
@@ -36,11 +36,11 @@ export async function getProductsToRestock() {
   const productsToRestock = await prisma.product.findMany({
     where: {
       status: {
-        not: "Archived",
+        not: "ARCHIVED",
       },
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
     },
@@ -52,10 +52,10 @@ export async function getProductsToRestock() {
 export async function getAvailableProducts() {
   const availableProducts = await prisma.product.findMany({
     where: {
-      status: "In Stock",
+      status: "IN_STOCK",
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
       quantity: {
@@ -130,7 +130,7 @@ export async function updateProductStatusById(productId: Product["id"]) {
       id: productId,
     },
     data: {
-      status: "Archived",
+      status: "ARCHIVED",
     },
   });
 
@@ -146,7 +146,7 @@ export async function restoreProductById(productId: Product["id"]) {
         id: productId,
       },
       data: {
-        status: product.quantity === 0 ? "Out of Stock" : "In Stock",
+        status: product.quantity === 0 ? "OUT_OF_STOCK" : "IN_STOCK",
       },
     });
 
@@ -166,7 +166,7 @@ export async function updateProductQuantityAndStatus(
       quantity: {
         increment: quantity,
       },
-      status: "In Stock",
+      status: "IN_STOCK",
     },
   });
 
@@ -178,20 +178,26 @@ export async function updateProductQuantitiesAndStatus(
 ) {
   const updatePromises = productsToUpdate.map(async ({ id, quantity }) => {
     const product = await prisma.product.findUnique({
-      where: { id },
-      select: { quantity: true },
+      where: {
+        id,
+      },
+      select: {
+        quantity: true,
+      },
     });
 
     if (product && product.quantity >= quantity) {
       const newQuantity = product.quantity - quantity;
 
       return prisma.product.update({
-        where: { id },
+        where: {
+          id,
+        },
         data: {
           quantity: {
             decrement: quantity,
           },
-          status: newQuantity === 0 ? "Out of Stock" : "In Stock",
+          status: newQuantity === 0 ? "OUT_OF_STOCK" : "IN_STOCK",
         },
       });
     }
@@ -200,25 +206,4 @@ export async function updateProductQuantitiesAndStatus(
   const updatedProducts = await Promise.all(updatePromises);
 
   return updatedProducts;
-}
-
-export async function checkIfProductHasBeenRestocked(productId: Product["id"]) {
-  const hasProductBeenRestocked = await prisma.order.findFirst({
-    where: {
-      productId,
-      type: "Restock",
-    },
-  });
-
-  return hasProductBeenRestocked;
-}
-
-export async function checkIfProductHasBeenShipped(productId: Product["id"]) {
-  const hasProductBeenShipped = await prisma.shipmentItem.findFirst({
-    where: {
-      productId,
-    },
-  });
-
-  return hasProductBeenShipped;
 }

@@ -89,40 +89,40 @@ export const fontSizeData = [
 ];
 
 export const productStatuses: ProductStatus[] = [
-  { value: "in-stock", label: "In Stock" },
-  { value: "out-of-stock", label: "Out of Stock" },
-  { value: "archived", label: "Archived" },
+  { value: "IN_STOCK", label: "In Stock" },
+  { value: "OUT_OF_STOCK", label: "Out of Stock" },
+  { value: "ARCHIVED", label: "Archived" },
 ];
 
 export const orderTypes: OrderType[] = [
-  { value: "new", label: "New Orders" },
-  { value: "restock", label: "Restock Orders" },
+  { value: "NEW", label: "New Orders" },
+  { value: "RESTOCK", label: "Restock Orders" },
 ];
 
 export const orderStatuses: OrderStatus[] = [
-  { value: "shipped", label: "Shipped" },
-  { value: "delivered", label: "Delivered" },
+  { value: "SHIPPED", label: "Shipped" },
+  { value: "DELIVERED", label: "Delivered" },
 ];
 
 export const taskStatuses: TaskStatus[] = [
-  { value: "backlog", label: "Backlog", icon: CircleHelp },
-  { value: "to-do", label: "To-Do", icon: Circle },
-  { value: "in-progress", label: "In Progress", icon: Timer },
-  { value: "done", label: "Done", icon: CircleCheckBig },
-  { value: "canceled", label: "Canceled", icon: CircleOff },
+  { value: "BACKLOG", label: "Backlog", icon: CircleHelp },
+  { value: "TO_DO", label: "To-Do", icon: Circle },
+  { value: "IN_PROGRESS", label: "In Progress", icon: Timer },
+  { value: "DONE", label: "Done", icon: CircleCheckBig },
+  { value: "CANCELED", label: "Canceled", icon: CircleOff },
 ];
 
 export const taskPriorities: TaskPriority[] = [
-  { value: "low", label: "Low", icon: ArrowDown },
-  { value: "medium", label: "Medium", icon: ArrowRight },
-  { value: "high", label: "High", icon: ArrowUp },
+  { value: "LOW", label: "Low", icon: ArrowDown },
+  { value: "MEDIUM", label: "Medium", icon: ArrowRight },
+  { value: "HIGH", label: "High", icon: ArrowUp },
 ];
 
 export const taskLabels: TaskLabel[] = [
-  { value: "inventory", label: "Inventory" },
-  { value: "order", label: "Order" },
-  { value: "shipping", label: "Shipping" },
-  { value: "quality", label: "Quality" },
-  { value: "customer", label: "Customer" },
-  { value: "maintenance", label: "Maintenance" },
+  { value: "INVENTORY", label: "Inventory" },
+  { value: "ORDER", label: "Order" },
+  { value: "SHIPPING", label: "Shipping" },
+  { value: "QUALITY", label: "Quality" },
+  { value: "CUSTOMER", label: "Customer" },
+  { value: "MAINTENANCE", label: "Maintenance" },
 ];

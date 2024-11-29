@@ -28,10 +28,33 @@ export default function MainAlertDialog({
   status,
   type,
 }: MainAlertDialogProps) {
-  const handleAction =
-    type === "product" || type === "order" ? onUpdateItemStatus : onDeleteItem;
-  const statusTitleInfo = status === "Archived" ? "restore" : "archive";
-  const statusDescriptionInfo = status === "Archived" ? "restored" : "archived";
+  const statusTitleInfo = status === "ARCHIVED" ? "restore" : "archive";
+  const statusDescriptionInfo = status === "ARCHIVED" ? "restored" : "archived";
+
+  if (type === "task") {
+    return (
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to delete this task?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This task will be deleted. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={onDeleteItem}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -41,21 +64,20 @@ export default function MainAlertDialog({
             {type === "product" &&
               `Are you sure you want to ${statusTitleInfo} this product?`}
             {type === "order" && "Are you sure you want to ship this order?"}
-            {type === "task" && "Are you sure you want to delete this task?"}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {type === "product" &&
               `This product will be ${statusDescriptionInfo}.`}
             {type === "order" && "This order will be shipped."}
-            {type === "task" &&
-              "This task will be deleted. This action cannot be undone."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setOpen(false)}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={handleAction}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={onUpdateItemStatus}>
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

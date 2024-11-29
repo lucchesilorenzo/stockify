@@ -3,87 +3,84 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.supplier.create({
+  const user = await prisma.user.create({
     data: {
-      name: "Supplier One",
-      email: "supplier1@example.com",
-      phone: "9876543210",
-      rating: 5,
-      address: "456 Supplier Ave",
-      city: "Supplier City",
-      zipCode: "11111",
+      email: "john.doe@example.com",
+      hashedPassword: "hashedpassword123",
+      firstName: "John",
+      lastName: "Doe",
+      dateOfBirth: new Date("1990-01-01"),
+      phone: "1234567890",
+      bio: "Warehouse manager",
+      address: "123 Main St",
+      city: "Metropolis",
+      zipCode: "10001",
     },
   });
 
-  const category1 = await prisma.category.create({
+  const supplier = await prisma.supplier.create({
+    data: {
+      name: "Best Supplier Inc.",
+      email: "supplier@example.com",
+      phone: "0987654321",
+      address: "456 Supplier Rd",
+      city: "Supplier City",
+      zipCode: "20002",
+      website: "https://bestsupplier.com",
+      rating: 5,
+    },
+  });
+
+  const category = await prisma.category.create({
     data: {
       name: "Electronics",
-      taxRate: 15.0,
+      taxRate: 0.21,
     },
   });
 
-  const warehouse1 = await prisma.warehouse.create({
+  const warehouse = await prisma.warehouse.create({
     data: {
-      name: "Warehouse One",
-      location: "Location 1",
+      name: "Main Warehouse",
+      location: "Warehouse District",
+      quantity: 100,
+      maxQuantity: 1000,
     },
   });
 
-  const product1 = await prisma.product.create({
+  const product = await prisma.product.create({
     data: {
       name: "Laptop",
-      slug: "laptop",
-      sku: "LAP123",
+      slug: "laptop-2024",
+      sku: "LPT123",
       price: 999.99,
-      quantity: 100,
-      maxQuantity: 200,
-      description: "High-performance laptop",
-      warehouseId: warehouse1.id,
-      categoryId: category1.id,
+      quantity: 50,
+      maxQuantity: 100,
+      description: "High performance laptop",
+      status: "IN_STOCK",
+      category: { connect: { id: category.id } },
+      warehouse: { connect: { id: warehouse.id } },
     },
   });
 
-  const customer1 = await prisma.customer.create({
+  await prisma.order.create({
     data: {
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@example.com",
-      phone: "1122334455",
-      address: "456 Another Street",
-      city: "Townsville",
-      zipCode: "67890",
+      type: "PURCHASE",
+      quantity: 10,
+      subtotal: 9999.9,
+      shipping: 50,
+      tax: 2100,
+      totalPrice: 12149.9,
+      status: "SHIPPED",
+      user: { connect: { id: user.id } },
+      supplier: { connect: { id: supplier.id } },
+      product: { connect: { id: product.id } },
     },
   });
-
-  const shipment1 = await prisma.customerShipment.create({
-    data: {
-      customerId: customer1.id,
-      status: "Shipped",
-    },
-  });
-
-  await prisma.shipmentItem.create({
-    data: {
-      productId: product1.id,
-      customerShipmentId: shipment1.id,
-      quantity: 1,
-    },
-  });
-
-  await prisma.activity.create({
-    data: {
-      activity: "Product Added",
-      entity: "Product",
-      product: product1.name,
-    },
-  });
-
-  console.log("Database seeded successfully");
 }
 
 main()
   .catch((e) => {
-    console.error("Error seeding database:", e);
+    console.error(e);
     process.exit(1);
   })
   .finally(async () => {

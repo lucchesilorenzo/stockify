@@ -4,10 +4,10 @@ import { ActivityEssentials } from "../types";
 export async function getInventoryValue() {
   const products = await prisma.product.findMany({
     where: {
-      status: "In Stock",
+      status: "IN_STOCK",
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
     },
@@ -28,10 +28,10 @@ export async function getInventoryValue() {
 export async function getLowStockProducts() {
   const products = await prisma.product.findMany({
     where: {
-      status: "In Stock",
+      status: "IN_STOCK",
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
     },
@@ -50,7 +50,7 @@ export async function getLowStockProducts() {
 export async function getShippedOrders() {
   const shippedOrders = await prisma.order.count({
     where: {
-      status: "Shipped",
+      status: "SHIPPED",
     },
   });
 
@@ -62,7 +62,7 @@ export async function getUnitsInStock() {
     where: {
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
     },
@@ -79,8 +79,17 @@ export async function getUnitsInStock() {
   return totalUnitsInStock;
 }
 
-export async function getRecentActivities() {
-  const recentActivities = await prisma.activity.findMany();
+export async function getActivities() {
+  const recentActivities = await prisma.activity.findMany({
+    include: {
+      user: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
 
   return recentActivities;
 }

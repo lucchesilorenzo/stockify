@@ -41,6 +41,7 @@ export type CustomerShipmentWithItems = Prisma.CustomerShipmentGetPayload<{
 
 export type CustomerSelectedProduct = {
   productId: string;
+  warehouseId: string;
   name: string;
   price: number;
   quantity: number;

@@ -5,7 +5,7 @@ export type OrderEssentials = Omit<
   "id" | "createdAt" | "updatedAt" | "status"
 >;
 
-export type OrderWithProductAndSupplier = Prisma.OrderGetPayload<{
+export type DetailedOrder = Prisma.OrderGetPayload<{
   include: {
     product: {
       select: {
@@ -27,11 +27,11 @@ export type OrderWithProductAndSupplier = Prisma.OrderGetPayload<{
 }>;
 
 export type OrderType = {
-  value: "new" | "restock";
+  value: "NEW" | "RESTOCK";
   label: "New Orders" | "Restock Orders";
 };
 
 export type OrderStatus = {
-  value: "shipped" | "delivered";
+  value: "SHIPPED" | "DELIVERED";
   label: "Shipped" | "Delivered";
 };

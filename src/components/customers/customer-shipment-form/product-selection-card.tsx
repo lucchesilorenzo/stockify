@@ -76,6 +76,7 @@ export default function ProductSelectionCard({
       ...selectedProducts,
       {
         productId: product.id,
+        warehouseId: product.warehouseId,
         name: product.name,
         price: product.price,
         quantity:
@@ -134,7 +135,7 @@ export default function ProductSelectionCard({
         <CardDescription>Select products for shipment.</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="mb-4">
+        <div className="mb-4 space-y-1">
           <div className="flex items-center gap-2">
             <Select
               value={selectedProductId}

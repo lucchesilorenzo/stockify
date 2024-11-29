@@ -57,6 +57,7 @@ export async function createTaskAction(task: unknown) {
   const activity: ActivityEssentials = {
     activity: "Created",
     entity: "Task",
+    userId: session.user.id,
   };
 
   try {
@@ -69,6 +70,10 @@ export async function createTaskAction(task: unknown) {
 }
 
 export async function deleteTaskAction(taskId: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
+  // Validation
   const validatedTaskId = taskIdSchema.safeParse(taskId);
   if (!validatedTaskId.success) {
     return { message: "Invalid task ID." };
@@ -89,6 +94,7 @@ export async function deleteTaskAction(taskId: unknown) {
   const activity: ActivityEssentials = {
     activity: "Deleted",
     entity: "Task",
+    userId: session.user.id,
   };
 
   try {
@@ -105,6 +111,9 @@ export async function updateTaskFieldAction(
   taskValue: unknown,
   taskId: unknown,
 ) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation for taskField
   const validatedTaskField = taskFieldSchema.safeParse(taskField);
   if (!validatedTaskField.success) {
@@ -151,6 +160,7 @@ export async function updateTaskFieldAction(
         return { message: "Task not found." };
       }
     }
+    console.error(error);
     return { message: "Failed to update task." };
   }
 
@@ -158,6 +168,7 @@ export async function updateTaskFieldAction(
   const activity: ActivityEssentials = {
     activity: "Updated",
     entity: "Task",
+    userId: session.user.id,
   };
 
   try {
@@ -170,6 +181,9 @@ export async function updateTaskFieldAction(
 }
 
 export async function updateTaskAction(task: unknown, taskId: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation for task
   const validatedTask = taskEditFormSchema.safeParse(task);
   if (!validatedTask.success) {
@@ -198,6 +212,7 @@ export async function updateTaskAction(task: unknown, taskId: unknown) {
   const activity: ActivityEssentials = {
     activity: "Updated",
     entity: "Task",
+    userId: session.user.id,
   };
 
   try {

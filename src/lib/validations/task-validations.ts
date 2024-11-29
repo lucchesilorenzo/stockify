@@ -28,23 +28,23 @@ export const taskEditFormSchema = z.object({
 export const taskIdSchema = z.string().cuid();
 
 export const taskLabelSchema = z.enum([
-  "inventory",
-  "order",
-  "shipping",
-  "quality",
-  "customer",
-  "maintenance",
+  "INVENTORY",
+  "ORDER",
+  "SHIPPING",
+  "QUALITY",
+  "CUSTOMER",
+  "MAINTENANCE",
 ]);
 
 export const taskStatusSchema = z.enum([
-  "backlog",
-  "to-do",
-  "in-progress",
-  "done",
-  "canceled",
+  "BACKLOG",
+  "TO_DO",
+  "IN_PROGRESS",
+  "DONE",
+  "CANCELED",
 ]);
 
-export const taskPrioritySchema = z.enum(["low", "medium", "high"]);
+export const taskPrioritySchema = z.enum(["LOW", "MEDIUM", "HIGH"]);
 export const taskFieldSchema = z.enum(["label", "status", "priority"]);
 
 export const taskGeneratorFormSchema = z.object({

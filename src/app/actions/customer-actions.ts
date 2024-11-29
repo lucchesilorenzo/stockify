@@ -13,13 +13,18 @@ import {
 } from "@/lib/queries/customer-queries";
 import { createActivity } from "@/lib/queries/dashboard-queries";
 import { updateProductQuantitiesAndStatus } from "@/lib/queries/product-queries";
+import { updateWarehouseQuantities } from "@/lib/queries/warehouse-queries";
 import { ActivityEssentials } from "@/lib/types";
+import { checkAuth } from "@/lib/utils";
 import {
   customerEditFormSchema,
   shippingFormSchema,
 } from "@/lib/validations/customer-validations";
 
 export async function createShipmentAction(shipment: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation
   const validatedShipment = shippingFormSchema.safeParse(shipment);
   if (!validatedShipment.success) {
@@ -56,6 +61,7 @@ export async function createShipmentAction(shipment: unknown) {
     const activity: ActivityEssentials = {
       activity: "Created",
       entity: "Customer",
+      userId: session.user.id,
     };
 
     try {
@@ -100,7 +106,7 @@ export async function createShipmentAction(shipment: unknown) {
     return { message: "Failed to create shipment." };
   }
 
-  // Subtract quantity from inventory
+  // Decrement quantity from inventory
   const productsToUpdate = validatedShipment.data.products.map((p) => ({
     id: p.productId,
     quantity: p.quantity,
@@ -112,10 +118,24 @@ export async function createShipmentAction(shipment: unknown) {
     return { message: "Failed to update product quantities and status." };
   }
 
+  // Decrement quantity from warehouse
+  const warehousesToUpdate = validatedShipment.data.products.map((p) => ({
+    warehouseId: p.warehouseId,
+    quantity: p.quantity,
+  }));
+
+  try {
+    await updateWarehouseQuantities(warehousesToUpdate);
+  } catch {
+    return { message: "Failed to update warehouse quantities." };
+  }
+
   // Create new activity
   const activity: ActivityEssentials = {
     activity: "Created",
     entity: "Shipment",
+    product: validatedShipment.data.products.map((p) => p.name).join(", "),
+    userId: session.user.id,
   };
 
   try {
@@ -128,6 +148,9 @@ export async function createShipmentAction(shipment: unknown) {
 }
 
 export async function updateCustomerAction(customer: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation
   const validatedCustomer = customerEditFormSchema.safeParse(customer);
   if (!validatedCustomer.success) {
@@ -150,6 +173,7 @@ export async function updateCustomerAction(customer: unknown) {
   const activity: ActivityEssentials = {
     activity: "Updated",
     entity: "Customer",
+    userId: session.user.id,
   };
 
   try {

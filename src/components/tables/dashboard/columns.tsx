@@ -6,10 +6,10 @@ import { format } from "date-fns";
 import { ChevronsUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ActivityEssentials } from "@/lib/types";
+import { DashboardActivity } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-export const columns: ColumnDef<Activity>[] = [
+export const columns: ColumnDef<DashboardActivity>[] = [
   {
     accessorKey: "activity",
     header: ({ column }) => {
@@ -24,7 +24,7 @@ export const columns: ColumnDef<Activity>[] = [
       );
     },
     cell: ({ row }) => {
-      const activity: ActivityEssentials["activity"] = row.getValue("activity");
+      const activity: DashboardActivity["activity"] = row.getValue("activity");
 
       let activityColor;
 
@@ -38,8 +38,11 @@ export const columns: ColumnDef<Activity>[] = [
         case "Deleted":
           activityColor = "bg-red-100 text-red-800";
           break;
-        default:
+        case "Archived":
           activityColor = "bg-gray-100 text-gray-800";
+          break;
+        case "Restored":
+          activityColor = "bg-cyan-100 text-cyan-800";
           break;
       }
 
@@ -83,7 +86,7 @@ export const columns: ColumnDef<Activity>[] = [
       );
     },
     cell: ({ row }) => {
-      const product: ActivityEssentials["product"] = row.getValue("product");
+      const product: DashboardActivity["product"] = row.getValue("product");
 
       return <div>{product || "N/A"}</div>;
     },
@@ -105,6 +108,29 @@ export const columns: ColumnDef<Activity>[] = [
       const date: Activity["createdAt"] = row.getValue("createdAt");
 
       return <div>{format(date, "yyyy-MM-dd")}</div>;
+    },
+  },
+  {
+    accessorKey: "user",
+    id: "user",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Operator
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const firstName = row.original.user.firstName;
+      const lastName = row.original.user.lastName;
+
+      return (
+        <div className="min-w-[150px] font-medium">{`${firstName} ${lastName}`}</div>
+      );
     },
   },
 ];

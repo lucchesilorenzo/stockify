@@ -75,7 +75,7 @@ export async function updateOrderStatus(orderId: Order["id"]) {
       id: orderId,
     },
     data: {
-      status: "Delivered",
+      status: "DELIVERED",
     },
   });
 

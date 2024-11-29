@@ -12,6 +12,10 @@ import {
   getProductOptions,
   updateProductQuantityAndStatus,
 } from "@/lib/queries/product-queries";
+import {
+  getWarehouse,
+  updateWarehouseQuantity,
+} from "@/lib/queries/warehouse-queries";
 import { ActivityEssentials } from "@/lib/types";
 import { checkAuth, generateSKU, generateSlug } from "@/lib/utils";
 import {
@@ -30,6 +34,19 @@ export async function createOrderAction(order: unknown) {
     return { message: "Invalid form data." };
   }
 
+  // Check if there is enough space in the warehouse
+  const warehouse = await getWarehouse(validatedOrder.data.warehouseId);
+  if (!warehouse) return { message: "Warehouse not found." };
+
+  if (
+    validatedOrder.data.quantity + warehouse.quantity >
+    warehouse.maxQuantity
+  ) {
+    return {
+      message: `There is not enough space in the warehouse: ${warehouse.name}.`,
+    };
+  }
+
   // Get category
   const category = await getCategory(validatedOrder.data.categoryId);
   if (!category) return { message: "Category not found." };
@@ -45,11 +62,7 @@ export async function createOrderAction(order: unknown) {
   const slug = generateSlug(validatedOrder.data.name);
 
   // Create a new product
-  const newProduct = {
-    ...productData,
-    sku,
-    slug,
-  };
+  const newProduct = { ...productData, sku, slug };
 
   let product;
 
@@ -74,7 +87,7 @@ export async function createOrderAction(order: unknown) {
     productId: product.id,
     supplierId,
     userId: session.user.id,
-    type: "New",
+    type: "NEW",
     quantity: validatedOrder.data.quantity,
     subtotal,
     shipping,
@@ -94,11 +107,19 @@ export async function createOrderAction(order: unknown) {
     return { message: "Failed to create order." };
   }
 
+  // Update warehouse quantity
+  try {
+    await updateWarehouseQuantity(warehouse.id, validatedOrder.data.quantity);
+  } catch {
+    return { message: "Failed to update warehouse quantity." };
+  }
+
   // Create a new activity
   const activity: ActivityEssentials = {
     activity: "Created",
     entity: "Order",
     product: validatedOrder.data.name,
+    userId: session.user.id,
   };
 
   try {
@@ -128,6 +149,19 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   const options = await getProductOptions(validatedRestockOrder.data.productId);
   if (!options) return { message: "Options not found." };
 
+  // Check if there is enough space in the warehouse
+  const warehouse = await getWarehouse(product.warehouseId);
+  if (!warehouse) return { message: "Warehouse not found." };
+
+  if (
+    validatedRestockOrder.data.quantity + warehouse.quantity >
+    warehouse.maxQuantity
+  ) {
+    return {
+      message: `There is not enough space in the warehouse: ${warehouse.name}.`,
+    };
+  }
+
   // Get category
   const category = await getCategory(product.categoryId);
   if (!category) return { message: "Category not found." };
@@ -137,19 +171,20 @@ export async function createRestockOrderAction(restockOrder: unknown) {
   const currentQuantity = options.quantity;
   const maxQuantity = options.maxQuantity;
 
-  if (orderedQuantity <= 0) {
-    return {
-      message: "The selected quantity must be at least 1.",
-    };
-  } else if (currentQuantity >= maxQuantity) {
-    return {
-      message:
-        "You cannot order more units of this product. The maximum quantity is already reached.",
-    };
-  } else if (orderedQuantity + currentQuantity > maxQuantity) {
-    return {
-      message: `The total quantity cannot exceed the maximum limit of ${maxQuantity}. Please select a quantity no greater than ${maxQuantity - currentQuantity}.`,
-    };
+  switch (true) {
+    case orderedQuantity <= 0:
+      return {
+        message: "The selected quantity must be at least 1.",
+      };
+    case currentQuantity >= maxQuantity:
+      return {
+        message:
+          "You cannot order more units of this product. The maximum quantity is already reached.",
+      };
+    case orderedQuantity + currentQuantity > maxQuantity:
+      return {
+        message: `The total quantity cannot exceed the maximum limit of ${maxQuantity}. Please select a quantity no greater than ${maxQuantity - currentQuantity}.`,
+      };
   }
 
   // Calculate order details
@@ -162,7 +197,7 @@ export async function createRestockOrderAction(restockOrder: unknown) {
     productId: validatedRestockOrder.data.productId,
     supplierId: validatedRestockOrder.data.supplierId,
     userId: session.user.id,
-    type: "Restock",
+    type: "RESTOCK",
     quantity: orderedQuantity,
     subtotal,
     shipping,
@@ -192,11 +227,22 @@ export async function createRestockOrderAction(restockOrder: unknown) {
     return { message: "Failed to update product quantity." };
   }
 
+  // Update warehouse quantity
+  try {
+    await updateWarehouseQuantity(
+      warehouse.id,
+      validatedRestockOrder.data.quantity,
+    );
+  } catch {
+    return { message: "Failed to update warehouse quantity." };
+  }
+
   // Create new activity
   const activity: ActivityEssentials = {
     activity: "Created",
     entity: "Restock",
     product: product.name,
+    userId: session.user.id,
   };
 
   try {
@@ -209,6 +255,9 @@ export async function createRestockOrderAction(restockOrder: unknown) {
 }
 
 export async function updateOrderStatusAction(orderId: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
   // Validation
   const validatedOrderId = orderIdSchema.safeParse(orderId);
   if (!validatedOrderId.success) {
@@ -226,6 +275,7 @@ export async function updateOrderStatusAction(orderId: unknown) {
   const activity: ActivityEssentials = {
     activity: "Updated",
     entity: "Order",
+    userId: session.user.id,
   };
 
   try {

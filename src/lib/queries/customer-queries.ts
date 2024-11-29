@@ -72,7 +72,7 @@ export async function updateCustomerShipmentStatus(
       id: customerShipmentId,
     },
     data: {
-      status: "Delivered",
+      status: "DELIVERED",
     },
   });
 

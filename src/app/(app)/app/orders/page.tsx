@@ -8,6 +8,7 @@ import OrdersActionCard from "@/components/orders/orders-action-card";
 import { columns } from "@/components/tables/orders/columns";
 import OrdersTable from "@/components/tables/orders/orders-table";
 import InvoiceProvider from "@/contexts/invoice-provider";
+import { orderStatuses } from "@/lib/data";
 import {
   getMonthlyOrders,
   getOrders,
@@ -29,11 +30,15 @@ export default async function OrdersPage() {
   const csvData = orders.map((order) => ({
     ID: formatOrderId(order),
     Type: order.type,
-    Name: order.product.name,
+    Product: order.product.name,
     Quantity: order.quantity,
-    Status: order.status,
+    Supplier: order.supplier.name,
+    Status:
+      orderStatuses.find((o) => o.value === order.status)?.label ||
+      order.status,
     Amount: formatCurrency(order.totalPrice),
     Date: format(order.createdAt, "yyyy-MM-dd"),
+    Operator: `${order.user.firstName} ${order.user.lastName}`,
   }));
 
   return (
@@ -57,7 +62,7 @@ export default async function OrdersPage() {
           <div>
             <OrdersTable columns={columns} data={orders} csvData={csvData} />
           </div>
-          <div className="my-[70px]">
+          <div className="my-auto">
             <OrderInvoice />
           </div>
         </section>

@@ -17,10 +17,10 @@ import {
 
 import { updateOrderStatusAction } from "@/app/actions/order-actions";
 import { useInvoice } from "@/hooks/use-invoice";
-import { OrderWithProductAndSupplier } from "@/lib/types";
+import { DetailedOrder } from "@/lib/types";
 
 type OrderActionsProps = {
-  order: OrderWithProductAndSupplier;
+  order: DetailedOrder;
 };
 
 export default function OrderActions({ order }: OrderActionsProps) {
@@ -49,7 +49,7 @@ export default function OrderActions({ order }: OrderActionsProps) {
           >
             View details
           </DropdownMenuItem>
-          {order.status === "Shipped" && (
+          {order.status === "SHIPPED" && (
             <DropdownMenuItem onSelect={() => setIsAlertOpen(true)}>
               Update status
             </DropdownMenuItem>

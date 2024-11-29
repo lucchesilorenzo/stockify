@@ -11,10 +11,10 @@ export async function getProductsByCategory() {
     include: {
       products: {
         where: {
-          status: "In Stock",
+          status: "IN_STOCK",
           orders: {
             every: {
-              status: "Delivered",
+              status: "DELIVERED",
             },
           },
         },
@@ -51,10 +51,10 @@ export async function getProductsByCategory() {
 export async function updateCurrentMonthInventoryValue() {
   const inventoryData = await prisma.product.findMany({
     where: {
-      status: "In Stock",
+      status: "IN_STOCK",
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
     },
@@ -105,10 +105,10 @@ export async function getTopProducts() {
     where: {
       orders: {
         every: {
-          status: "Delivered",
+          status: "DELIVERED",
         },
       },
-      status: "In Stock",
+      status: "IN_STOCK",
     },
     select: {
       name: true,

@@ -14,7 +14,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -23,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TablePagination from "@/components/ui/table-ui/table-pagination";
 import TableSearchInput from "@/components/ui/table-ui/table-search-input";
 
 export interface CustomersTableProps<TData, TValue> {
@@ -123,26 +123,7 @@ export default function CustomersTable<TData, TValue>({
 
       {/* Pagination */}
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount() || 1}
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+        <TablePagination table={table} />
       </div>
     </>
   );

@@ -28,9 +28,9 @@ export const productUploadImageSchema = z.object({
 });
 
 export const productUpdateStatusSchema = z.enum([
-  "In Stock",
-  "Out of Stock",
-  "Archived",
+  "IN_STOCK",
+  "OUT_OF_STOCK",
+  "ARCHIVED",
 ]);
 
 // Types

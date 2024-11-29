@@ -4,14 +4,14 @@ import H1 from "@/components/common/h1";
 import DashboardSummary from "@/components/dashboard/dashboard-summary";
 import ActivitiesTable from "@/components/tables/dashboard/activities-table";
 import { columns } from "@/components/tables/dashboard/columns";
-import { getRecentActivities } from "@/lib/queries/dashboard-queries";
+import { getActivities } from "@/lib/queries/dashboard-queries";
 
 export const metadata: Metadata = {
   title: "Dashboard",
 };
 
 export default async function DashboardPage() {
-  const activities = await getRecentActivities();
+  const activities = await getActivities();
 
   return (
     <main>
