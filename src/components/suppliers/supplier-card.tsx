@@ -11,7 +11,7 @@ type SupplierCardProps = {
 
 export default function SupplierCard({ card }: SupplierCardProps) {
   return (
-    <Card key={card.title}>
+    <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="font-medium">{card.title}</CardTitle>
         <card.icon className="h-4 w-4 text-muted-foreground" />

@@ -86,7 +86,7 @@ model Order {
 model Warehouse {
   id          String   @id @default(cuid())
   name        String   @unique
-  location    String?
+  location    String
   quantity    Int
   maxQuantity Int
   createdAt   DateTime @default(now())

@@ -9,6 +9,7 @@ import {
   CircleHelp,
   CircleOff,
   ClipboardList,
+  Euro,
   Home,
   LineChart,
   Monitor,
@@ -16,9 +17,8 @@ import {
   ShoppingCart,
   Star,
   Timer,
-  TrendingUp,
   Truck,
-  UserRound,
+  UsersRound,
 } from "lucide-react";
 
 import {
@@ -36,7 +36,7 @@ export const routes = [
   { name: "Orders", href: "/app/orders", icon: ShoppingCart },
   { name: "Products", href: "/app/products", icon: Package },
   { name: "Suppliers", href: "/app/suppliers", icon: Truck },
-  { name: "Customers", href: "/app/customers", icon: UserRound },
+  { name: "Customers", href: "/app/customers", icon: UsersRound },
   { name: "Analytics", href: "/app/analytics", icon: LineChart },
 ];
 
@@ -44,7 +44,7 @@ export const dashboardData = [
   {
     title: "Inventory Value",
     description: "Value of your inventory",
-    icon: TrendingUp,
+    icon: Euro,
   },
   {
     title: "Low Stock Products",
