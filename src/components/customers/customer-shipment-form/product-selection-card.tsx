@@ -82,6 +82,7 @@ export default function ProductSelectionCard({
         quantity:
           selectedProducts.find((p) => p.productId === product.id)?.quantity ||
           1,
+        maxQuantity: product.quantity,
       },
     ];
 

@@ -40,7 +40,7 @@ export async function createSupplierAction(supplier: unknown) {
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Created",
+    activity: "CREATED",
     entity: "Supplier",
     userId: session.user.id,
   };
@@ -82,7 +82,7 @@ export async function updateSupplierRatingAction(
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Updated",
+    activity: "UPDATED",
     entity: "Supplier",
     userId: session.user.id,
   };

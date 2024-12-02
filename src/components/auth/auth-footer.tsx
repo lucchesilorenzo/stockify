@@ -1,20 +1,17 @@
 import Link from "next/link";
 
+import { AUTH_FOOTER_TEXTS } from "@/lib/constants";
+
 type AuthFooterProps = {
-  authType: "login" | "signup";
+  authType: "signup" | "login";
 };
 
 export default function AuthFooter({ authType }: AuthFooterProps) {
   return (
     <div className="mt-4 text-center text-sm">
-      {authType === "login"
-        ? "Don't have an account?"
-        : "Already have an account?"}{" "}
-      <Link
-        href={authType === "login" ? "/signup" : "/login"}
-        className="underline"
-      >
-        {authType === "login" ? "Sign up" : "Login"}
+      {AUTH_FOOTER_TEXTS[authType].title}{" "}
+      <Link href={AUTH_FOOTER_TEXTS[authType].href} className="underline">
+        {AUTH_FOOTER_TEXTS[authType].hrefText}
       </Link>
     </div>
   );

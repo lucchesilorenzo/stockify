@@ -33,7 +33,9 @@ export default function WarehouseCard({ card }: WarehouseCardProps) {
           <LocateIcon className="h-4 w-4 text-muted-foreground" />
           <p className="text-sm text-muted-foreground">{card.location}</p>
         </div>
-        <div className="text-2xl font-bold">{card.occupancyRate}%</div>
+        <div className="text-2xl font-bold">
+          {card.occupancyRate.toFixed(1)}%
+        </div>
         <p className="text-xs text-muted-foreground">{card.description}</p>
       </CardContent>
       <CardFooter>

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { Product, Task } from "@prisma/client";
 
-import CustomerEditForm from "../customers/customer-edit-form/customer-edit-form";
+import CustomerEditForm from "../customers/customer-edit-form";
 import OrderForm from "../orders/order-form";
 import RestockOrderForm from "../orders/restock-order-form";
 import SupplierForm from "../suppliers/supplier-form";
@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DIALOG_BTN_VARIANTS } from "@/lib/constants";
 import {
   CustomerWithCustomerShipment,
   FormDialogActionType,
@@ -48,13 +49,6 @@ export default function FormDialog({
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = open ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
-
-  const orderBtnVariants =
-    actionType === "createOrder"
-      ? "default"
-      : actionType === "createRestockOrder"
-        ? "accent"
-        : "default";
 
   function handleFormSubmit() {
     setOpen(false);
@@ -90,7 +84,10 @@ export default function FormDialog({
     return (
       <Dialog open={isOpen} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="icon">
+          <Button
+            variant={DIALOG_BTN_VARIANTS[actionType].variant}
+            size={DIALOG_BTN_VARIANTS[actionType].size}
+          >
             {children}
           </Button>
         </DialogTrigger>
@@ -116,7 +113,10 @@ export default function FormDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={orderBtnVariants} size="default">
+        <Button
+          variant={DIALOG_BTN_VARIANTS[actionType].variant}
+          size={DIALOG_BTN_VARIANTS[actionType].size}
+        >
           {children}
         </Button>
       </DialogTrigger>

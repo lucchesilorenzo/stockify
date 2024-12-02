@@ -3,7 +3,7 @@ import { Prisma, User } from "@prisma/client";
 import { ProductEssentials } from "./product-types";
 
 export type ActivityEssentials = {
-  activity: "Created" | "Updated" | "Deleted" | "Archived" | "Restored";
+  activity: "CREATED" | "UPDATED" | "DELETED" | "ARCHIVED" | "RESTORED";
   entity:
     | "Product"
     | "Order"

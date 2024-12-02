@@ -69,9 +69,10 @@ export const customerEditFormSchema = z.object({
     .min(1, "Email is required.")
     .email("Invalid email address."),
   phone: z
-    .string()
+    .string({
+      required_error: "Phone number is required.",
+    })
     .trim()
-    .min(1, "Phone number is required.")
     .max(15, "Phone number is too long."),
   address: z
     .string()

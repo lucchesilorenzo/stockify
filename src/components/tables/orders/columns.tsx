@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { orderStatuses } from "@/lib/data";
 import { DetailedOrder, OrderStatus, OrderType } from "@/lib/types";
-import { formatCurrency, formatOrderId } from "@/lib/utils";
+import { capitalize, formatCurrency, formatOrderId } from "@/lib/utils";
 
 export const columns: ColumnDef<DetailedOrder>[] = [
   {
@@ -47,7 +47,7 @@ export const columns: ColumnDef<DetailedOrder>[] = [
     },
     cell: ({ row }) => {
       const type: OrderType["value"] = row.getValue("type");
-      const formattedType = type[0].toUpperCase() + type.slice(1).toLowerCase();
+      const formattedType = capitalize(type);
 
       return <Badge variant="outline">{formattedType}</Badge>;
     },
@@ -104,7 +104,7 @@ export const columns: ColumnDef<DetailedOrder>[] = [
       const supplier: string = row.getValue("supplier.name");
 
       return (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex min-w-[150px] items-center justify-center gap-2">
           <Truck className="h-4 w-4 text-muted-foreground" />{" "}
           <span>{supplier}</span>
         </div>
@@ -193,7 +193,9 @@ export const columns: ColumnDef<DetailedOrder>[] = [
       const firstName = row.original.user.firstName;
       const lastName = row.original.user.lastName;
 
-      return <div className="font-medium">{`${firstName} ${lastName}`}</div>;
+      return (
+        <div className="min-w-[150px] font-medium">{`${firstName} ${lastName}`}</div>
+      );
     },
   },
   {

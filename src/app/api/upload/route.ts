@@ -8,6 +8,7 @@ import { productUploadImageSchema } from "@/lib/validations/product-validations"
 
 export async function POST(req: Request) {
   try {
+    // Validation
     const validatedData = productUploadImageSchema.safeParse(
       Object.fromEntries(await req.formData()),
     );
@@ -19,6 +20,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // Destructure data
     const { image: file, productId } = validatedData.data;
 
     // Delete previous file if it exists
@@ -28,14 +30,14 @@ export async function POST(req: Request) {
       await fs.rm(filePath, { force: true });
     }
 
-    // Read file into memory
+    // Convert file to ArrayBuffer
     const buffer = await file.arrayBuffer();
 
     // Create uploads directory if it doesn't exist
     const uploadsDir = path.join(process.cwd(), "public/uploads");
     await fs.mkdir(uploadsDir, { recursive: true });
 
-    // Generate a random name for file
+    // Generate random file name
     const randomFileName = randomUUID() + path.extname(file.name);
 
     // Write file to disk

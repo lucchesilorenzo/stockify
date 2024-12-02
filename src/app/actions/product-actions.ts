@@ -88,7 +88,7 @@ export async function updateProductAction(
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Updated",
+    activity: "UPDATED",
     entity: "Product",
     product: productToUpdate.name,
     userId: session.user.id,
@@ -139,7 +139,7 @@ export async function updateProductStatusAction(
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: `${validatedProductStatus.data !== "ARCHIVED" ? "Archived" : "Restored"}`,
+    activity: `${validatedProductStatus.data !== "ARCHIVED" ? "ARCHIVED" : "RESTORED"}`,
     entity: "Product",
     product: product.name,
     userId: session.user.id,

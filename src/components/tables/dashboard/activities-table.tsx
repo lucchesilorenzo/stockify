@@ -49,8 +49,9 @@ export default function ActivitiesTable<TData, TValue>({
 
   return (
     <>
-      {/* Table */}
       <h2 className="my-6 text-lg font-semibold">Recent Activities</h2>
+
+      {/* Table */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>

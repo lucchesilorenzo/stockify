@@ -16,22 +16,20 @@ import {
 import { cn } from "@/lib/utils";
 import { TSettingsFormSchema } from "@/lib/validations/settings-validations";
 
-type DatePickerProps = {
+type SettingsDatePickerProps = {
   setValue: UseFormSetValue<TSettingsFormSchema>;
-  fieldName: "dateOfBirth";
   defaultValue?: Date;
 };
 
-export default function DatePicker({
+export default function SettingsDatePicker({
   setValue,
   defaultValue,
-  fieldName,
-}: DatePickerProps) {
+}: SettingsDatePickerProps) {
   const [date, setDate] = useState<Date | undefined>(defaultValue);
 
   function handleDateChange(selectedDate?: Date) {
     setDate(selectedDate);
-    setValue(fieldName, selectedDate as Date);
+    setValue("dateOfBirth", selectedDate as Date);
   }
 
   return (

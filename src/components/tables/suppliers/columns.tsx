@@ -56,11 +56,12 @@ export const columns: ColumnDef<SupplierWithOrderCount>[] = [
           toast.error(result?.message);
           return;
         }
+
         toast.success("Rating updated successfully.");
       }
 
       return (
-        <div className="flex min-w-[200px] items-center justify-center">
+        <div className="flex min-w-[150px] items-center justify-center">
           <StarRating
             initialRating={rating}
             onChange={handleRatingChange}

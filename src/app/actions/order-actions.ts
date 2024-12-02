@@ -116,7 +116,7 @@ export async function createOrderAction(order: unknown) {
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Created",
+    activity: "CREATED",
     entity: "Order",
     product: validatedOrder.data.name,
     userId: session.user.id,
@@ -239,7 +239,7 @@ export async function createRestockOrderAction(restockOrder: unknown) {
 
   // Create new activity
   const activity: ActivityEssentials = {
-    activity: "Created",
+    activity: "CREATED",
     entity: "Restock",
     product: product.name,
     userId: session.user.id,
@@ -273,7 +273,7 @@ export async function updateOrderStatusAction(orderId: unknown) {
 
   // Create new activity
   const activity: ActivityEssentials = {
-    activity: "Updated",
+    activity: "UPDATED",
     entity: "Order",
     userId: session.user.id,
   };

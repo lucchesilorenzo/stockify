@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useProduct } from "@/hooks/use-product";
 import { uploadImage } from "@/lib/api";
+import { STATUS_CONFIG } from "@/lib/constants";
 import {
   TProductEditFormSchema,
   productEditFormSchema,
@@ -99,20 +100,10 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         </Button>
         <H1>{product.name}</H1>
         <Badge
-          variant={
-            product.status === "IN_STOCK"
-              ? "default"
-              : product.status === "OUT_OF_STOCK"
-                ? "destructive"
-                : "archived"
-          }
+          variant={STATUS_CONFIG[product.status].variant}
           className="ml-auto sm:ml-0"
         >
-          {product.status === "IN_STOCK"
-            ? "In Stock"
-            : product.status === "OUT_OF_STOCK"
-              ? "Out of Stock"
-              : "Archived"}
+          {STATUS_CONFIG[product.status].label}
         </Badge>
 
         <div className="hidden items-center gap-2 md:ml-auto md:flex">

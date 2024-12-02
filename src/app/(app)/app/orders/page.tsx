@@ -58,7 +58,7 @@ export default async function OrdersPage() {
           <OrderSummaryCard type="week" orders={weeklyOrders} />
         </div>
 
-        <section className="relative grid grid-cols-1 gap-6 xl:grid-cols-[1250px_1fr]">
+        <section className="relative grid grid-cols-1 gap-6 xl:grid-cols-[1300px_1fr]">
           <div>
             <OrdersTable columns={columns} data={orders} csvData={csvData} />
           </div>

@@ -7,7 +7,7 @@ import { ChevronsUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DashboardActivity } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { capitalize, cn } from "@/lib/utils";
 
 export const columns: ColumnDef<DashboardActivity>[] = [
   {
@@ -25,23 +25,24 @@ export const columns: ColumnDef<DashboardActivity>[] = [
     },
     cell: ({ row }) => {
       const activity: DashboardActivity["activity"] = row.getValue("activity");
+      const formattedActivity = capitalize(activity);
 
       let activityColor;
 
       switch (activity) {
-        case "Created":
+        case "CREATED":
           activityColor = "bg-green-100 text-green-800";
           break;
-        case "Updated":
+        case "UPDATED":
           activityColor = "bg-yellow-100 text-yellow-800";
           break;
-        case "Deleted":
+        case "DELETED":
           activityColor = "bg-red-100 text-red-800";
           break;
-        case "Archived":
+        case "ARCHIVED":
           activityColor = "bg-gray-100 text-gray-800";
           break;
-        case "Restored":
+        case "RESTORED":
           activityColor = "bg-cyan-100 text-cyan-800";
           break;
       }
@@ -53,7 +54,7 @@ export const columns: ColumnDef<DashboardActivity>[] = [
             activityColor,
           )}
         >
-          {activity}
+          {formattedActivity}
         </div>
       );
     },

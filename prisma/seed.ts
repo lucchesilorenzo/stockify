@@ -1,86 +1,100 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+import { startOfMonth } from "date-fns";
+
+import {
+  activities,
+  categories,
+  orders,
+  products,
+  suppliers,
+  tasks,
+  warehouses,
+} from "./mock-data";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const user = await prisma.user.create({
+  // Create warehouses
+  await prisma.warehouse.createMany({
+    data: warehouses,
+  });
+
+  // Create categories
+  await prisma.category.createMany({
+    data: categories,
+  });
+
+  // Create suppliers
+  await prisma.supplier.createMany({
+    data: suppliers,
+  });
+
+  // Create user
+  await prisma.user.create({
     data: {
-      email: "john.doe@example.com",
-      hashedPassword: "hashedpassword123",
-      firstName: "John",
-      lastName: "Doe",
-      dateOfBirth: new Date("1990-01-01"),
-      phone: "1234567890",
-      bio: "Warehouse manager",
-      address: "123 Main St",
-      city: "Metropolis",
-      zipCode: "10001",
+      id: "cm466qyf100004ov2f62p5gm6",
+      email: "lorenzolucchesi@gmail.com",
+      hashedPassword: await bcrypt.hash("test", 10),
+      firstName: "Lorenzo",
+      lastName: "Lucchesi",
+      dateOfBirth: "1984-09-20T22:00:00.000Z",
+      phone: "+393304456032",
+      bio: "I'm the admin!",
+      address: "123 Main St.",
+      city: "San Francisco, CA",
+      zipCode: "94105",
     },
   });
 
-  const supplier = await prisma.supplier.create({
-    data: {
-      name: "Best Supplier Inc.",
-      email: "supplier@example.com",
-      phone: "0987654321",
-      address: "456 Supplier Rd",
-      city: "Supplier City",
-      zipCode: "20002",
-      website: "https://bestsupplier.com",
-      rating: 5,
+  // Create tasks
+  await prisma.task.createMany({
+    data: tasks,
+  });
+
+  // Create products
+  await prisma.product.createMany({
+    data: products,
+  });
+
+  // Create orders
+  await prisma.order.createMany({
+    data: orders,
+  });
+
+  // Create activities
+  await prisma.activity.createMany({
+    data: activities,
+  });
+
+  // Create monthly inventory values
+  const uniqueMonths = await prisma.order.groupBy({
+    by: ["createdAt"],
+    _count: {
+      createdAt: true,
     },
   });
 
-  const category = await prisma.category.create({
-    data: {
-      name: "Electronics",
-      taxRate: 0.21,
-    },
-  });
+  await Promise.all(
+    uniqueMonths.map(async (monthGroup) => {
+      const monthStart = startOfMonth(new Date(monthGroup.createdAt));
+      await prisma.monthlyInventoryValue.upsert({
+        where: { month: monthStart },
+        update: {},
+        create: {
+          month: monthStart,
+          totalValue: parseFloat((Math.random() * 10000 + 5000).toFixed(2)),
+        },
+      });
+    }),
+  );
 
-  const warehouse = await prisma.warehouse.create({
-    data: {
-      name: "Main Warehouse",
-      location: "Warehouse District",
-      quantity: 100,
-      maxQuantity: 1000,
-    },
-  });
-
-  const product = await prisma.product.create({
-    data: {
-      name: "Laptop",
-      slug: "laptop-2024",
-      sku: "LPT123",
-      price: 999.99,
-      quantity: 50,
-      maxQuantity: 100,
-      description: "High performance laptop",
-      status: "IN_STOCK",
-      category: { connect: { id: category.id } },
-      warehouse: { connect: { id: warehouse.id } },
-    },
-  });
-
-  await prisma.order.create({
-    data: {
-      type: "PURCHASE",
-      quantity: 10,
-      subtotal: 9999.9,
-      shipping: 50,
-      tax: 2100,
-      totalPrice: 12149.9,
-      status: "SHIPPED",
-      user: { connect: { id: user.id } },
-      supplier: { connect: { id: supplier.id } },
-      product: { connect: { id: product.id } },
-    },
-  });
+  console.log("Database seeded successfully!");
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("Error seeding database:", e);
     process.exit(1);
   })
   .finally(async () => {

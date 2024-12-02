@@ -55,7 +55,7 @@ export async function createTaskAction(task: unknown) {
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Created",
+    activity: "CREATED",
     entity: "Task",
     userId: session.user.id,
   };
@@ -92,7 +92,7 @@ export async function deleteTaskAction(taskId: unknown) {
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Deleted",
+    activity: "DELETED",
     entity: "Task",
     userId: session.user.id,
   };
@@ -160,13 +160,12 @@ export async function updateTaskFieldAction(
         return { message: "Task not found." };
       }
     }
-    console.error(error);
     return { message: "Failed to update task." };
   }
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Updated",
+    activity: "UPDATED",
     entity: "Task",
     userId: session.user.id,
   };
@@ -210,7 +209,7 @@ export async function updateTaskAction(task: unknown, taskId: unknown) {
 
   // Create a new activity
   const activity: ActivityEssentials = {
-    activity: "Updated",
+    activity: "UPDATED",
     entity: "Task",
     userId: session.user.id,
   };

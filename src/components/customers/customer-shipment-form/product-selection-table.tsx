@@ -62,6 +62,7 @@ export default function ProductSelectionTable({
                 id={`product-quantity-${product.productId}`}
                 type="number"
                 min={1}
+                max={product.maxQuantity}
                 step={1}
                 defaultValue={product.quantity}
                 onChange={(e) => handleOnChange(e, product)}

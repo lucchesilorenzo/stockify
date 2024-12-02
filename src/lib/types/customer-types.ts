@@ -45,6 +45,7 @@ export type CustomerSelectedProduct = {
   name: string;
   price: number;
   quantity: number;
+  maxQuantity: number;
 };
 
 export type CustomerShipmentEssentials = Omit<

@@ -1,31 +1,32 @@
-# Stockify
+<h1 align="center">
+  <br />
+  <img src="screenshots/stockify-logo.png" alt="Stockify" width="300" />
+  <br />
+  Stockify
+  <br />
+</h1>
 
-![Stockify Main Screenshot](screenshots/stockify-main.png)
+<h4 align="center">A warehouse management system designed to simplify inventory management for warehouse workers.</h4>
 
-## Overview
-
-**Stockify** is a warehouse management system designed to simplify inventory management for warehouse workers. It provides an intuitive interface for adding new products, reordering stock, creating orders, managing tasks, tracking suppliers, monitoring inventory statistics, and much more.
-
-_Note: The application supports both light and dark modes, enhancing user experience._
+<p align="center"><em>Note: The application supports both light and dark modes, enhancing user experience.</em></p>
 
 ## Features
 
 ### 1. **Dashboard**
 
 - Real-time updates on key warehouse metrics.
-- Track the total inventory value, low-stock products, shipped orders, and total products in stock.
-- Activity logs displaying recent actions, such as order creation and stock updates.
+- Track inventory value, low-stock products, shipped orders, and total products in stock.
+- View recent actions like order creation and stock updates.
 
 ![Stockify 1 Screenshot](screenshots/stockify-1.png)
 
 ### 2. **Tasks**
 
-- Manage and track warehouse operations with unique task IDs.
-- Categorize tasks with labels (Shipping, Quality, Inventory, Customer).
-- Set priority levels and track task status.
-- Filter, sort, and search tasks.
-- AI-powered task generation using Ollama integration.
-- Create, edit, and delete tasks as needed.
+- Manage warehouse operations with task IDs, labels, and priority levels.
+- AI-powered task generation using [Ollama](https://github.com/ollama/ollama-js).
+- Create, edit, delete, filter, and search tasks.
+
+![Stockify 2 Screenshot](screenshots/stockify-2.png)
 
 ### 3. **Orders**
 
@@ -33,9 +34,7 @@ _Note: The application supports both light and dark modes, enhancing user experi
 - Place restock orders for products already in inventory.
 - View order status, receipts, and the total number of orders placed in the current month and week.
 
-![Stockify 2 Screenshot - Dark Mode](screenshots/stockify-2.png)
-
-![Stockify 3 Screenshot - Light Mode](screenshots/stockify-3.png)
+![Stockify 3 Screenshot](screenshots/stockify-3.png)
 
 ### 4. **Products**
 
@@ -52,67 +51,82 @@ _Note: The application supports both light and dark modes, enhancing user experi
 - View supplier profiles with contact details and order history.
 - Monitor overall supplier metrics and individual ratings.
 
-### 6. **Analytics**
-
-- Visual charts and graphs provide insightful inventory data:
-
-  - **Product Categories**: A pie chart showing the distribution of products by category.
-  - **Monthly Inventory Value**: A line chart illustrating the inventory value trend over time.
-  - **Top 5 Highest Value Products**: A bar chart highlighting the top 5 products by total value.
-
 ![Stockify 5 Screenshot](screenshots/stockify-5.png)
+
+### 6. **Customers**
+
+- Manage customer information and track their shipments.
+- Add new customers with detailed contact information.
+- View customer profiles including personal details and shipment history.
+- Create and manage shipments for customers.
+- Filter, sort, and search customers for easy access to information.
 
 ![Stockify 6 Screenshot](screenshots/stockify-6.png)
 
-### 7. **Settings**
-
-- Manage account settings, including adding or updating account information.
-
 ![Stockify 7 Screenshot](screenshots/stockify-7.png)
 
-### 8. **Sign Up / Log In**
+### 7. **Analytics**
 
-- **User Authentication:** Users can easily create an account or log in to access the dashboard. The signup and login forms are designed to be user-friendly, ensuring a smooth onboarding experience.
-- **Secure Access:** The application utilizes secure authentication methods to protect user data, ensuring that sensitive information remains private.
+- Visual charts and graphs provide insightful inventory data:
+
+  - **Product Categories:** A pie chart showing the distribution of products by category.
+  - **Monthly Inventory Value:** A line chart illustrating the inventory value trend over time.
+  - **Top 5 Highest Value Products:** A bar chart highlighting the top 5 products by total value.
 
 ![Stockify 8 Screenshot](screenshots/stockify-8.png)
 
 ![Stockify 9 Screenshot](screenshots/stockify-9.png)
 
+### 8. **Settings**
+
+- Manage account settings, including adding or updating account information.
+
+![Stockify 10 Screenshot](screenshots/stockify-10.png)
+
+### 9. **Sign Up / Log In**
+
+- **User Authentication:** Users can easily create an account or log in to access the dashboard. The signup and login forms are designed to be user-friendly, ensuring a smooth onboarding experience.
+
+![Stockify 11 Screenshot](screenshots/stockify-11.png)
+
+![Stockify 12 Screenshot](screenshots/stockify-12.png)
+
 ## Tech Stack
 
 Stockify is built using modern and efficient web technologies:
 
-- **Front-end**:
-  - [React](https://reactjs.org/) for building user interfaces.
-  - [Tailwind CSS](https://tailwindcss.com/) for utility-first styling.
-  - [Shadcn/ui](https://ui.shadcn.com/) for pre-built, customizable UI components.
-- **Back-end**:
-  - [Next.js](https://nextjs.org/) for handling backend logic.
-  - [Auth.js](https://authjs.dev/) for authentication and authorization.
-- **Database**:
-  - [Prisma](https://www.prisma.io/) as the database ORM.
-- **Type Safety**:
-  - [TypeScript](https://www.typescriptlang.org/) for type safety and code quality.
-- **Form Management and Validation**:
-  - [React Hook Form](https://react-hook-form.com/) for efficient form management.
-  - [Zod](https://zod.dev/) for schema validation.
-- **Date Manipulation**:
-  - [date-fns](https://date-fns.org/) for date manipulation.
-- **Charts**:
-  - [Recharts](https://recharts.org/en-US/) for visual data representation.
-- **Date Picking**:
-  - [React Day Picker](https://react-day-picker.js.org/) for date selection in forms.
-- **CSV Export**:
-  - [React CSV](https://github.com/react-csv/react-csv) for exporting data to CSV files.
-- **Task Scheduling**:
-  - [Node Cron](https://github.com/merencia/node-cron) for scheduling tasks.
-- **AI Integration**:
-  - [Ollama](https://github.com/ollama/ollama-js) for AI integration.
+**Front-end:**
+
+- [TypeScript](https://www.typescriptlang.org/) for type safety and code quality.
+- [React](https://reactjs.org/) for building user interfaces.
+- [Tailwind CSS](https://tailwindcss.com/) for utility-first styling.
+- [Shadcn/ui](https://ui.shadcn.com/) for pre-built, customizable UI components.
+
+**Back-end:**
+
+- [Next.js](https://nextjs.org/) for handling backend logic.
+- [Auth.js](https://authjs.dev/) for authentication and authorization.
+
+**Database:**
+
+- [Prisma](https://www.prisma.io/) as the database ORM.
+
+**Other Libraries:**
+
+- [React Hook Form](https://react-hook-form.com/) for efficient form management.
+- [Zod](https://zod.dev/) for schema validation.
+- [date-fns](https://date-fns.org/) for date manipulation.
+- [Recharts](https://recharts.org/en-US/) for visual data representation.
+- [React Day Picker](https://react-day-picker.js.org/) for date selection in forms.
+- [React CSV](https://github.com/react-csv/react-csv) for exporting data to CSV files.
+- [Node Cron](https://github.com/merencia/node-cron) for scheduling tasks.
+- [Ollama](https://github.com/ollama/ollama-js) for AI integration.
 
 ## Getting Started
 
-### Requisites
+### Prerequisites
+
+Ensure you have the following installed:
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en/)
@@ -161,8 +175,9 @@ Stockify is built using modern and efficient web technologies:
 
 ## Database Schema
 
-The project uses **Prisma** ORM for database management. Here’s a basic overview of the core models:
-!["Prisma ER Diagram"](./screenshots/database-schema.svg)
+Here’s a basic overview of the core models:
+
+![Prisma ER Diagram](./screenshots/database-schema.svg)
 
 ## License
 

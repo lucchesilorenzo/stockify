@@ -29,16 +29,15 @@ export const orderFormSchema = z
       })
       .int("Quantity must be an integer.")
       .positive("Quantity must be a positive number.")
-      .min(1, "Quantity is required.")
-      .max(100, "Quantity is too long."),
+      .min(1, "Quantity is required."),
     maxQuantity: z.coerce
       .number({
-        invalid_type_error: "Max Quantity must be a number.",
+        invalid_type_error: "Max quantity must be a number.",
       })
-      .int("Max Quantity must be an integer.")
-      .positive("Max Quantity must be a positive number.")
-      .min(1, "Max Quantity is required.")
-      .max(100, "Max Quantity is too long."),
+      .int("Max quantity must be an integer.")
+      .positive("Max quantity must be a positive number.")
+      .min(1, "Max quantity is required.")
+      .max(500, "Max quantity is too long."),
   })
   .refine((data) => data.quantity <= data.maxQuantity, {
     message: "Quantity must be less than or equal to Max Quantity.",

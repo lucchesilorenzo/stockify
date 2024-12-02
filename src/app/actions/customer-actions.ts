@@ -59,7 +59,7 @@ export async function createShipmentAction(shipment: unknown) {
   // Create new activity if a new customer was created
   if (newCustomer) {
     const activity: ActivityEssentials = {
-      activity: "Created",
+      activity: "CREATED",
       entity: "Customer",
       userId: session.user.id,
     };
@@ -132,7 +132,7 @@ export async function createShipmentAction(shipment: unknown) {
 
   // Create new activity
   const activity: ActivityEssentials = {
-    activity: "Created",
+    activity: "CREATED",
     entity: "Shipment",
     product: validatedShipment.data.products.map((p) => p.name).join(", "),
     userId: session.user.id,
@@ -171,7 +171,7 @@ export async function updateCustomerAction(customer: unknown) {
 
   // Create new activity
   const activity: ActivityEssentials = {
-    activity: "Updated",
+    activity: "UPDATED",
     entity: "Customer",
     userId: session.user.id,
   };

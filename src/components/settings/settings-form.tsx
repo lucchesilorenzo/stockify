@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import DatePicker from "../common/date-picker";
 import { LoadingButton } from "../common/loading-button";
 import EmailInput from "../ui/email-input";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { PhoneInput } from "../ui/phone-input";
 import { Textarea } from "../ui/textarea";
+import SettingsDatePicker from "./settings-date-picker";
 
 import { updateSettingsAction } from "@/app/actions/settings-actions";
 import { UserSettings } from "@/lib/types";
@@ -90,10 +90,9 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
 
         <div className="flex flex-col space-y-2">
           <Label htmlFor="dateOfBirth">Date of birth</Label>
-          <DatePicker
+          <SettingsDatePicker
             defaultValue={userSettings?.dateOfBirth ?? undefined}
             setValue={setValue}
-            fieldName="dateOfBirth"
           />
           {errors.dateOfBirth && (
             <p className="px-1 text-sm text-red-600">
@@ -127,7 +126,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
               <PhoneInput
                 {...field}
                 id="phone"
-                placeholder="Enter phone number"
+                placeholder="330 123 4567"
                 autoComplete="tel"
                 defaultCountry="IT"
               />
@@ -159,7 +158,7 @@ export default function SettingsForm({ userSettings }: SettingsFormProps) {
           <Input
             defaultValue={userSettings?.city ?? ""}
             id="city"
-            placeholder="San Francisco"
+            placeholder="San Francisco, CA"
             {...register("city")}
           />
           {errors.city && (

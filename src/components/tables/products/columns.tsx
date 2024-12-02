@@ -27,6 +27,7 @@ export const columns: ColumnDef<ProductWithCategoryAndWarehouse>[] = [
     },
     cell: ({ row }) => {
       const name: Product["name"] = row.getValue("name");
+
       return <div className="min-w-[150px] font-medium">{name}</div>;
     },
   },
