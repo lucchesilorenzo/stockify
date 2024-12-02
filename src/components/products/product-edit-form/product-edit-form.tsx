@@ -19,7 +19,7 @@ import { LoadingButton } from "@/components/common/loading-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useProduct } from "@/hooks/use-product";
-import { uploadImage } from "@/lib/api";
+import { uploadProductImage } from "@/lib/api";
 import { STATUS_CONFIG } from "@/lib/constants";
 import {
   TProductEditFormSchema,
@@ -65,9 +65,8 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
       if (file.type.startsWith("image")) {
         const formData = new FormData();
         formData.append("image", file);
-        formData.append("productId", product.id);
 
-        const uploadResponse = await uploadImage(formData);
+        const uploadResponse = await uploadProductImage(formData, product.id);
 
         if (uploadResponse.message) {
           toast.error(uploadResponse.message);

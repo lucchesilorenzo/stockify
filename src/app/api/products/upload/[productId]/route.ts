@@ -1,30 +1,44 @@
 import { randomUUID } from "crypto";
 import { promises as fs } from "fs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 
 import { getProductById } from "@/lib/queries/product-queries";
-import { productUploadImageSchema } from "@/lib/validations/product-validations";
+import {
+  productIdSchema,
+  productImageSchema,
+} from "@/lib/validations/product-validations";
 
-export async function POST(req: Request) {
+type ImageUpload = {
+  params: {
+    productId: unknown;
+  };
+};
+
+export async function POST(req: NextRequest, { params }: ImageUpload) {
   try {
-    // Validation
-    const validatedData = productUploadImageSchema.safeParse(
-      Object.fromEntries(await req.formData()),
-    );
-
-    if (!validatedData.success) {
+    // Validate product ID
+    const validatedProductId = productIdSchema.safeParse(params.productId);
+    if (!validatedProductId.success) {
       return NextResponse.json(
-        { message: "Invalid form data." },
+        { message: "Invalid product ID." },
         { status: 400 },
       );
     }
 
+    // Validate formData (image)
+    const validatedImage = productImageSchema.safeParse(
+      Object.fromEntries(await req.formData()),
+    );
+    if (!validatedImage.success) {
+      return NextResponse.json({ message: "Invalid image." }, { status: 400 });
+    }
+
     // Destructure data
-    const { image: file, productId } = validatedData.data;
+    const { image: file } = validatedImage.data;
 
     // Delete previous file if it exists
-    const product = await getProductById(productId);
+    const product = await getProductById(validatedProductId.data);
     if (product && product.image && product.image !== "/placeholder.svg") {
       const filePath = path.join(process.cwd(), "public", product.image);
       await fs.rm(filePath, { force: true });

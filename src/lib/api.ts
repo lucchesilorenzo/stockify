@@ -1,5 +1,10 @@
-export async function uploadImage(formData: FormData) {
-  const res = await fetch("/api/upload", {
+import { Product } from "@prisma/client";
+
+export async function uploadProductImage(
+  formData: FormData,
+  productId: Product["id"],
+) {
+  const res = await fetch(`/api/products/upload/${productId}`, {
     method: "POST",
     body: formData,
   });
