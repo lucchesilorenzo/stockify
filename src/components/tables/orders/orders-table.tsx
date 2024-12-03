@@ -61,42 +61,43 @@ export default function OrdersTable<TData, TValue>({
   return (
     <>
       {/* Filters and actions */}
-      <div className="my-4">
-        <div className="relative flex items-center space-x-2">
-          <TableSearchInput
-            table={table}
-            column="product.name"
-            id="order-search"
-            placeholder="Filter orders..."
-            className="w-[180px] pl-10 sm:w-full"
-          />
+      <div>
+        <div className="flex items-center justify-between gap-x-4 py-4">
+          <div className="relative flex items-center space-x-2">
+            <TableSearchInput
+              table={table}
+              column="product.name"
+              id="order-search"
+              placeholder="Filter orders..."
+            />
 
-          <TableSelect
-            table={table}
-            column="type"
-            id="order-select"
-            placeholder="Select order type"
-            defaultOptionLabel="All Types"
-            orderItems={orderTypes}
-            className="w-[100px] sm:w-full"
-            type="order"
-          />
+            <TableSelect
+              table={table}
+              column="type"
+              id="order-select"
+              placeholder="Select order type"
+              defaultOptionLabel="All Types"
+              orderItems={orderTypes}
+              type="order"
+              className="w-[100px] md:w-[300px]"
+            />
 
-          <TableSelect
-            table={table}
-            column="status"
-            id="status-order-select"
-            placeholder="Select order status"
-            defaultOptionLabel="All Statuses"
-            orderItems={orderStatuses}
-            className="w-[100px] sm:w-full"
-            type="order"
-          />
+            <TableSelect
+              table={table}
+              column="status"
+              id="status-order-select"
+              placeholder="Select order status"
+              defaultOptionLabel="All Statuses"
+              orderItems={orderStatuses}
+              type="order"
+              className="w-[100px] md:w-[300px]"
+            />
 
-          <CSVExport data={csvData} filename="orders.csv">
-            <Download className="h-4 w-4 sm:mr-2" />
-            <span className="hidden sm:block">Export</span>
-          </CSVExport>
+            <CSVExport data={csvData} fileName="orders.csv">
+              <Download className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:block">Export</span>
+            </CSVExport>
+          </div>
         </div>
       </div>
 

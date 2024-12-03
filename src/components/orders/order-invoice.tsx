@@ -1,9 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { X } from "lucide-react";
 
-import { Button } from "../ui/button";
 import OrderInvoiceItem from "./order-invoice-item";
 
 import {
@@ -14,13 +12,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useInvoice } from "@/hooks/use-invoice";
+import { DetailedOrder } from "@/lib/types";
 import { formatOrderId } from "@/lib/utils";
 
-export default function OrderInvoice() {
-  const { isInvoiceOpen, order, handleCloseInvoice } = useInvoice();
+type OrderInvoiceProps = {
+  order: DetailedOrder;
+};
 
-  if (!isInvoiceOpen || !order) return null;
+export default function OrderInvoice({ order }: OrderInvoiceProps) {
+  if (!order) return null;
 
   const orderInvoiceData = [
     {
@@ -28,25 +28,33 @@ export default function OrderInvoice() {
       label: `${order.product.name} x ${order.quantity}`,
       amount: order.subtotal,
     },
-    { id: 2, label: "Subtotal", amount: order.subtotal },
-    { id: 3, label: "Shipping", amount: order.shipping },
-    { id: 4, label: "Tax", amount: order.tax },
-    { id: 5, label: "Total", amount: order.totalPrice },
+    {
+      id: 2,
+      label: "Subtotal",
+      amount: order.subtotal,
+    },
+    {
+      id: 3,
+      label: "Shipping",
+      amount: order.shipping,
+    },
+    {
+      id: 4,
+      label: "Tax",
+      amount: order.tax,
+    },
+    {
+      id: 5,
+      label: "Total",
+      amount: order.totalPrice,
+    },
   ];
 
   return (
-    <Card className="relative overflow-hidden">
-      <Button
-        className="absolute right-2 top-2 border-none bg-transparent p-1"
-        onClick={handleCloseInvoice}
-        aria-label="Close invoice"
-        variant="link"
-      >
-        <X className="h-6 w-6 text-muted-foreground transition hover:text-foreground" />
-      </Button>
-      <CardHeader className="flex flex-row items-start bg-muted/50">
+    <Card className="overflow-hidden">
+      <CardHeader className="bg-muted">
         <div className="grid gap-0.5">
-          <CardTitle className="group flex items-center gap-2 text-lg">
+          <CardTitle className="flex items-center gap-2 text-lg">
             Order # {formatOrderId(order)}
           </CardTitle>
           <CardDescription>
@@ -62,7 +70,7 @@ export default function OrderInvoice() {
           ))}
         </ul>
       </CardContent>
-      <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+      <CardFooter className="flex items-center border-t bg-muted px-6 py-3">
         <div className="text-xs text-muted-foreground">
           Updated{" "}
           <time dateTime={order.updatedAt.toISOString()}>

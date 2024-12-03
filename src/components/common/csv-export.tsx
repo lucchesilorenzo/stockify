@@ -21,17 +21,17 @@ const CSVLink = dynamic(() => import("react-csv").then((mod) => mod.CSVLink), {
 type CSVExportProps = {
   children: React.ReactNode;
   data: Record<string, string | number>[];
-  filename: string;
+  fileName: string;
 };
 
 export default function CSVExport({
   children,
   data,
-  filename,
+  fileName,
 }: CSVExportProps) {
   return (
     <Button variant="outline" asChild>
-      <CSVLink data={data} filename={filename}>
+      <CSVLink data={data} filename={fileName}>
         {children}
       </CSVLink>
     </Button>

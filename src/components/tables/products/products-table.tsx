@@ -80,10 +80,12 @@ export default function ProductsTable<TData, TValue>({
               placeholder="Select categories"
               defaultOptionLabel="All Categories"
               categoryItems={categories}
+              className="w-[100px] md:w-[300px]"
             />
 
             <ProductTablePopover table={table} />
-            <CSVExport data={csvData} filename="products.csv">
+
+            <CSVExport data={csvData} fileName="products.csv">
               <Download className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:block">Export</span>
             </CSVExport>

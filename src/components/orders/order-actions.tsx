@@ -14,9 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import OrderInvoiceDialog from "./order-invoice-dialog";
 
 import { updateOrderStatusAction } from "@/app/actions/order-actions";
-import { useInvoice } from "@/hooks/use-invoice";
 import { DetailedOrder } from "@/lib/types";
 
 type OrderActionsProps = {
@@ -24,8 +24,8 @@ type OrderActionsProps = {
 };
 
 export default function OrderActions({ order }: OrderActionsProps) {
-  const { handleIsInvoiceOpenAndSetOrder } = useInvoice();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
 
   async function onUpdateOrderStatus() {
     await updateOrderStatusAction(order.id);
@@ -44,9 +44,7 @@ export default function OrderActions({ order }: OrderActionsProps) {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onSelect={() => handleIsInvoiceOpenAndSetOrder(order)}
-          >
+          <DropdownMenuItem onSelect={() => setIsInvoiceOpen(true)}>
             View details
           </DropdownMenuItem>
           {order.status === "SHIPPED" && (
@@ -56,6 +54,12 @@ export default function OrderActions({ order }: OrderActionsProps) {
           )}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <OrderInvoiceDialog
+        open={isInvoiceOpen}
+        setOpen={setIsInvoiceOpen}
+        order={order}
+      />
 
       <MainAlertDialog
         open={isAlertOpen}
