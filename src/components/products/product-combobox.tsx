@@ -23,17 +23,17 @@ import {
 import { cn } from "@/lib/utils";
 import { TRestockOrderFormSchema } from "@/lib/validations/order-validations";
 
-type OrderComboboxProps = {
+type ProductComboboxProps = {
   products: Product[];
   setValue: UseFormSetValue<TRestockOrderFormSchema>;
   fieldName: "productId";
 };
 
-export default function OrderCombobox({
+export default function ProductCombobox({
   products,
   setValue,
   fieldName,
-}: OrderComboboxProps) {
+}: ProductComboboxProps) {
   const [open, setOpen] = useState(false);
   const [internalValue, setInternalValue] = useState("");
 

@@ -5,6 +5,7 @@ import { Product } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
 import { LoadingButton } from "../common/loading-button";
+import ProductCombobox from "../products/product-combobox";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
@@ -14,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import OrderCombobox from "./order-combobox";
 
 import { useOrder } from "@/hooks/use-order";
 import {
@@ -58,7 +58,7 @@ export default function RestockOrderForm({
           <Label htmlFor="productId">
             Product <span className="text-red-600">*</span>
           </Label>
-          <OrderCombobox
+          <ProductCombobox
             products={products}
             setValue={setValue}
             fieldName="productId"
