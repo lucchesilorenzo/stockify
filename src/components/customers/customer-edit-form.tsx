@@ -5,11 +5,11 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { updateCustomerAction } from "@/app/actions/customer-actions";
+import EmailInput from "@/components/common/email-input";
 import { LoadingButton } from "@/components/common/loading-button";
-import EmailInput from "@/components/ui/email-input";
+import { PhoneInput } from "@/components/common/phone-input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PhoneInput } from "@/components/ui/phone-input";
 import { CustomerWithCustomerShipment } from "@/lib/types";
 import {
   TCustomerEditFormSchema,
@@ -107,13 +107,13 @@ export default function CustomerEditForm({
             Phone <span className="text-red-600">*</span>
           </Label>
           <Controller
+            defaultValue={customer?.phone ?? ""}
             name="phone"
             control={control}
             render={({ field }) => (
               <PhoneInput
                 {...field}
                 id="phone"
-                value={customer?.phone ?? ""}
                 placeholder="Enter customer phone number"
                 autoComplete="tel"
                 defaultCountry="IT"

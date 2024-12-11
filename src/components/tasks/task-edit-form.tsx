@@ -3,7 +3,7 @@ import { Task } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import TaskFormDatePicker from "../task-form/task-form-date-picker";
+import TaskFormDatePicker from "./task-form/task-form-date-picker";
 
 import { updateTaskAction } from "@/app/actions/task-actions";
 import { LoadingButton } from "@/components/common/loading-button";

@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import EmailInput from "../common/email-input";
 import { LoadingButton } from "../common/loading-button";
-import EmailInput from "../ui/email-input";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { PhoneInput } from "../ui/phone-input";
 
 import { createSupplierAction } from "@/app/actions/supplier-actions";
+import { PhoneInput } from "@/components/common/phone-input";
 import {
   TSupplierFormSchema,
   supplierFormSchema,

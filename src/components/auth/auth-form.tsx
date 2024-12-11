@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import EmailInput from "../common/email-input";
 import { LoadingButton } from "../common/loading-button";
-import EmailInput from "../ui/email-input";
-import PasswordInput from "../ui/password-input";
+import PasswordInput from "../common/password-input";
 
 import { logInAction, signUpAction } from "@/app/actions/auth-actions";
 import { Input } from "@/components/ui/input";

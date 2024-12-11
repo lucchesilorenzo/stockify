@@ -4,15 +4,14 @@ import { useState } from "react";
 
 import { Product, Task } from "@prisma/client";
 
-import CustomerEditForm from "../customers/customer-edit-form";
-import OrderForm from "../orders/order-form";
-import RestockOrderForm from "../orders/restock-order-form";
-import SupplierForm from "../suppliers/supplier-form";
-import TaskEditForm from "../tasks/task-edit-form/task-edit-form";
-import TaskForm from "../tasks/task-form/task-form";
-import TaskGenerationForm from "../tasks/task-generation-form";
-import { Button } from "../ui/button";
-
+import CustomerEditForm from "@/components/customers/customer-edit-form";
+import OrderForm from "@/components/orders/order-form";
+import RestockOrderForm from "@/components/orders/restock-order-form";
+import SupplierForm from "@/components/suppliers/supplier-form";
+import TaskEditForm from "@/components/tasks/task-edit-form";
+import TaskForm from "@/components/tasks/task-form/task-form";
+import TaskGenerationForm from "@/components/tasks/task-generation-form";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,

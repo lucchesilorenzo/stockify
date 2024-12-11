@@ -10,6 +10,8 @@ import {
 
 import CustomerInfoFormSelect from "./customer-info-form-select";
 
+import EmailInput from "@/components/common/email-input";
+import { PhoneInput } from "@/components/common/phone-input";
 import {
   Card,
   CardContent,
@@ -17,10 +19,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import EmailInput from "@/components/ui/email-input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PhoneInput } from "@/components/ui/phone-input";
 import { useCustomer } from "@/hooks/use-customer";
 import { TShippingFormSchema } from "@/lib/validations/customer-validations";
 

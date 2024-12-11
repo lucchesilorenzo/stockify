@@ -4,15 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import EmailInput from "../common/email-input";
 import { LoadingButton } from "../common/loading-button";
-import EmailInput from "../ui/email-input";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { PhoneInput } from "../ui/phone-input";
 import { Textarea } from "../ui/textarea";
 import SettingsDatePicker from "./settings-date-picker";
 
 import { updateSettingsAction } from "@/app/actions/settings-actions";
+import { PhoneInput } from "@/components/common/phone-input";
 import { UserSettings } from "@/lib/types";
 import {
   TSettingsFormSchema,
