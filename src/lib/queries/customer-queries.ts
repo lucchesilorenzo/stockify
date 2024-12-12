@@ -44,6 +44,14 @@ export async function createCustomer(customer: CustomerEssentials) {
   return newCustomer;
 }
 
+export async function createCustomers(customers: CustomerEssentials[]) {
+  const newCustomers = await prisma.customer.createMany({
+    data: customers,
+  });
+
+  return newCustomers;
+}
+
 export async function createCustomerShipment(
   shipment: CustomerShipmentEssentials,
 ) {

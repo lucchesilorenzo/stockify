@@ -7,6 +7,7 @@ import {
   createCustomer,
   createCustomerItems,
   createCustomerShipment,
+  createCustomers,
   getCustomerByEmail,
   updateCustomerById,
   updateCustomerShipmentStatus,
@@ -17,6 +18,7 @@ import { updateWarehouseQuantities } from "@/lib/queries/warehouse-queries";
 import { ActivityEssentials } from "@/lib/types";
 import { checkAuth } from "@/lib/utils";
 import {
+  CSVCustomerEssentials,
   customerEditFormSchema,
   shippingFormSchema,
 } from "@/lib/validations/customer-validations";
@@ -172,6 +174,44 @@ export async function updateCustomerAction(customer: unknown) {
   // Create new activity
   const activity: ActivityEssentials = {
     activity: "UPDATED",
+    entity: "Customer",
+    userId: session.user.id,
+  };
+
+  try {
+    await createActivity(activity);
+  } catch {
+    return { message: "Failed to create activity." };
+  }
+
+  revalidatePath("/app/customers");
+}
+
+export async function createCustomersFromCSVAction(csvData: unknown) {
+  // Check if user is authenticated
+  const session = await checkAuth();
+
+  // Validation
+  const validatedCustomersData = CSVCustomerEssentials.safeParse(csvData);
+  if (!validatedCustomersData.success) {
+    return { message: "Invalid CSV file format." };
+  }
+
+  // Create customers
+  try {
+    await createCustomers(validatedCustomersData.data);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return { message: "Email or phone have already been taken." };
+      }
+    }
+    return { message: "Failed to create customers." };
+  }
+
+  // Create new activity
+  const activity: ActivityEssentials = {
+    activity: "CREATED",
     entity: "Customer",
     userId: session.user.id,
   };
