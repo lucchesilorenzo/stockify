@@ -52,7 +52,7 @@ export async function createOrderAction(order: unknown) {
   if (!category) return { message: "Category not found." };
 
   // Destructure order data
-  const { supplierId, ...productData } = validatedOrder.data;
+  const { supplierId, vatRate, ...productData } = validatedOrder.data;
 
   // Generate SKU and slug
   const sku = generateSKU({
@@ -62,7 +62,8 @@ export async function createOrderAction(order: unknown) {
   const slug = generateSlug(validatedOrder.data.name);
 
   // Create a new product
-  const newProduct = { ...productData, sku, slug };
+  const productVatRate = Number(vatRate);
+  const newProduct = { ...productData, vatRate: productVatRate, sku, slug };
 
   let product;
 
@@ -79,9 +80,9 @@ export async function createOrderAction(order: unknown) {
 
   // Calculate order details
   const subtotal = validatedOrder.data.quantity * product.price;
-  const shipping = subtotal > 50 ? 0 : 10;
-  const tax = Number((subtotal * (category.taxRate / 100)).toFixed(2));
-  const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
+  const shipping = subtotal > 50 ? 0 : 9.99;
+  const vat = Number((subtotal * (productVatRate / 100)).toFixed(2));
+  const totalPrice = Number((subtotal + shipping + vat).toFixed(2));
 
   const orderDetails = {
     productId: product.id,
@@ -91,7 +92,7 @@ export async function createOrderAction(order: unknown) {
     quantity: validatedOrder.data.quantity,
     subtotal,
     shipping,
-    tax,
+    vat,
     totalPrice,
   };
 
@@ -189,9 +190,9 @@ export async function createRestockOrderAction(restockOrder: unknown) {
 
   // Calculate order details
   const subtotal = orderedQuantity * options.price;
-  const shipping = subtotal > 50 ? 0 : 10;
-  const tax = Number((subtotal * (category.taxRate / 100)).toFixed(2));
-  const totalPrice = Number((subtotal + shipping + tax).toFixed(2));
+  const shipping = subtotal > 50 ? 0 : 9.99;
+  const vat = Number((subtotal * (product.vatRate / 100)).toFixed(2));
+  const totalPrice = Number((subtotal + shipping + vat).toFixed(2));
 
   const orderDetails = {
     productId: validatedRestockOrder.data.productId,
@@ -201,7 +202,7 @@ export async function createRestockOrderAction(restockOrder: unknown) {
     quantity: orderedQuantity,
     subtotal,
     shipping,
-    tax,
+    vat,
     totalPrice,
   };
 
