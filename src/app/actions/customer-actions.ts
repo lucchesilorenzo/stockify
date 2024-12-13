@@ -192,14 +192,22 @@ export async function createCustomersFromCSVAction(csvData: unknown) {
   const session = await checkAuth();
 
   // Validation
-  const validatedCustomersData = CSVCustomerEssentials.safeParse(csvData);
-  if (!validatedCustomersData.success) {
+  const validatedCustomerData = CSVCustomerEssentials.safeParse(csvData);
+  if (!validatedCustomerData.success) {
     return { message: "Invalid CSV file format." };
   }
 
+  // Add "+" to phone numbers that don't have it
+  const updatedCustomerData = validatedCustomerData.data.map((customer) => {
+    if (!customer.phone.startsWith("+")) {
+      customer.phone = `+${customer.phone}`;
+    }
+    return customer;
+  });
+
   // Create customers
   try {
-    await createCustomers(validatedCustomersData.data);
+    await createCustomers(updatedCustomerData);
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
