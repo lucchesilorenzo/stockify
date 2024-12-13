@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 
 import {
+  CategoryVATRates,
   OrderStatus,
   OrderType,
   ProductStatus,
@@ -29,7 +30,6 @@ import {
   TaskPriority,
   TaskStatus,
 } from "./types";
-import { CategoryVATRates } from "./types/category-types";
 
 export const routes = [
   { name: "Dashboard", href: "/app/dashboard", icon: Home },

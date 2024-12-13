@@ -18,7 +18,7 @@ export default async function DashboardSummary() {
       getUnitsInStock(),
     ]);
 
-  // Updates dashboard data with new amount values
+  // Update dashboard data with new amount values
   const updatedDashboardData = [
     { ...dashboardData[0], amount: formatCurrency(inventoryValue) },
     { ...dashboardData[1], amount: lowStockProducts.toLocaleString() },

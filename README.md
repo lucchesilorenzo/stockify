@@ -140,6 +140,7 @@ Ensure you have the following installed:
    ```bash
    git clone https://github.com/lucchesilorenzo/stockify.git
    cd stockify
+   code .
    ```
 
 2. **Install dependencies**:
@@ -186,6 +187,16 @@ Here’s a basic overview of the core models:
 
 - **Notification System**: Implement a notification system to notify users about important events, such as low stock alerts.
 - **User Roles and Permissions**: Add user roles and permissions to control access to specific features.
+
+## Side Project: React + Express
+
+To explore new technologies and architectural approaches, Stockify was also ported to a **React + Express** stack as a side project. This alternative implementation allowed for:
+
+- Experimentation with a **separated client-server architecture**.
+- Hands-on experience building custom RESTful APIs with Express.
+- Enhanced understanding of **TypeScript** in a modular, full-stack environment.
+
+You can find the repository for this side project here: [React + Express version of Stockify](https://github.com/lucchesilorenzo/stockify-react-express).
 
 ## License
 

@@ -47,6 +47,10 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="space-y-6">
+        <div className="text-sm text-green-600">
+          Orders exceeding 50,00 € in product value qualify for free shipping.
+        </div>
+
         <div className="space-y-1">
           <Label htmlFor="name">
             Name <span className="text-red-600">*</span>

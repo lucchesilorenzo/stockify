@@ -81,14 +81,17 @@ export async function createShipmentAction(shipment: unknown) {
   try {
     const customerShipment = await createCustomerShipment({ customerId });
 
-    // Update customer shipment status in 1 minute
-    setTimeout(async () => {
-      try {
-        await updateCustomerShipmentStatus(customerShipment.id);
-      } catch {
-        return { message: "Failed to update shipment status." };
-      }
-    }, 60000);
+    // Update customer shipment status in 5 minutes
+    setTimeout(
+      async () => {
+        try {
+          await updateCustomerShipmentStatus(customerShipment.id);
+        } catch {
+          return { message: "Failed to update shipment status." };
+        }
+      },
+      5 * 60 * 1000,
+    );
 
     // Create items for shipment
     const customerShipmentItems = validatedShipment.data.products.map((p) => ({
