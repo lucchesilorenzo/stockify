@@ -120,6 +120,7 @@ Stockify is built using modern and efficient web technologies:
 - [React Day Picker](https://react-day-picker.js.org/) for date selection in forms.
 - [React CSV](https://github.com/react-csv/react-csv) for exporting data to CSV files.
 - [Node Cron](https://github.com/merencia/node-cron) for scheduling tasks.
+- [Papaparse](https://github.com/mholt/papaparse) for parsing CSV files.
 - [Ollama](https://github.com/ollama/ollama-js) for AI integration.
 
 ## Getting Started
@@ -129,7 +130,7 @@ Stockify is built using modern and efficient web technologies:
 Ensure you have the following installed:
 
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en/)
+- [Node.js (v22+)](https://nodejs.org/en/)
 - [Ollama](https://ollama.com/download) with the following model: [qwen2.5-coder:1.5b](https://ollama.com/library/qwen2.5-coder:1.5b)
 
 ### Installation
@@ -168,9 +169,11 @@ Ensure you have the following installed:
    ```
 
 6. **Start the development server**:
+
    ```bash
    npm run dev
    ```
+
    The app will be running at [http://localhost:3000](http://localhost:3000).
 
 ## Database Schema
@@ -178,6 +181,11 @@ Ensure you have the following installed:
 Here’s a basic overview of the core models:
 
 ![Prisma ER Diagram](./screenshots/database-schema.svg)
+
+## Future Features
+
+- **Notification System**: Implement a notification system to notify users about important events, such as low stock alerts.
+- **User Roles and Permissions**: Add user roles and permissions to control access to specific features.
 
 ## License
 
