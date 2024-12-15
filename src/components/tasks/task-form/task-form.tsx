@@ -17,7 +17,9 @@ import TaskFormDatePicker from "./task-form-date-picker";
 
 import { createTaskAction } from "@/app/actions/task-actions";
 import { Textarea } from "@/components/ui/textarea";
+import { useFontSize } from "@/hooks/use-font-size";
 import { taskLabels, taskPriorities, taskStatuses } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import {
   TTaskFormSchema,
   taskFormSchema,
@@ -28,6 +30,7 @@ type TaskFormProps = {
 };
 
 export default function TaskForm({ onFormSubmit }: TaskFormProps) {
+  const { fontSize } = useFontSize();
   const {
     register,
     handleSubmit,
@@ -37,6 +40,12 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
   } = useForm<TTaskFormSchema>({
     resolver: zodResolver(taskFormSchema),
   });
+
+  const space: Record<string, { spaceY: string }> = {
+    "text-md": { spaceY: "space-y-6" },
+    "text-lg": { spaceY: "space-y-6" },
+    "text-xl": { spaceY: "space-y-4" },
+  };
 
   async function onSubmit(data: TTaskFormSchema) {
     const result = await createTaskAction(data);
@@ -51,7 +60,7 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="space-y-6">
+      <div className={cn(space[fontSize].spaceY)}>
         <div className="space-y-1">
           <Label htmlFor="title">
             Title <span className="text-red-600">*</span>
@@ -71,7 +80,7 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
             Status <span className="text-red-600">*</span>
           </Label>
           <Select onValueChange={(value) => setValue("status", value)}>
-            <SelectTrigger id="status-select" className="w-full">
+            <SelectTrigger id="status" className="w-full">
               <SelectValue placeholder="Select a status" />
             </SelectTrigger>
             <SelectContent>
@@ -95,7 +104,7 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
             Priority <span className="text-red-600">*</span>
           </Label>
           <Select onValueChange={(value) => setValue("priority", value)}>
-            <SelectTrigger id="priority-select" className="w-full">
+            <SelectTrigger id="priority" className="w-full">
               <SelectValue placeholder="Select a priority" />
             </SelectTrigger>
             <SelectContent>
@@ -121,7 +130,7 @@ export default function TaskForm({ onFormSubmit }: TaskFormProps) {
             Label <span className="text-red-600">*</span>
           </Label>
           <Select onValueChange={(value) => setValue("label", value)}>
-            <SelectTrigger id="label-select" className="w-full">
+            <SelectTrigger id="label" className="w-full">
               <SelectValue placeholder="Select a label" />
             </SelectTrigger>
             <SelectContent>

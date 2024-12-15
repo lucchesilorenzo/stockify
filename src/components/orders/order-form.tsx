@@ -14,9 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useFontSize } from "@/hooks/use-font-size";
 import { useOrder } from "@/hooks/use-order";
 import { useProduct } from "@/hooks/use-product";
 import { categoryVATRates } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import {
   TOrderFormSchema,
   orderFormSchema,
@@ -27,9 +29,9 @@ type OrderFormProps = {
 };
 
 export default function OrderForm({ onFormSubmit }: OrderFormProps) {
+  const { fontSize } = useFontSize();
   const { categories, warehouses } = useProduct();
   const { suppliers, handleCreateOrder } = useOrder();
-
   const {
     register,
     handleSubmit,
@@ -39,6 +41,12 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
     resolver: zodResolver(orderFormSchema),
   });
 
+  const space: Record<string, { spaceY: string }> = {
+    "text-md": { spaceY: "space-y-6" },
+    "text-lg": { spaceY: "space-y-4" },
+    "text-xl": { spaceY: "space-y-2" },
+  };
+
   async function onSubmit(data: TOrderFormSchema) {
     await handleCreateOrder(data);
     onFormSubmit();
@@ -46,7 +54,7 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="space-y-6">
+      <div className={cn(space[fontSize].spaceY)}>
         <div className="text-sm text-green-600">
           Orders exceeding 50,00 € in product value qualify for free shipping.
         </div>
@@ -113,50 +121,52 @@ export default function OrderForm({ onFormSubmit }: OrderFormProps) {
           </div>
         </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="warehouseId">
-            Warehouse <span className="text-red-600">*</span>
-          </Label>
-          <Select onValueChange={(value) => setValue("warehouseId", value)}>
-            <SelectTrigger id="warehouseId">
-              <SelectValue placeholder="Select a warehouse" />
-            </SelectTrigger>
-            <SelectContent>
-              {warehouses.map((warehouse) => (
-                <SelectItem key={warehouse.id} value={warehouse.id}>
-                  {warehouse.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.warehouseId && (
-            <p className="px-1 text-sm text-red-600">
-              {errors.warehouseId.message}
-            </p>
-          )}
-        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Label htmlFor="warehouseId">
+              Warehouse <span className="text-red-600">*</span>
+            </Label>
+            <Select onValueChange={(value) => setValue("warehouseId", value)}>
+              <SelectTrigger id="warehouseId">
+                <SelectValue placeholder="Select a warehouse" />
+              </SelectTrigger>
+              <SelectContent>
+                {warehouses.map((warehouse) => (
+                  <SelectItem key={warehouse.id} value={warehouse.id}>
+                    {warehouse.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.warehouseId && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.warehouseId.message}
+              </p>
+            )}
+          </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="supplierId">
-            Supplier <span className="text-red-600">*</span>
-          </Label>
-          <Select onValueChange={(value) => setValue("supplierId", value)}>
-            <SelectTrigger id="supplierId">
-              <SelectValue placeholder="Select a supplier" />
-            </SelectTrigger>
-            <SelectContent>
-              {suppliers.map((supplier) => (
-                <SelectItem key={supplier.id} value={supplier.id}>
-                  {supplier.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.supplierId && (
-            <p className="px-1 text-sm text-red-600">
-              {errors.supplierId.message}
-            </p>
-          )}
+          <div className="space-y-1">
+            <Label htmlFor="supplierId">
+              Supplier <span className="text-red-600">*</span>
+            </Label>
+            <Select onValueChange={(value) => setValue("supplierId", value)}>
+              <SelectTrigger id="supplierId">
+                <SelectValue placeholder="Select a supplier" />
+              </SelectTrigger>
+              <SelectContent>
+                {suppliers.map((supplier) => (
+                  <SelectItem key={supplier.id} value={supplier.id}>
+                    {supplier.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.supplierId && (
+              <p className="px-1 text-sm text-red-600">
+                {errors.supplierId.message}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="space-y-1">

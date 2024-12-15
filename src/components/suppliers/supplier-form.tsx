@@ -11,6 +11,8 @@ import { Label } from "../ui/label";
 
 import { createSupplierAction } from "@/app/actions/supplier-actions";
 import { PhoneInput } from "@/components/common/phone-input";
+import { useFontSize } from "@/hooks/use-font-size";
+import { cn } from "@/lib/utils";
 import {
   TSupplierFormSchema,
   supplierFormSchema,
@@ -21,6 +23,7 @@ type SupplierFormProps = {
 };
 
 export default function SupplierForm({ onFormSubmit }: SupplierFormProps) {
+  const { fontSize } = useFontSize();
   const {
     register,
     handleSubmit,
@@ -29,6 +32,12 @@ export default function SupplierForm({ onFormSubmit }: SupplierFormProps) {
   } = useForm<TSupplierFormSchema>({
     resolver: zodResolver(supplierFormSchema),
   });
+
+  const space: Record<string, { spaceY: string }> = {
+    "text-md": { spaceY: "space-y-6" },
+    "text-lg": { spaceY: "space-y-4" },
+    "text-xl": { spaceY: "space-y-2" },
+  };
 
   async function onSubmit(data: TSupplierFormSchema) {
     const result = await createSupplierAction(data);
@@ -43,7 +52,7 @@ export default function SupplierForm({ onFormSubmit }: SupplierFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="space-y-6">
+      <div className={cn(space[fontSize].spaceY)}>
         <div className="space-y-1">
           <Label htmlFor="name">
             Name <span className="text-red-600">*</span>
