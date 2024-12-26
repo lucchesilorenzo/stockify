@@ -188,15 +188,19 @@ Here’s a basic overview of the core models:
 - **Notification System**: Implement a notification system to notify users about important events, such as low stock alerts.
 - **User Roles and Permissions**: Add user roles and permissions to control access to specific features.
 
-## Side Project: React + Express
+## Side Project: React + Express and Laravel
 
-To explore new technologies and architectural approaches, Stockify was also ported to a **React + Express** stack as a side project. This alternative implementation allowed for:
+To explore new technologies and architectural approaches, Stockify was ported to both a **React + Express** stack and a **React + Laravel** stack as side projects. These alternative implementations allowed for:
 
 - Experimentation with a **separated client-server architecture**.
-- Hands-on experience building custom RESTful APIs with Express.
+- Hands-on experience building custom RESTful APIs with **Express** and **Laravel**.
 - Enhanced understanding of **TypeScript** in a modular, full-stack environment.
+- Familiarity with **Laravel** and its ecosystem for rapid back-end development.
 
-You can find the repository for this side project here: [React + Express version of Stockify](https://github.com/lucchesilorenzo/stockify-react-express).
+You can find the repositories for these side projects here:
+
+- [React + Express version of Stockify](https://github.com/lucchesilorenzo/stockify-react-express)
+- [React + Laravel version of Stockify](https://github.com/lucchesilorenzo/stockify-react-laravel)
 
 ## License
 

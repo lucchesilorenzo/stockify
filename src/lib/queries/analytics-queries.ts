@@ -32,7 +32,7 @@ export async function getProductsByCategory() {
       (total, product) => total + product.quantity,
       0,
     ),
-    fill: `hsl(${COLORS[index % COLORS.length]}`,
+    fill: `hsl(${COLORS[index % COLORS.length]})`,
   }));
 
   // Take pieChartData and return pieChartConfig with category name and color

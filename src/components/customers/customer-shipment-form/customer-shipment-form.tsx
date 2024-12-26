@@ -28,14 +28,14 @@ export default function CustomerOrderForm({
   customers,
 }: CustomerOrderFormProps) {
   const {
-    selectedCustomer,
+    selectedCustomerId,
     handleSelectCustomer,
     setSelectedProductId,
     setSelectedProducts,
   } = useCustomer();
 
   const selectedCustomerInfo = customers.find(
-    (customer) => customer.id === selectedCustomer,
+    (customer) => customer.id === selectedCustomerId,
   );
 
   const {
